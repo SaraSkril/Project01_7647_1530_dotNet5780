@@ -12,6 +12,6 @@ namespace BE
         public Host Owner { get; set; }//owner of hosting unit
         public string HostingUnitName { get; set; }//name of the hosting unit
 
-        public bool diary[,] = new bool[12, 31] { get; }
+       // public bool diary[,] = new bool[12, 31] { get; }
     }
 }
