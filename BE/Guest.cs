@@ -9,6 +9,15 @@ namespace BE
     class Guest
     {
         //GuestRequestKey - in configuration
+     
+        static int GuestRequestKey1 = 10000000;//guest serial number
+
+        public static int GuestRequestKey
+        {
+            get { return GuestRequestKey1; }
+            set { GuestRequestKey1 = value; }
+        }
+       // public static int GuestRequestKey { get; set; }//check configu and initialize
         public string FirstName { get; set; }//guest first name
         public string LastName { get; set; }//guest last name
         public string EmailAddress { get; set; }//guest email address

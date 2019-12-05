@@ -48,5 +48,9 @@ namespace BE
         {
             Yes,No
         }
+        enum Status
+        {
+           Mail_Sent,Not_Treated,Closed_NoReply,Closed_ClientRequest
+        }
     }
 }
