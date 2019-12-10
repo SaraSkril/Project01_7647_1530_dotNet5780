@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    class Enums
+    public class Enums
     {
         public enum GuestStatus//status of guest
         {

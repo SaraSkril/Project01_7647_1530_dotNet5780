@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    class Configuration
+    public class Configuration
     {
-        static int GuestRequestKey1 = 10000000;//guest serial number
 
-        public int GuestRequestKey
-        {
-            get { return GuestRequestKey1; }
-            set { GuestRequestKey1 = value; }
-        }
+        public static int HostingUnitKey = 10000000;
+        public static int GuestRequestKey = 10000000;
+        public static int OrderKey = 10000000;
+        public static int GuestRequestKey1 = 10000000;//guest serial number
+
+        
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    class Host
+   public class Host
     {
         private Enums.CollectionClearance CollectionClearance1;
         public static int HostKey { get; }//check if need to put in configure

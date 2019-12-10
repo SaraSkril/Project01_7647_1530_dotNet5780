@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    class Guest
+    public class Guest
     {
         private Enums.GuestStatus GuestStatus1;
         private Enums.Type Type1;
@@ -36,7 +36,7 @@ namespace BE
         public Enums.Type Type { get { return Type1; } set { Type1 = value; } } //enum type
         public Enums.Area Area { get { return Area1; } set { Area1 = value; } }//enum Area
         public int Adults { get; set; }
-        public int children { get; set; }
+        public int Children { get; set; }
         public Enums.Pool Pool { get { return Pool1; }set { Pool1 = value; } }//enum pool
         public Enums.Jacuzzi Jacuzzi { get { return Jacuzzi1;  }set { Jacuzzi1 = value; } }//enum Jacuzzi
         public Enums.Garden Garden { get { return Garden1; }set { Garden1 = value; } }//enum Garden
