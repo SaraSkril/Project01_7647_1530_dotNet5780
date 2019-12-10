@@ -8,11 +8,11 @@ namespace BE
 {
     class Enums
     {
-        enum GuestStatus//status of guest
+        public enum GuestStatus//status of guest
         {
             Active,Archive
         }
-        enum Area//destination area
+        public enum Area//destination area
         {
             All,North,South,Center,Jerusalem
         }
@@ -20,35 +20,35 @@ namespace BE
         //{
 
         //}
-        enum Type//type of guest unit
+        public enum Type//type of guest unit
         {
             Zimmer,Hotel,CampingSite,AirBNB
         }
-        enum Pool//if guest wants pool
+        public enum Pool//if guest wants pool
         {
          Interested, NotIntersted, Maybe
         }
-        enum Jacuzzi//if guest wants jacuzzi
+        public enum Jacuzzi//if guest wants jacuzzi
         {
             Interested, NotIntersted, Maybe
         }
-        enum Garden//if guest wants garden
+        public enum Garden//if guest wants garden
         {
             Interested, NotIntersted, Maybe
         }
-        enum ChildrensAttractions//if guest wants child attractions
+       public  enum ChildrensAttractions//if guest wants child attractions
         {
             Interested, NotIntersted, Maybe
         }
-        enum Wifi//if guest wants wifi
+        public enum Wifi//if guest wants wifi
         {
             Interested, NotIntersted, Maybe
         }
-        enum CollectionClearance //if host lets access to bank accout to withdrawl money
+        public enum CollectionClearance //if host lets access to bank accout to withdrawl money
         {
             Yes,No
         }
-        enum Status
+       public  enum Status
         {
            Mail_Sent,Not_Treated,Closed_NoReply,Closed_ClientRequest
         }
