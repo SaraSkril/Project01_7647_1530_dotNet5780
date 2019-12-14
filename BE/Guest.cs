@@ -26,22 +26,23 @@ namespace BE
             set { GuestRequestKey1 = value; }
         }
        // public static int GuestRequestKey { get; set; }//check configu and initialize
+       public int ID { get; set; }
         public string FirstName { get; set; }//guest first name
         public string LastName { get; set; }//guest last name
         public string EmailAddress { get; set; }//guest email address
-        public Enums.GuestStatus GuestStatus { get { return GuestStatus1; } set { GuestStatus1 = value; } }
+        public GuestStatus GuestStatus { get { return GuestStatus1; } set { GuestStatus1 = value; } }
         public DateTime RegistrationDate { get; set; }//guest registration date to website
         public DateTime EntryDate { get; set; }//guests entry date
         public DateTime ReleaseDate { get; set; }//guests release date
-        public Enums.Type Type { get { return Type1; } set { Type1 = value; } } //enum type
-        public Enums.Area Area { get { return Area1; } set { Area1 = value; } }//enum Area
+        public Type Type { get { return Type1; } set { Type1 = value; } } //enum type
+        public Area Area { get { return Area1; } set { Area1 = value; } }//enum Area
         public int Adults { get; set; }
         public int Children { get; set; }
-        public Enums.Pool Pool { get { return Pool1; }set { Pool1 = value; } }//enum pool
-        public Enums.Jacuzzi Jacuzzi { get { return Jacuzzi1;  }set { Jacuzzi1 = value; } }//enum Jacuzzi
-        public Enums.Garden Garden { get { return Garden1; }set { Garden1 = value; } }//enum Garden
-        public Enums.ChildrensAttractions ChildrensAttractions { get { return ChildrensAttractions1; }set { ChildrensAttractions1 = value; } }//enum ChildrensAttractions
-        public Enums.Wifi Wifi { get { return Wifi1; }set { Wifi1 = value; } }//enum wifi
+        public Pool Pool { get { return Pool1; }set { Pool1 = value; } }//enum pool
+        public Jacuzzi Jacuzzi { get { return Jacuzzi1;  }set { Jacuzzi1 = value; } }//enum Jacuzzi
+        public Garden Garden { get { return Garden1; }set { Garden1 = value; } }//enum Garden
+        public ChildrensAttractions ChildrensAttractions { get { return ChildrensAttractions1; }set { ChildrensAttractions1 = value; } }//enum ChildrensAttractions
+        public Wifi Wifi { get { return Wifi1; }set { Wifi1 = value; } }//enum wifi
         public override string ToString()
         { return FirstName + " " + LastName + "\n" + EmailAddress + "\n" + "Registered: " + RegistrationDate;}
 

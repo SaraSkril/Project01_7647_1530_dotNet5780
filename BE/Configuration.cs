@@ -12,8 +12,13 @@ namespace BE
         public static int HostingUnitKey = 10000000;
         public static int GuestRequestKey = 10000000;
         public static int OrderKey = 10000000;
-        public static int GuestRequestKey1 = 10000000;//guest serial number
+
+        public int GuestRequestKey1 = GuestRequestKey;
+        public int HostingUnitKey1 = HostingUnitKey;
+        public int OrderKey1 = OrderKey;
 
         
+
+
     }
 }

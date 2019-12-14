@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    public class Enums
-    {
+ 
+    
         public enum GuestStatus//status of guest
         {
             Active,Archive
@@ -16,10 +16,6 @@ namespace BE
         {
             All,North,South,Center,Jerusalem
         }
-        //enum SubArea
-        //{
-
-        //}
         public enum Type//type of guest unit
         {
             Zimmer,Hotel,CampingSite,AirBNB
@@ -52,5 +48,5 @@ namespace BE
         {
            Mail_Sent,Not_Treated,Closed_NoReply,Closed_ClientRequest
         }
-    }
+    
 }
