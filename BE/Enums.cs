@@ -16,7 +16,7 @@ namespace BE
         {
             All,North,South,Center,Jerusalem
         }
-        public enum Type//type of guest unit
+        public enum TypeUnit//type of guest unit
         {
             Zimmer,Hotel,CampingSite,AirBNB
         }

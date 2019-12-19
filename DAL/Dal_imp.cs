@@ -4,46 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BE;
-using DS;
 
 namespace DAL
 {
     class Dal_imp : Idal
-    {
-        private List<Guest> guests = new List<Guest>();
-        private static List<Host> hosts = new List<Host> ();
-        private static List<Order> orders = new List<Order> ();
-        private static List<HostingUnit> hostingUnits = new List<HostingUnit>();
-
-        public Guest GetGuest(int ID)//returns a guest with ID inputed ,null if dosent exis
+    { 
+    public Host GetHost(string id)=>  DataSource.getHosts().FirstOrDefault(t => t.ID == id);//gets a code and return the host
+    public HostingUnit GetHostingUnit(string name) => DataSource.getHostingUnits().FirstOrDefault(t => t.HostingUnitName== name);//gets an id and returns the hosting unit
+    public Guest GetGuest(string id) => DataSource.getGuests().FirstOrDefault(t => t.ID == id);//gets an id and returns the guest
+    
+        public void AddGuestReq(Guest guest)
         {
-            return guests.FirstOrDefault(s => s.ID == ID);//linq
-        }
-
-        public void AddGuestReq(Guest guest)//adds a guest request to list of guests
-        {
-            Guest g1 = GetGuest(guest.ID);
-            if (g1 != null)
-                throw new Exception("Guest with the same ID already exists!");
-            guests.Add(guest);
-        }
-
-        public HostingUnit GetHosting(String name, Host owner)
-        {
-            return hostingUnits.FirstOrDefault(s => s.HostingUnitName == name && s.Owner==owner);//linq
+            throw new NotImplementedException();
         }
 
         public void AddHostingUnit(HostingUnit hostingUnit)
         {
-            HostingUnit h1 = GetHosting(hostingUnit.HostingUnitName,hostingUnit.Owner);
-            if (h1 != null)
-                throw new Exception("Hosting Unit with the same name and owner already exists!");
-            hostingUnits.Add(hostingUnit);
-        }
-
-        public Order GetOrder(int orderkey)
-        {
-            return orders.FirstOrDefault(s => s.);
+            throw new NotImplementedException();
         }
 
         public void AddOrder(Order order)
@@ -90,7 +67,5 @@ namespace DAL
         {
             throw new NotImplementedException();
         }
-
-        
     }
 }
