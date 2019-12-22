@@ -13,20 +13,13 @@ namespace BE
         public int BranchNumber { get; set; }
         public string BranchAddress { get; set; }
         public string BranchCity { get; set; }
-        public int BankAccountNumber { get; set; }
-        public BankAccount(int bn, string ban,int branchn,string ba, string bc, int bankaccnum)
-        {
-            BankNumber = bn;
-            BankName = ban;
-            BranchNumber = branchn;
-            BranchAddress = ba;
-            BranchCity = bc;
-            BankAccountNumber = bankaccnum;
-        }
+        ///public int BankAccountNumber { get; set; }
+    
         public override string ToString()
         {
-            return "Bank Name: "+ BankName+"\n"+BranchAddress+ ", " + BranchCity + "\n" +"Bank Number: "+BankAccountNumber+ "Branch Number: "+BranchNumber
-                + "Account: "+BankAccountNumber+"\n";
+            /* return "Bank Name: "+ BankName+"\n"+BranchAddress+ ", " + BranchCity + "\n" +"Bank Number: "+BankAccountNumber+ "Branch Number: "+BranchNumber
+                 + "Account: "+BankAccountNumber+"\n";*/
+            return this.ToStringProperty();
         }
 
     }

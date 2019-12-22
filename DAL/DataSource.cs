@@ -12,7 +12,13 @@ namespace DAL
         internal static List<Host> hosts;
         internal static List<Guest> guests;
         internal static List<HostingUnit> hostingUnits;
-        //internal static List<Order> orders;
+        internal static List<Order> orders;
+        internal static List<BankAccount> bankAccounts;
+
+        public static List<Order> GetOrders()
+        {
+            return orders;
+        }
 
         public static List<Host> getHosts()
         {
@@ -29,31 +35,41 @@ namespace DAL
             return hostingUnits;
         }
 
+        public static List<BankAccount> GetBankAccounts()
+        {
+            return bankAccounts;
+        }
+
         static DataSource()
         {
             hosts = new List<Host>();
             guests = new List<Guest>();
             hostingUnits = new List<HostingUnit>();
 
-            Host host1 = new Host("319031530");
+            Host host1 = new Host();
+            host1.ID = "319031530";
             host1.FirstName = "Sara Raizel";
             host1.LastName = "Skriloff";
             host1.PhoneNumber = 0527148093;
             host1.EmailAddress = "srskriloff@gmail.com";
-            host1.BankDetails = new BankAccount(12,"Poalim",333,"Tzalim 3/6", "Beit Shemesh", 123456) ;
+            host1.BankDetails = new BankAccount() { BankName = "Poalim", BankNumber = 12, BranchAddress = "Kanfei Nesharim 55", BranchCity = "Jerusalem", BranchNumber = 446 };
+            host1.BankAccountNumber = 11245;
             host1.CollectionClearance = CollectionClearance.No;
             hosts.Add(host1);
 
-            Host host2 = new Host("315207647");
+            Host host2 = new Host();
+            host2.ID = "315207647";
             host2.FirstName = "Elisheva";
             host2.LastName = "Aronstam";
             host2.PhoneNumber = 0528752889;
             host2.EmailAddress = "elishevaronstam@gmail.com";
-            host2.BankDetails = new BankAccount(13, "Pagi", 333, "Tzalim 4", "Beit Shemesh", 789101);
+            host2.BankDetails = new BankAccount() { BankName = "Pag", BankNumber = 14, BranchAddress = "Tzealim 4", BranchCity = "Beit Shemesh", BranchNumber = 122 };
+            host1.BankAccountNumber = 25478;
             host2.CollectionClearance = CollectionClearance.No;
             hosts.Add(host2);
 
-            Guest guest1 = new Guest("345678902");
+            Guest guest1 = new Guest();
+            guest1.ID = "345678902";
             guest1.FirstName = "Harel";
             guest1.LastName = "Skaat";
             guest1.EmailAddress = "harelrox@gmail.com";
@@ -72,7 +88,8 @@ namespace DAL
             guest1.Wifi = Wifi.Interested;
             guests.Add(guest1);
 
-            Guest guest2 = new Guest("345678912");
+            Guest guest2 = new Guest();
+            guest2.ID = "345678912";
             guest2.FirstName = "Noa";
             guest2.LastName = "Kirel";
             guest2.EmailAddress = "noakila@gmail.com";
@@ -91,13 +108,14 @@ namespace DAL
             guest2.Wifi = Wifi.Interested;
             guests.Add(guest2);
 
-            Guest guest3 = new Guest("123678912");
+            Guest guest3 = new Guest();
+            guest3.ID = "123678912";
             guest3.FirstName = "oshri";
             guest3.LastName = "cohen";
             guest3.EmailAddress = "oshri@gmail.com";
             guest3.GuestStatus = GuestStatus.Active;
             guest3.RegistrationDate = DateTime.Now;
-            guest3.EntryDate = new DateTime(2/ 1 / 2020);
+            guest3.EntryDate = new DateTime(2 / 1 / 2020);
             guest3.ReleaseDate = new DateTime(20 / 1 / 2020);
             guest3.TypeUnit = TypeUnit.AirBNB;
             guest3.Area = Area.All;
@@ -110,7 +128,8 @@ namespace DAL
             guest3.Wifi = Wifi.Interested;
             guests.Add(guest3);
 
-            HostingUnit hostingUnit1 =  new HostingUnit("Ramada");
+            HostingUnit hostingUnit1 = new HostingUnit();
+            hostingUnit1.HostingUnitName = "Ramada";
             hostingUnit1.Owner = host1;
             hostingUnit1.area = Area.Jerusalem;
             hostingUnit1.pool = true;
@@ -121,7 +140,8 @@ namespace DAL
             hostingUnit1.TypeUnit = TypeUnit.Hotel;
             hostingUnits.Add(hostingUnit1);
 
-            HostingUnit hostingUnit2 = new HostingUnit("Golan Heights");
+            HostingUnit hostingUnit2 = new HostingUnit();
+            hostingUnit2.HostingUnitName = "Golan Heights";
             hostingUnit2.Owner = host2;
             hostingUnit2.area = Area.North;
             hostingUnit2.pool = false;
@@ -132,7 +152,8 @@ namespace DAL
             hostingUnit2.TypeUnit = TypeUnit.AirBNB;
             hostingUnits.Add(hostingUnit2);
 
-            HostingUnit hostingUnit3 = new HostingUnit("");
+            HostingUnit hostingUnit3 = new HostingUnit();
+            hostingUnit3.HostingUnitName = "David Citadel";
             hostingUnit3.Owner = host1;
             hostingUnit3.area = Area.Jerusalem;
             hostingUnit3.pool = true;
@@ -143,9 +164,17 @@ namespace DAL
             hostingUnit3.TypeUnit = TypeUnit.Hotel;
             hostingUnits.Add(hostingUnit3);
 
-        }
+            BankAccount b1 = new BankAccount() { BankName = "Pag", BankNumber = 14, BranchAddress = "Tzealim 4", BranchCity = "Beit Shemesh", BranchNumber = 122 };
+            BankAccount b2 = new BankAccount() { BankName = "Poalim", BankNumber = 12, BranchAddress = "Kanfei Nesharim 55", BranchCity = "Jerusalem", BranchNumber = 446 };
+            BankAccount b3 = new BankAccount() { BankName = "Yahav", BankNumber = 11, BranchAddress = "Dolev 24", BranchCity = "Tel Aviv", BranchNumber = 789 };
+            BankAccount b4 = new BankAccount() { BankName = "Mizrachi Tfachot", BankNumber = 17, BranchAddress = "Tkoa", BranchCity = "Tkoa Citi", BranchNumber = 20 };
+            BankAccount b5 = new BankAccount() { BankName = "Bank Israel", BankNumber = 89, BranchAddress = "King David ", BranchCity = "Jerusalem", BranchNumber = 63 };
 
-
-
+            bankAccounts.Add(b1);
+            bankAccounts.Add(b2);
+            bankAccounts.Add(b3);
+            bankAccounts.Add(b4);
+            bankAccounts.Add(b5);
+            
     }
 }

@@ -17,7 +17,7 @@ namespace DAL
 
         #region HostingUnit
         void AddHostingUnit(HostingUnit hostingUnit);//Adds new Hosting unit;
-        void DelHostingUnit(HostingUnit hostingUnit);//Deletes Hosting Unit
+        void DelHostingUnit(string name);//Deletes Hosting Unit
         void UpdateHostUnit(HostingUnit hostingUnit);//Updates Hosting Unit;
         
         #endregion
@@ -31,7 +31,7 @@ namespace DAL
         List<HostingUnit> GetAllHostingUnits();//returns a lists with all hosting unit
         List<Guest> GetAllGuests();//returns a list with all Guests
         List<Order> GetAllOrders();//returns a list with all orders
-        List<BankAccount> GetAllBankAccounts();//returns a list with all Bank Accounts 
+        IEnumerable<BankAccount> GetAllBankAccounts();//returns a list with all Bank Accounts 
 
     }
 }

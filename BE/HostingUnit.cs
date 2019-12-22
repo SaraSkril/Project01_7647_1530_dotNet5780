@@ -10,7 +10,7 @@ namespace BE
     {
         private static int HostingUnitKey1 = 100000;
 
-        public static int HostingUnitKey { get { return HostingUnitKey1; }  }//check if need to put in configure
+        public int HostingUnitKey { get; set; }//check if need to put in configure
         public Host Owner { get; set; }//owner of hosting unit
         public string HostingUnitName { get; set; }//name of the hosting unit
         public bool[,] Diary = new bool[12, 31];//matrix of hosting unit status
@@ -21,15 +21,11 @@ namespace BE
         public bool Garden { get; set; }
         public bool ChildrensAttractions { get; set; }
         public bool Wifi { get; set; }
-
-        public HostingUnit(string name)
-        {
-            HostingUnitName = name;
-
-        }
+        
         public override string ToString()
         {
-            return "Hosting unit key: " + HostingUnitKey + "\n" + "Unit Name: " + HostingUnitName + "\n" + Owner.ToString();
+            // return "Hosting unit key: " + HostingUnitKey + "\n" + "Unit Name: " + HostingUnitName + "\n" + Owner.ToString();
+            return this.ToStringProperty();
         }
 
     }

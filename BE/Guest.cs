@@ -8,24 +8,7 @@ namespace BE
 {
     public class Guest
     {
-        //private Enums.GuestStatus GuestStatus1;
-        //private Enums.Type Type1;
-        //private Enums.Area Area1;
-        //private Enums.Pool Pool1;
-        //private Enums.Jacuzzi Jacuzzi1;
-        //private Enums.Garden Garden1;
-        //private Enums.ChildrensAttractions ChildrensAttractions1;
-        //private Enums.Wifi Wifi1;
-        //GuestRequestKey - in configuration
-     
-        static int GuestRequestKey1 = 10000000;//guest serial number
-
-        public static int GuestRequestKey
-        {
-            get { return GuestRequestKey1; }
-            set { GuestRequestKey1 = value; }
-        }
-       // public static int GuestRequestKey { get; set; }//check configu and initialize
+        public int GuestRequestKey { get; set; }
        public string ID { get; set; }
         public string FirstName { get; set; }//guest first name
         public string LastName { get; set; }//guest last name
@@ -43,12 +26,14 @@ namespace BE
         public Garden Garden { get; set; }//enum Garden
         public ChildrensAttractions ChildrensAttractions { get; set; }//enum ChildrensAttractions
         public Wifi Wifi { get; set; }//enum wifi
-        public Guest(string id)
+       /* public Guest(string id)
         {
             ID = id;
-        }
+        }*/
         public override string ToString()
-        { return FirstName + " " + LastName + "\n" + EmailAddress + "\n" + "Registered: " + RegistrationDate;}
+        { //return FirstName + " " + LastName + "\n" + EmailAddress + "\n" + "Registered: " + RegistrationDate;
+            return this.ToStringProperty();
+        }
 
     }
 }

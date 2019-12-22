@@ -4,15 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BE;
+using System.Reflection;
+using System.Linq.Expressions;
+
+
+
 namespace DAL
 {
-   public static class Cloning
+    public static class Cloning
     {
-        public static Host clone(this Host orig)
-        {
-            Host target = new Host();
-            orig.
-        }
 
+        public static T Clone<T>(this T original) where T : new() //generic clonig function 
+        {
+            //T target = (T)Activator.CreateInstance(original.GetType());
+            T target = new T();
+
+            foreach (var originalProp in original.GetType().GetProperties())
+            {
+                originalProp.SetValue(target, originalProp.GetValue(original));
+            }
+
+            return target;
+        }
     }
+
 }
+
