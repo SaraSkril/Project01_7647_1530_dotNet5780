@@ -104,6 +104,7 @@ namespace DAL
             if (index == -1)//meaning id not found
                 throw new Exception("No order was found!");
             DataSource.GetOrders()[index] = order.Clone();//update the order
+
         }
 
         public List<Order> GetAllOrders()
@@ -114,12 +115,12 @@ namespace DAL
         #endregion
 
 
-        public IEnumerable<BankAccount> GetAllBankAccounts()//Linq 2
+        public IEnumerable<BankAccount> GetAllBankAccounts()//Linq 4
         {
 
             return from BA in DataSource.GetBankAccounts()
-                       select BA.Clone();
-            
+                   select BA.Clone();
+
         }
 
 
