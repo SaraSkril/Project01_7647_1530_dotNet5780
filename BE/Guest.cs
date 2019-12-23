@@ -26,12 +26,9 @@ namespace BE
         public Garden Garden { get; set; }//enum Garden
         public ChildrensAttractions ChildrensAttractions { get; set; }//enum ChildrensAttractions
         public Wifi Wifi { get; set; }//enum wifi
-       /* public Guest(string id)
-        {
-            ID = id;
-        }*/
+      
         public override string ToString()
-        { //return FirstName + " " + LastName + "\n" + EmailAddress + "\n" + "Registered: " + RegistrationDate;
+        { 
             return this.ToStringProperty();
         }
 

@@ -17,8 +17,6 @@ namespace BE
     
         public override string ToString()
         {
-            /* return "Bank Name: "+ BankName+"\n"+BranchAddress+ ", " + BranchCity + "\n" +"Bank Number: "+BankAccountNumber+ "Branch Number: "+BranchNumber
-                 + "Account: "+BankAccountNumber+"\n";*/
             return this.ToStringProperty();
         }
 

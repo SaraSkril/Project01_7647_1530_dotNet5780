@@ -16,8 +16,6 @@ namespace BE
         public DateTime OrderDate { get; set; }//date email was sent  to client - guest
         public override string ToString()
         {
-            /*  return "Order Number: " + OrderKey + "\n" + "Guest ID: " + GuestRequestKey + "\n" + "Hosting Unit Number: " + HostingUnitKey + "\n"
-                  + "Order Placed: " + CreateDate + "\n" + "Email Sent: " + OrderDate;*/
             return this.ToStringProperty();
         }
 
