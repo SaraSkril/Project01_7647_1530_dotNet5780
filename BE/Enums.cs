@@ -7,11 +7,6 @@ using System.Threading.Tasks;
 namespace BE
 {
  
-    
-        public enum GuestStatus//status of guest
-        {
-            Active,Archive
-        }
         public enum Area//destination area
         {
             All,North,South,Center,Jerusalem
@@ -46,7 +41,7 @@ namespace BE
         }
        public  enum Status
         {
-           Mail_Sent,Not_Treated,Closed_NoReply,Closed_ClientRequest
-        }
+           Mail_Sent,Not_Treated,Closed_NoReply,Closed_ClientRequest, Active
+    }
     
 }

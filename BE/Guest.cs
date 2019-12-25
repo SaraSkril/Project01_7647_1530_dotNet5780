@@ -13,7 +13,7 @@ namespace BE
         public string FirstName { get; set; }//guest first name
         public string LastName { get; set; }//guest last name
         public string EmailAddress { get; set; }//guest email address
-        public GuestStatus GuestStatus { get; set; }
+        public Status GuestStatus { get; set; }
         public DateTime RegistrationDate { get; set; }//guest registration date to website
         public DateTime EntryDate { get; set; }//guests entry date
         public DateTime ReleaseDate { get; set; }//guests release date

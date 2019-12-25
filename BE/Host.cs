@@ -9,7 +9,7 @@ namespace BE
 {
    public class Host
     {
-        private CollectionClearance CollectionClearance1;
+        
         public string ID { get; set; }//ID 
         public static int HostKey { get; }//check if need to put in configure
         public string FirstName { get; set; }

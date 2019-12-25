@@ -7,7 +7,7 @@ using BE;
 
 namespace DAL
 {
-    interface Idal
+    public interface Idal
     {
         #region Guest
         void AddGuestReq(Guest guest);//Adds a new Guest Request
@@ -33,5 +33,11 @@ namespace DAL
         List<Order> GetAllOrders();//returns a list with all orders
         IEnumerable<BankAccount> GetAllBankAccounts();//returns a list with all Bank Accounts 
 
+        #region finds element
+        Host GetHost(string id);
+        HostingUnit GetHostingUnit(string name);
+        Guest GetGuest(string id);
+        Order GetOrder(int guestkey, int unitkey);
+        List<Host> GetHosts();
     }
 }

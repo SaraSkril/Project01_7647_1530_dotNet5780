@@ -122,7 +122,10 @@ namespace DAL
                    select BA.Clone();
 
         }
-
-
+        public List<Host> GetHosts()
+        {
+            return DataSource.getHosts();
+        }
+    
     }
 }
