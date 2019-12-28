@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BL
 {
-   public class FactoryBl
+    public class FactoryBl
     {
         static IBL bl = null;
         public static IBL GetBL()

@@ -9,7 +9,7 @@ namespace BE
     public class Guest
     {
         public int GuestRequestKey { get; set; }
-       public string ID { get; set; }
+        public string ID { get; set; }
         public string FirstName { get; set; }//guest first name
         public string LastName { get; set; }//guest last name
         public string EmailAddress { get; set; }//guest email address
@@ -26,11 +26,12 @@ namespace BE
         public Garden Garden { get; set; }//enum Garden
         public ChildrensAttractions ChildrensAttractions { get; set; }//enum ChildrensAttractions
         public Wifi Wifi { get; set; }//enum wifi
-      
+
         public override string ToString()
-        { 
+        {
             return this.ToStringProperty();
         }
+    }
 
     }
 }

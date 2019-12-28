@@ -1,7 +1,9 @@
-﻿using System;
+﻿
+using System.Text;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+
 using System.Threading.Tasks;
 using BE;
 using DAL;
@@ -18,54 +20,211 @@ namespace BL
             dal = DAL.FactoryDal.GetDal();
         }
 
-        #region Guest
-        void AddGuestReq(Guest guest)//Adds a new Guest Request
+        public HostingUnit GetHostingUnit(int key) => GetAllHostingUnits().FirstOrDefault(t => t.HostingUnitKey == key);
+        public Guest GetGuest(int id) => GetAllGuests().FirstOrDefault(t => t.GuestRequestKey == id);
+        #region Add
+        public void AddGuestReq(Guest guest)//Adds a new Guest Request
         {
+            if (!CheckDate(guest.EntryDate, guest.ReleaseDate))
+                throw new ArgumentOutOfRangeException("Dates are not valid/n ");
+
+            if (checkID(guest.ID) == false)
+                throw new ArgumentOutOfRangeException("ID not valid/n");
+            try
+            {
+                dal.AddGuestReq(guest.Clone());
+            }
+            catch (DuplicateWaitObjectException s)
+            {
+                throw s;
+            }
 
         }
-        void UpdateGuestReq(Guest guest)//Updates guest
+        public void AddHostingUnit(HostingUnit hostingUnit)//Adds new Hosting unit;
         {
+            if (checkID(hostingUnit.Owner.ID))
+            {
+                try
+                {
+                    dal.AddHostingUnit(hostingUnit.Clone());
+                }
+                catch (DuplicateWaitObjectException e)
+                {
+                    throw e;
+                }
+            }
+            else
+            {
+                throw new Exception("Owner ID  is not valid/n");
+            }
+        }
+        public void AddOrder(Order order)//adds a new order
+        {
+            HostingUnit hosting = GetHostingUnit(order.HostingUnitKey);
+            if (hosting == null)
+                throw new Exception("Invalid Hosting Unit");
+            Guest guest = GetGuest(order.GuestRequestKey);
+            if (guest == null)
+                throw new Exception("Invalid Guest");
+            //order.Status = Status.Active;
+            order.CreateDate = DateTime.Now;
+            /*if (!CheckIsBankAllowed(hosting.Owner, order))
+            {
+                dal.AddOrder(order.Clone());
+                //check if need to do this?
+                throw new Exception("Cannot send mail. No debit authorization");
+            }
+            else
+            {
+                order.Status = Status.Mail_Sent;
+                SendMail(order);
+            }*/
+            try
+            {
+                dal.AddOrder(order.Clone());
+            }
+            catch (DuplicateWaitObjectException e)
+            {
+                throw e;
+            }
+
+        }
+        #endregion
+        #region Update
+        public void UpdateGuestReq(Guest guest)//Updates guest
+        {
+            if (!CheckDate(guest.EntryDate, guest.ReleaseDate))
+                throw new ArgumentOutOfRangeException("Dates are not valid/n ");
+            if (checkID(guest.ID) == false)
+                throw new ArgumentOutOfRangeException("ID not valid/n");
+            dal.UpdateGuestReq(guest);
+        }
+        public void UpdateHostUnit(HostingUnit hostingUnit)//Updates Hosting Unit;
+        {
+            if (checkID(hostingUnit.Owner.ID))
+                dal.UpdateHostUnit(hostingUnit);
+            else
+                throw new ArgumentOutOfRangeException("Owner ID  is not valid\n");
+        }
+        public void UpdateOrder(Order order)//Updates Order
+        {
+            Order orig = GetAllOrders().FirstOrDefault(t => t.OrderKey == order.OrderKey);
+            if ((orig.Status == Status.Closed_ClientRequest || orig.Status == Status.Closed_NoReply) && orig.Status != order.Status)
+                throw new Exception("Status cannot be changed");
+            if ((orig.Status == Status.Closed_ClientRequest || orig.Status == Status.Closed_NoReply) && orig.Status == order.Status)
+                try
+                {
+                    dal.UpdateOrder(order.Clone());
+
+                }
+                catch (ArgumentOutOfRangeException e)
+                {
+                    throw e;
+                }
+            if (orig.Status == Status.Mail_Sent && order.Status == Status.Mail_Sent)
+                try
+                {
+                    dal.UpdateOrder(order.Clone());
+
+                }
+                catch (ArgumentOutOfRangeException e)
+                {
+                    throw e;
+                }
+            if (order.Status == Status.Closed_NoReply)
+                try
+                {
+                    dal.UpdateOrder(order.Clone());
+
+                }
+                catch (ArgumentOutOfRangeException e)
+                {
+                    throw e;
+                }
+            if (order.Status == Status.Closed_ClientRequest)
+            {
+                Guest guest = GetGuest(order.GuestRequestKey);
+                Charge(FindHost(order.HostingUnitKey), DaysBetween(guest.EntryDate, guest.ReleaseDate));//charges the host 10 nis 
+                HostingUnit tmp = dal.GetAllHostingUnits().FirstOrDefault(t => t.HostingUnitKey == order.HostingUnitKey);
+                if (!CheckOffDates(tmp, guest.EntryDate, guest.ReleaseDate))
+                    throw new TaskCanceledException("could not book dates");
+                foreach (Order order1 in dal.GetAllOrders())//closes all orders that are open for this guest
+                {
+                    if (order1.GuestRequestKey == guest.GuestRequestKey)
+                        order1.Status = Status.Closed_ClientRequest;
+                }
+            }
+            if (order.Status == Status.Mail_Sent)
+            {
+                HostingUnit hosting = GetHostingUnit(order.HostingUnitKey);
+                if (!CheckIsBankAllowed(hosting.Owner, order))
+                    throw new Exception("Cannot send mail. No debit authorization");
+                SendMail(order);
+                order.OrderDate = DateTime.Now;
+            }
+            if (order.Status == Status.Closed_NoReply)
+                try
+                {
+                    dal.UpdateOrder(order.Clone());
+
+                }
+                catch (ArgumentOutOfRangeException e)
+                {
+                    throw e;
+                }
 
         }
 
         #endregion
-        #region HostingUnit
-        void AddHostingUnit(HostingUnit hostingUnit);//Adds new Hosting unit;
-        void DelHostingUnit(string name);//Deletes Hosting Unit
-        void UpdateHostUnit(HostingUnit hostingUnit);//Updates Hosting Unit;
+        #region Delete
 
+        public void DelHostingUnit(HostingUnit hosting)//Deletes Hosting Unit
+        {
+            if (!IsHostingUnitActive(hosting))
+                dal.DelHostingUnit(hosting.HostingUnitName);
+            throw new Exception("Hosting Unit cannot be deleted/n");
+        }
         #endregion
-        #region Order
-        void AddOrder(Order order);//adds a new order
-        void UpdateOrder(Order order);//Updates Order
-
+        #region GetAll
+        public List<HostingUnit> GetAllHostingUnits()//returns a lists with all hosting unit
+        {
+            return dal.GetAllHostingUnits();
+        }
+        public List<Guest> GetAllGuests()//returns a list with all Guests
+        {
+            return dal.GetAllGuests();
+        }
+        public List<Order> GetAllOrders()//returns a list with all orders
+        {
+            return dal.GetAllOrders();
+        }
+        public IEnumerable<BankAccount> GetAllBankAccounts()//returns a list with all Bank Accounts 
+        {
+            return dal.GetAllBankAccounts();
+        }
         #endregion
-
-        List<HostingUnit> GetAllHostingUnits()//returns a lists with all hosting unit
-        List<Guest> GetAllGuests();//returns a list with all Guests
-        List<Order> GetAllOrders();//returns a list with all orders
-        IEnumerable<BankAccount> GetAllBankAccounts();//returns a list with all Bank Accounts 
-
-        #region now starting to do the rest of function 
-        bool CheckDate(DateTime start, DateTime end)//check if end day is longer than 1 day by start
+        #region check
+        public bool checkID(string id)
+        {
+            if (Int32.Parse(id) < 100000000 || Int32.Parse(id) > 999999999)
+                return false;
+            return true;
+        }
+        public bool CheckDate(DateTime start, DateTime end)//check if end day is longer than 1 day by start
         {
             DateTime temp = start.AddDays(1);
             if (temp > end)
                 return false;
             return true;
         }
-        bool CheckIsBankAllowed(Host host, Order order)//check if host allows access to bank acct, if so sends email else returns false 
+        public bool CheckIsBankAllowed(Host host, Order order)//check if host allows access to bank acct, if so sends email else returns false 
         {
-            if ((int)(host.CollectionClearance) == 0)//checks if theres access to bank acct 
-            {
-                order.Status = Status.Mail_Sent;
-                SendMail(order);
+            if (host.CollectionClearance == CollectionClearance.Yes)//checks if theres access to bank acct 
                 return true;
-            }
             return false;
 
         }
-        bool IsAvailible(HostingUnit hostingUnit, DateTime start, DateTime end)//checks if dates in hosting unit are availble 
+        public bool IsAvailible(HostingUnit hostingUnit, DateTime start, DateTime end)//checks if dates in hosting unit are availble 
         {
             DateTime tempstart = start;
             while (tempstart != end)
@@ -76,84 +235,184 @@ namespace BL
             }
             return true;//dates were available
         }
-        bool CheckifOrderIsClosed(Order order)//checks if status can be changed
+        public bool CheckifOrderIsClosed(Order order)//checks if status can be changed
         {
             if (order.Status == Status.Closed_ClientRequest || order.Status == Status.Closed_NoReply)//order closed
                 return true;//status cannot be changed
             return false;
         }
-        bool Charge(Host host, int numdays);//when order is closed we charge the owner 10 nis
-        Host FindHost(int key);//recieves hosting unit key and returns the host that ownes it
-        bool CheckOffDates(HostingUnit hostingUnit, DateTime start, DateTime end)//when status is changed to closed, update diary in hosting unit 
+        public bool Charge(Host host, int numdays)//when order is closed we charge the owner 10 nis
+        {
+            try
+            {
+                host.commission += Configuration.commission * numdays;
+                return true;
+            }
+            catch
+            {
+                throw new TaskCanceledException(" Not able to charge comission");
+            }
+
+        }
+        public Host FindHost(int key)//recieves hosting unit key and returns the host that ownes it
+        {
+            HostingUnit hostingUnit = dal.GetAllHostingUnits().FirstOrDefault(t => t.HostingUnitKey == key);//fins hosting unit with given key
+            return hostingUnit.Owner;//returns owner
+        }
+        public bool CheckOffDates(HostingUnit hostingUnit, DateTime start, DateTime end)//when status is changed to closed, update diary in hosting unit 
         {
             if (IsAvailible(hostingUnit, start, end) == false)
-
-                throw new OperationCanceledException("Dates are not availible for this Unit.");
+                return false;
+            //throw new OperationCanceledException("Dates are not availible for this Unit.");
             DateTime tempstart = start;
             while (tempstart != end)
             {
                 hostingUnit.Diary[tempstart.Month, tempstart.Day] = true;//marks that date is accupied
-                    
+
                 tempstart.AddDays(1);
             }
             return true;//dates were available
 
         }
-        void updateInfo(Guest guest, Order order/*all orders with guest*/)//when order status is chenged to closed update guest and all orders that have to do with the guest
+
+        public bool IsHostingUnitActive(HostingUnit hostingUnit)//checks if hosting unit is active in any order, if so w cant delete
         {
-            if (CheckifOrderIsClosed(order) == true)
+
+            var orders = from order in dal.GetAllOrders()//gets all orders from this unit
+                         where order.HostingUnitKey.Equals(hostingUnit.HostingUnitKey)
+                         select order;
+            foreach (var ord in orders)//checks if any order is active if so returns false so we cant delete the hosting unit
             {
-                throw new TaskCanceledException("order status is closed already");
+                if (ord.Status == Status.Active || ord.Status == Status.Closed_ClientRequest)
+                    return true;
             }
-            Charge(FindHost(order.HostingUnitKey), DaysBetween(guest.EntryDate, guest.ReleaseDate));//charges the host 10 nis 
-            HostingUnit tmp=dal.GetHostingUnit()
-            CheckOffDates();
-            guest.GuestStatus = Status.Closed_ClientRequest;
-            foreach (Order order1 in dal.GetAllOrders())
-            {
-                if (order1.GuestRequestKey == guest.GuestRequestKey)
-                    order1.Status = Status.Closed_ClientRequest;
-            }
+            return false;
+
         }
-        bool IsHostingUnitActive(HostingUnit hostingUnit);//checks if hosting unit is active in any order, if so w cant delete
-        bool ChangeCollectionClearance(HostingUnit hostingUnit);//checks if theres a open order, if so we cannot change collection clearance
-        void SendMail(Order order);//when status of order is changed to "sent mail", this function will send the mail
-        List<HostingUnit> AllDays(DateTime date, int duration);//returns all hosting units with avilble date
-        int DaysBetween(DateTime start/*end=now*/);//returns the days between the start day and now 
-        int DaysBetween(DateTime start, DateTime end);//returns the days between the start and last day
-        List<Order> DaysFromOrder(int num);//returns all orders that "num"days have past since they were created / sent email (num or bigger)
-        int NumOfVacationers(Guest g);//recieves a guest and returns num of vacationers
-        int NumOfHostingUnits(Host h);//recieves a host and returns num of hosting units he ownes
-        bool HostExist(Host host);
-        bool GuestExist(Guest guest);
-        bool HostingUnitExist(HostingUnit hostingUnit);
-        bool OrderExist(Order order);
-        bool isDateTaken(HostingUnit hostingUnit, DateTime start, DateTime end);
+        public bool ChangeCollectionClearance(HostingUnit hostingUnit)//checks if theres a open order, if so we cannot change collection clearance
+        {
+            if (IsHostingUnitActive(hostingUnit))//if hosting unit is in a active status then we cant change collection clearance 
+                return false;
+            //hostingUnit.Owner.CollectionClearance = CollectionClearance.No;//change collection clearence
+            return true;
+        }
+        public void SendMail(Order order)//when status of order is changed to "sent mail", this function will send the mail
+        {
+            Console.WriteLine(" Email sent");
+        }
+        public List<HostingUnit> AllDays(DateTime date, int duration)//returns all hosting units with avilble date
+        {
+            DateTime end = date.AddDays(duration);
+            var result = from item in dal.GetAllHostingUnits()//selects all hosting units with available dates  into a list
+                         where IsAvailible(item, date, end) == true
+                         select item;
+            return (List<HostingUnit>)result;//returns the list
+        }
+        public int DaysBetween(DateTime start/*end=now*/)//returns the days between the start day and now 
+        {
+            DateTime now = DateTime.Now;
+            return (now - start).Days;
+
+        }
+        public int DaysBetween(DateTime start, DateTime end)//returns the days between the start and last day
+        {
+            return (end - start).Days;
+        }
+        public List<Order> DaysFromOrder(int num)//returns all orders that "num"days have past since they were created / sent email (num or bigger)
+        {
+            var result = from item in dal.GetAllOrders()
+                         where DaysBetween(item.OrderDate) >= num
+                         select item;
+            return (List<Order>)result;
+
+        }
+        public int NumOfVacationers(Guest g)//recieves a guest and returns num of vacationers
+        {
+            return g.Adults + g.Children;
+        }
+        public int NumOfHostingUnits(Host h)//recieves a host and returns num of hosting units he ownes
+        {
+            int count = 0;
+            foreach (HostingUnit unit in dal.GetAllHostingUnits())
+            {
+                if (unit.Owner.ID == h.ID)
+                    count++;
+            }
+            return count;
+
+        }
+        public bool HostExist(Host host)
+        {
+            Host host1 = dal.GetHost(host.ID);
+            if (host1 != null)
+                return true;
+            return false;
+
+
+        }
+        public bool GuestExist(Guest guest)
+        {
+            Guest guest1 = dal.GetGuest(guest.ID);
+            if (guest1 != null)
+                return true;
+            return false;
+        }
+        public bool HostingUnitExist(HostingUnit hostingUnit)
+        {
+            HostingUnit unit = dal.GetHostingUnit(hostingUnit.HostingUnitName);
+            if (unit != null)
+                return true;
+            return false;
+        }
+
         //Func -דלגייט שקיים  מקבל משהו ומחזיר משהו
         //predicate-בודק אם תנאי מסוים שמציבים בו מתקיים
         // IEnumeable מאפשר לנו לעבור על איברי האובייקט שלנו, לסדר אותם, לסנן אותם או סתם לדלות מהם מידע.
-        IEnumerable<Guest> GetAllGuests(Func<Guest, bool> predicate = null);//recieves a predicate and returns all guests that  satisfy the predicate condition
-        int NumForGuest(Guest guest);//counts and returns how many orders have been sent to him
-        int NumForUnit(HostingUnit hostingUnit);//counts how many orders were  closed/sent for hosting unit
-        Host FindHost(int key);//recieves hosting unit key and returns the host that ownes it
-
-        IEnumerable<IGrouping<Area, Guest>> GetGuestsGroupsByArea()//groups geusts according to area
+        public IEnumerable<Guest> GetAllGuests(Func<Guest, bool> predicate = null)//recieves a predicate and returns all guests that  satisfy the predicate condition
         {
-            //try
-            {
-                return from item in dal.GetAllGuests()
-                       orderby item.LastName, item.FirstName
-                       group item by item.Area
-                       into g
-                       orderby g.Key
-                       select g;
-            }
-            //catch (DirectoryNotFoundException e)
-            //{
-            //    throw e;
-            //}
+
+            var result = from item in dal.GetAllGuests()
+                         where predicate(item)
+                         select item;
+            return result;
         }
-        IEnumerable<IGrouping<int, Guest>> GetGuestsGroupsByVacationers()//groups guests according to num vacation
+        public int NumForGuest(Guest guest)//counts and returns how many orders have been sent to him
+        {
+            int count = 0;
+            foreach (Order item in dal.GetAllOrders())
+            {
+                if (item.GuestRequestKey == guest.GuestRequestKey)
+                    count++;
+            }
+            return count;
+
+
+        }
+        public int NumForUnit(HostingUnit hostingUnit)//counts how many orders were  closed/sent for hosting unit
+        {
+            int count = 0;
+            foreach (Order item in dal.GetAllOrders())
+            {
+                if (item.HostingUnitKey == hostingUnit.HostingUnitKey &&
+                    item.Status == Status.Closed_ClientRequest || item.HostingUnitKey == hostingUnit.HostingUnitKey &&
+                    item.Status == Status.Mail_Sent)
+                    count++;
+            }
+            return count;
+        }
+        #endregion
+        #region Group
+        public IEnumerable<IGrouping<Area, Guest>> GetGuestsGroupsByArea()//groups geusts according to area
+        {
+            return from item in dal.GetAllGuests()
+                   orderby item.LastName, item.FirstName
+                   group item by item.Area
+                         into g
+                   orderby g.Key
+                   select g;
+
+        }
+        public IEnumerable<IGrouping<int, Guest>> GetGuestsGroupsByVacationers()//groups guests according to num vacation
         {
             return from item in dal.GetAllGuests()
                    orderby item.LastName, item.FirstName
@@ -162,7 +421,7 @@ namespace BL
                    orderby g.Key
                    select g;
         }
-        IEnumerable<IGrouping<int, Host>> GetHostsGroupsByHostingUnits()//groups hosts according to num of hosting units
+        public IEnumerable<IGrouping<int, Host>> GetHostsGroupsByHostingUnits()//groups hosts according to num of hosting units
         {
             return from item in dal.GetHosts()
                    orderby item.LastName, item.FirstName
@@ -171,7 +430,7 @@ namespace BL
                    orderby g.Key
                    select g;
         }
-        IEnumerable<IGrouping<Area, HostingUnit>> GetHUGroupsByArea()//groups hosting units according to area
+        public IEnumerable<IGrouping<Area, HostingUnit>> GetHUGroupsByArea()//groups hosting units according to area
         {
             return from item in dal.GetAllHostingUnits()
                    orderby item.HostingUnitName
@@ -180,6 +439,7 @@ namespace BL
                    orderby g.Key
                    select g;
         }
+
 
         #endregion
     }

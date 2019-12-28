@@ -12,20 +12,20 @@ namespace DAL
         #region Guest
         void AddGuestReq(Guest guest);//Adds a new Guest Request
         void UpdateGuestReq(Guest guest);//Updates guest
-        
+
         #endregion
 
         #region HostingUnit
         void AddHostingUnit(HostingUnit hostingUnit);//Adds new Hosting unit;
         void DelHostingUnit(string name);//Deletes Hosting Unit
         void UpdateHostUnit(HostingUnit hostingUnit);//Updates Hosting Unit;
-        
+
         #endregion
 
         #region Order
         void AddOrder(Order order);//adds a new order
         void UpdateOrder(Order order);//Updates Order
-        
+
         #endregion
 
         List<HostingUnit> GetAllHostingUnits();//returns a lists with all hosting unit
@@ -39,5 +39,6 @@ namespace DAL
         Guest GetGuest(string id);
         Order GetOrder(int guestkey, int unitkey);
         List<Host> GetHosts();
+        #endregion
     }
 }

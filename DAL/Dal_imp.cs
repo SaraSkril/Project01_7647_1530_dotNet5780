@@ -23,11 +23,11 @@ namespace DAL
             if (guest1 == null)//if guest doesnt exist 
             {
                 if (guest.GuestRequestKey < 10000000)
-                    guest.GuestRequestKey = (Configuration.GuestRequestKey++);//update serial number
+                    guest.GuestRequestKey = Configuration.GuestRequestKey++; ;//update serial number
                 DataSource.getGuests().Add(guest.Clone());//adds new guest to list of guest(using clone funcion- sends a copy of the original)f 
             }
             else
-                throw new Exception("Guest with this ID already exists!");
+                throw new DuplicateWaitObjectException("Guest with this ID already exists!");
         }
 
         public void UpdateGuestReq(Guest guest)
@@ -57,7 +57,7 @@ namespace DAL
                 DataSource.getHostingUnits().Add(hostingUnit.Clone());
             }
             else
-                throw new Exception("Hosting Unit with the same name exists!");
+                throw new DuplicateWaitObjectException("Hosting Unit with the same name exists!");
         }
 
         public void UpdateHostUnit(HostingUnit hostingUnit)
@@ -95,7 +95,7 @@ namespace DAL
                 DataSource.GetOrders().Add(order.Clone());//adds new order to list of orders(using clone funcion- sends a copy of the original)f 
             }
             else
-                throw new Exception("Same order already exists!");
+                throw new DuplicateWaitObjectException("Same order already exists!");
         }
 
         public void UpdateOrder(Order order)
@@ -126,6 +126,6 @@ namespace DAL
         {
             return DataSource.getHosts();
         }
-    
+
     }
 }

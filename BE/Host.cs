@@ -9,7 +9,7 @@ namespace BE
 {
    public class Host
     {
-        
+
         public string ID { get; set; }//ID 
         public static int HostKey { get; }//check if need to put in configure
         public string FirstName { get; set; }
@@ -19,11 +19,13 @@ namespace BE
         public BankAccount BankDetails { get; set; }
         public int BankAccountNumber { get; set; }
         public CollectionClearance CollectionClearance { get; set; }
+        public int commission { get; set; }
         public override string ToString()
         {
 
             return this.ToStringProperty();
         }
+
 
     }
 }

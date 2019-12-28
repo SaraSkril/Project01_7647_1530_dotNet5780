@@ -7,13 +7,13 @@ using BE;
 
 namespace DAL
 {
-    internal class DataSource//accessible only in the assembly 
+    public class DataSource//accessible only in the assembly 
     {
-        internal static List<Host> hosts;
-        internal static List<Guest> guests;
-        internal static List<HostingUnit> hostingUnits;
-        internal static List<Order> orders;
-        internal static List<BankAccount> bankAccounts;
+        private static List<Host> hosts;
+        private static List<Guest> guests;
+        private static List<HostingUnit> hostingUnits;
+        private static List<Order> orders;
+        private static List<BankAccount> bankAccounts;
 
         public static List<Order> GetOrders()
         {
@@ -45,6 +45,9 @@ namespace DAL
             hosts = new List<Host>();
             guests = new List<Guest>();
             hostingUnits = new List<HostingUnit>();
+            orders = new List<Order>();
+            bankAccounts = new List<BankAccount>();
+
 
             Host host1 = new Host();
             host1.ID = "319031530";
@@ -54,7 +57,7 @@ namespace DAL
             host1.EmailAddress = "srskriloff@gmail.com";
             host1.BankDetails = new BankAccount() { BankName = "Poalim", BankNumber = 12, BranchAddress = "Kanfei Nesharim 55", BranchCity = "Jerusalem", BranchNumber = 446 };
             host1.BankAccountNumber = 11245;
-            host1.CollectionClearance = CollectionClearance.No;
+            host1.CollectionClearance = CollectionClearance.Yes;
             hosts.Add(host1);
 
             Host host2 = new Host();
@@ -65,7 +68,7 @@ namespace DAL
             host2.EmailAddress = "elishevaronstam@gmail.com";
             host2.BankDetails = new BankAccount() { BankName = "Pag", BankNumber = 14, BranchAddress = "Tzealim 4", BranchCity = "Beit Shemesh", BranchNumber = 122 };
             host1.BankAccountNumber = 25478;
-            host2.CollectionClearance = CollectionClearance.No;
+            host2.CollectionClearance = CollectionClearance.Yes;
             hosts.Add(host2);
 
             Guest guest1 = new Guest();
@@ -73,7 +76,7 @@ namespace DAL
             guest1.FirstName = "Harel";
             guest1.LastName = "Skaat";
             guest1.EmailAddress = "harelrox@gmail.com";
-            guest1.GuestStatus = GuestStatus.Active;
+            guest1.GuestStatus = Status.Active;
             guest1.RegistrationDate = DateTime.Now;
             guest1.EntryDate = new DateTime(11 / 12 / 2019);
             guest1.ReleaseDate = new DateTime(20 / 1 / 2020);
@@ -93,10 +96,10 @@ namespace DAL
             guest2.FirstName = "Noa";
             guest2.LastName = "Kirel";
             guest2.EmailAddress = "noakila@gmail.com";
-            guest2.GuestStatus = GuestStatus.Active;
+            guest2.GuestStatus = Status.Active;
             guest2.RegistrationDate = DateTime.Now;
-            guest2.EntryDate = new DateTime(1 / 1 / 2020);
-            guest2.ReleaseDate = new DateTime(20 / 1 / 2020);
+            guest2.EntryDate = new DateTime(2020, 1, 2);
+            guest2.ReleaseDate = new DateTime(2020, 1, 20);
             guest2.TypeUnit = TypeUnit.CampingSite;
             guest2.Area = Area.South;
             guest2.Adults = 2;
@@ -113,10 +116,10 @@ namespace DAL
             guest3.FirstName = "oshri";
             guest3.LastName = "cohen";
             guest3.EmailAddress = "oshri@gmail.com";
-            guest3.GuestStatus = GuestStatus.Active;
+            guest3.GuestStatus = Status.Active;
             guest3.RegistrationDate = DateTime.Now;
-            guest3.EntryDate = new DateTime(2 / 1 / 2020);
-            guest3.ReleaseDate = new DateTime(20 / 1 / 2020);
+            guest3.EntryDate = new DateTime(2020, 2, 1);
+            guest3.ReleaseDate = new DateTime(2020, 2, 10);
             guest3.TypeUnit = TypeUnit.AirBNB;
             guest3.Area = Area.All;
             guest3.Adults = 2;
@@ -164,17 +167,27 @@ namespace DAL
             hostingUnit3.TypeUnit = TypeUnit.Hotel;
             hostingUnits.Add(hostingUnit3);
 
-            BankAccount b1 = new BankAccount() { BankName = "Pag", BankNumber = 14, BranchAddress = "Tzealim 4", BranchCity = "Beit Shemesh", BranchNumber = 122 };
-            BankAccount b2 = new BankAccount() { BankName = "Poalim", BankNumber = 12, BranchAddress = "Kanfei Nesharim 55", BranchCity = "Jerusalem", BranchNumber = 446 };
-            BankAccount b3 = new BankAccount() { BankName = "Yahav", BankNumber = 11, BranchAddress = "Dolev 24", BranchCity = "Tel Aviv", BranchNumber = 789 };
-            BankAccount b4 = new BankAccount() { BankName = "Mizrachi Tfachot", BankNumber = 17, BranchAddress = "Tkoa", BranchCity = "Tkoa Citi", BranchNumber = 20 };
-            BankAccount b5 = new BankAccount() { BankName = "Bank Israel", BankNumber = 89, BranchAddress = "King David ", BranchCity = "Jerusalem", BranchNumber = 63 };
+            BankAccount b1 = new BankAccount(); b1.BankName = "Pag"; b1.BankNumber = 14; b1.BranchAddress = "Tzealim 4"; b1.BranchCity = "Beit Shemesh"; b1.BranchNumber = 122;
+            BankAccount b2 = new BankAccount(); b2.BankName = "Poalim"; b2.BankNumber = 12; b2.BranchAddress = "Kanfei Nesharim 55"; b2.BranchCity = "Jerusalem"; b2.BranchNumber = 446;
+            BankAccount b3 = new BankAccount(); b3.BankName = "Yahav"; b3.BankNumber = 11; b3.BranchAddress = "Dolev 24"; b3.BranchCity = "Tel Aviv"; b3.BranchNumber = 789;
+            BankAccount b4 = new BankAccount(); b4.BankName = "Mizrachi Tfachot"; b4.BankNumber = 17; b4.BranchAddress = "Tkoa"; b4.BranchCity = "Tkoa Citi"; b4.BranchNumber = 20;
+            BankAccount b5 = new BankAccount(); b5.BankName = "Bank Israel"; b5.BankNumber = 89; b5.BranchAddress = "King David "; b5.BranchCity = "Jerusalem"; b5.BranchNumber = 63;
 
             bankAccounts.Add(b1);
             bankAccounts.Add(b2);
             bankAccounts.Add(b3);
             bankAccounts.Add(b4);
             bankAccounts.Add(b5);
-            
+
+            Order order = new Order();
+            order.GuestRequestKey = guest3.GuestRequestKey;
+            order.HostingUnitKey = hostingUnit2.HostingUnitKey;
+            order.OrderDate = DateTime.Now;
+            order.OrderKey = 10000000;
+            order.Status = Status.Closed_ClientRequest;
+
+
+        }
     }
 }
+
