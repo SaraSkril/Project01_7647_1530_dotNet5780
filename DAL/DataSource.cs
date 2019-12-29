@@ -72,6 +72,7 @@ namespace DAL
             hosts.Add(host2);
 
             Guest guest1 = new Guest();
+            guest1.GuestRequestKey = ++Configuration.GuestRequestKey;
             guest1.ID = "345678902";
             guest1.FirstName = "Harel";
             guest1.LastName = "Skaat";
@@ -92,6 +93,7 @@ namespace DAL
             guests.Add(guest1);
 
             Guest guest2 = new Guest();
+            guest2.GuestRequestKey = ++Configuration.GuestRequestKey;
             guest2.ID = "345678912";
             guest2.FirstName = "Noa";
             guest2.LastName = "Kirel";
@@ -112,6 +114,7 @@ namespace DAL
             guests.Add(guest2);
 
             Guest guest3 = new Guest();
+            guest3.GuestRequestKey = ++Configuration.GuestRequestKey;
             guest3.ID = "123678912";
             guest3.FirstName = "oshri";
             guest3.LastName = "cohen";
@@ -132,6 +135,7 @@ namespace DAL
             guests.Add(guest3);
 
             HostingUnit hostingUnit1 = new HostingUnit();
+            hostingUnit1.HostingUnitKey = ++Configuration.HostingUnitKey;
             hostingUnit1.HostingUnitName = "Ramada";
             hostingUnit1.Owner = host1;
             hostingUnit1.area = Area.Jerusalem;
@@ -144,6 +148,7 @@ namespace DAL
             hostingUnits.Add(hostingUnit1);
 
             HostingUnit hostingUnit2 = new HostingUnit();
+            hostingUnit2.HostingUnitKey = ++Configuration.HostingUnitKey;
             hostingUnit2.HostingUnitName = "Golan Heights";
             hostingUnit2.Owner = host2;
             hostingUnit2.area = Area.North;
@@ -156,6 +161,7 @@ namespace DAL
             hostingUnits.Add(hostingUnit2);
 
             HostingUnit hostingUnit3 = new HostingUnit();
+            hostingUnit3.HostingUnitKey = ++Configuration.HostingUnitKey;
             hostingUnit3.HostingUnitName = "David Citadel";
             hostingUnit3.Owner = host1;
             hostingUnit3.area = Area.Jerusalem;
@@ -182,9 +188,11 @@ namespace DAL
             Order order = new Order();
             order.GuestRequestKey = guest3.GuestRequestKey;
             order.HostingUnitKey = hostingUnit2.HostingUnitKey;
+            order.CreateDate = DateTime.Now;
             order.OrderDate = DateTime.Now;
-            order.OrderKey = 10000000;
+            order.OrderKey = ++Configuration.OrderKey;
             order.Status = Status.Closed_ClientRequest;
+            orders.Add(order);
 
 
         }

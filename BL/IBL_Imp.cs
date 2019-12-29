@@ -20,6 +20,7 @@ namespace BL
             dal = DAL.FactoryDal.GetDal();
         }
 
+
         public HostingUnit GetHostingUnit(int key) => GetAllHostingUnits().FirstOrDefault(t => t.HostingUnitKey == key);
         public Guest GetGuest(int id) => GetAllGuests().FirstOrDefault(t => t.GuestRequestKey == id);
         #region Add
@@ -55,30 +56,20 @@ namespace BL
             }
             else
             {
-                throw new Exception("Owner ID  is not valid/n");
+                throw new KeyNotFoundException("Owner ID  is not valid/n");
             }
         }
         public void AddOrder(Order order)//adds a new order
         {
             HostingUnit hosting = GetHostingUnit(order.HostingUnitKey);
             if (hosting == null)
-                throw new Exception("Invalid Hosting Unit");
+                throw new KeyNotFoundException("Invalid Hosting Unit");
             Guest guest = GetGuest(order.GuestRequestKey);
             if (guest == null)
-                throw new Exception("Invalid Guest");
-            //order.Status = Status.Active;
+                throw new KeyNotFoundException("Invalid Guest");
+            order.Status = Status.Active;
             order.CreateDate = DateTime.Now;
-            /*if (!CheckIsBankAllowed(hosting.Owner, order))
-            {
-                dal.AddOrder(order.Clone());
-                //check if need to do this?
-                throw new Exception("Cannot send mail. No debit authorization");
-            }
-            else
-            {
-                order.Status = Status.Mail_Sent;
-                SendMail(order);
-            }*/
+            
             try
             {
                 dal.AddOrder(order.Clone());
@@ -97,12 +88,26 @@ namespace BL
                 throw new ArgumentOutOfRangeException("Dates are not valid/n ");
             if (checkID(guest.ID) == false)
                 throw new ArgumentOutOfRangeException("ID not valid/n");
-            dal.UpdateGuestReq(guest);
+            try
+            {
+                dal.UpdateGuestReq(guest);
+            }
+            catch(KeyNotFoundException e)
+            {
+                throw e;
+            }
         }
         public void UpdateHostUnit(HostingUnit hostingUnit)//Updates Hosting Unit;
         {
             if (checkID(hostingUnit.Owner.ID))
-                dal.UpdateHostUnit(hostingUnit);
+                try
+                {
+                    dal.UpdateHostUnit(hostingUnit);
+                }
+                catch (DuplicateWaitObjectException e)
+                {
+                    throw e;
+                }
             else
                 throw new ArgumentOutOfRangeException("Owner ID  is not valid\n");
         }
@@ -117,7 +122,7 @@ namespace BL
                     dal.UpdateOrder(order.Clone());
 
                 }
-                catch (ArgumentOutOfRangeException e)
+                catch (KeyNotFoundException e)
                 {
                     throw e;
                 }
@@ -127,7 +132,7 @@ namespace BL
                     dal.UpdateOrder(order.Clone());
 
                 }
-                catch (ArgumentOutOfRangeException e)
+                catch (KeyNotFoundException e)
                 {
                     throw e;
                 }
@@ -137,7 +142,7 @@ namespace BL
                     dal.UpdateOrder(order.Clone());
 
                 }
-                catch (ArgumentOutOfRangeException e)
+                catch (KeyNotFoundException e)
                 {
                     throw e;
                 }
@@ -158,20 +163,19 @@ namespace BL
             {
                 HostingUnit hosting = GetHostingUnit(order.HostingUnitKey);
                 if (!CheckIsBankAllowed(hosting.Owner, order))
-                    throw new Exception("Cannot send mail. No debit authorization");
+                    throw new TaskCanceledException("Cannot send mail. No debit authorization");
                 SendMail(order);
                 order.OrderDate = DateTime.Now;
             }
-            if (order.Status == Status.Closed_NoReply)
-                try
-                {
-                    dal.UpdateOrder(order.Clone());
+            try
+            {
+                dal.UpdateOrder(order.Clone());
 
-                }
-                catch (ArgumentOutOfRangeException e)
-                {
-                    throw e;
-                }
+            }
+            catch (KeyNotFoundException e)
+            {
+                throw e;
+            }
 
         }
 
@@ -181,8 +185,15 @@ namespace BL
         public void DelHostingUnit(HostingUnit hosting)//Deletes Hosting Unit
         {
             if (!IsHostingUnitActive(hosting))
-                dal.DelHostingUnit(hosting.HostingUnitName);
-            throw new Exception("Hosting Unit cannot be deleted/n");
+                try
+                {
+                    dal.DelHostingUnit(hosting.HostingUnitName);
+                }
+                catch (KeyNotFoundException e)
+                {
+                    throw e;
+                }
+            throw new TaskCanceledException("Hosting Unit cannot be deleted\n");
         }
         #endregion
         #region GetAll
@@ -293,7 +304,7 @@ namespace BL
         {
             if (IsHostingUnitActive(hostingUnit))//if hosting unit is in a active status then we cant change collection clearance 
                 return false;
-            //hostingUnit.Owner.CollectionClearance = CollectionClearance.No;//change collection clearence
+            hostingUnit.Owner.CollectionClearance = CollectionClearance.No;//change collection clearence
             return true;
         }
         public void SendMail(Order order)//when status of order is changed to "sent mail", this function will send the mail

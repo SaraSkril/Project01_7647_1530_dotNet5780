@@ -15,6 +15,7 @@ namespace PL
             #region add
             IBL ibl = FactoryBl.GetBL();
             Console.WriteLine("hello");
+           
             Guest guest1 = new Guest();
             {
                 guest1.ID = "123456789";
@@ -76,6 +77,7 @@ namespace PL
             {
                 Console.WriteLine(e.Message);
             }
+           
             Order order1 = new Order();
             {
                 order1.GuestRequestKey = guest1.GuestRequestKey;
@@ -85,13 +87,28 @@ namespace PL
             }
             try
             {
-                ibl.AddOrder(order1);
+                //ibl.AddOrder(order1);
             }
             catch (DuplicateWaitObjectException e)
             {
                 Console.WriteLine(e.Message);
             }
             #endregion
+
+            #region print before update
+            Console.WriteLine("--------------------------------------------------------------");
+            foreach (HostingUnit hosting in ibl.GetAllHostingUnits())
+                Console.WriteLine(hosting.ToString());
+            Console.WriteLine("--------------------------------------------------------------");
+            foreach (Guest guest in ibl.GetAllGuests())
+                Console.WriteLine(guest.ToString());
+            Console.WriteLine("--------------------------------------------------------------");
+            foreach (Order order in ibl.GetAllOrders())
+                Console.WriteLine(order.ToString());
+            Console.WriteLine("--------------------------------------------------------------");
+
+            #endregion
+
             #region Update
             guest1.Children = 10;
 
@@ -112,7 +129,7 @@ namespace PL
             {
                 Console.WriteLine(e.Message);
             }
-            order1.Status = Status.Not_Treated;
+           order1.Status = Status.Not_Treated;
             try
             {
                 ibl.UpdateOrder(order1);
@@ -121,8 +138,9 @@ namespace PL
             {
                 Console.WriteLine(e.Message);
             }
-
+            
             #endregion
+           
         }
     }
 }

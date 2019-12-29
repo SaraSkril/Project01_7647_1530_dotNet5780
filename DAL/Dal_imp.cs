@@ -9,6 +9,17 @@ namespace DAL
 {
     class Dal_imp : Idal
     {
+        #region Singleton
+        private static readonly Dal_imp instance = new Dal_imp();
+        public static Dal_imp Instance
+        {
+            get { return instance; }
+        }
+
+        public Dal_imp() { }
+        static Dal_imp() { }
+
+        #endregion
         //Linq type 1
         //deal with all configuration issues 
         public Host GetHost(string id) => DataSource.getHosts().FirstOrDefault(t => t.ID == id);//gets a code and return the host
@@ -23,7 +34,10 @@ namespace DAL
             if (guest1 == null)//if guest doesnt exist 
             {
                 if (guest.GuestRequestKey < 10000000)
-                    guest.GuestRequestKey = Configuration.GuestRequestKey++; ;//update serial number
+                {
+                    guest.GuestRequestKey =++Configuration.GuestRequestKey;//update serial number
+                   
+                }
                 DataSource.getGuests().Add(guest.Clone());//adds new guest to list of guest(using clone funcion- sends a copy of the original)f 
             }
             else
@@ -34,9 +48,8 @@ namespace DAL
         {
             int index = DataSource.getGuests().FindIndex(t => t.ID == guest.ID);//finds ondex of guest with id  
             if (index == -1)//meaning id not found
-                throw new Exception("No Guest with this id!");
-            if (guest.GuestRequestKey < 10000000)
-                guest.GuestRequestKey = (Configuration.GuestRequestKey++);//update serial number
+                throw new KeyNotFoundException("No Guest with this id!");
+         
             DataSource.getGuests()[index] = guest.Clone();//update the guest
         }
 
@@ -53,7 +66,7 @@ namespace DAL
             HostingUnit hosting = GetHostingUnit(hostingUnit.HostingUnitName);
             if (hosting == null)
             {
-                hostingUnit.HostingUnitKey = (Configuration.HostingUnitKey++);
+                hostingUnit.HostingUnitKey = ++(Configuration.HostingUnitKey);
                 DataSource.getHostingUnits().Add(hostingUnit.Clone());
             }
             else
@@ -64,7 +77,7 @@ namespace DAL
         {
             int index = DataSource.getHostingUnits().FindIndex(t => t.HostingUnitName == hostingUnit.HostingUnitName);//finds ondex of guest with id  
             if (index == -1)//meaning name not found
-                throw new Exception("No Hosting Unit with this name Exists!");
+                throw new DuplicateWaitObjectException("No Hosting Unit with this name Exists!");
             DataSource.getHostingUnits()[index] = hostingUnit.Clone();//update the hosting unit 
         }
 
@@ -81,7 +94,7 @@ namespace DAL
                 DataSource.getHostingUnits().Remove(DataSource.getHostingUnits().Find(x => x.HostingUnitName == name));
 
             }
-            throw new Exception("Hosting Unit does not exist!");
+            throw new KeyNotFoundException("Hosting Unit does not exist!");
         }
         #endregion
 
@@ -91,7 +104,7 @@ namespace DAL
             Order order1 = GetOrder(order.GuestRequestKey, order.HostingUnitKey);
             if (order1 == null)//if guest doesnt exist 
             {
-                order.OrderKey = (Configuration.OrderKey++);
+                order.OrderKey = ++(Configuration.OrderKey);
                 DataSource.GetOrders().Add(order.Clone());//adds new order to list of orders(using clone funcion- sends a copy of the original)f 
             }
             else
@@ -102,7 +115,7 @@ namespace DAL
         {
             int index = DataSource.GetOrders().FindIndex(t => t.HostingUnitKey == order.HostingUnitKey && t.GuestRequestKey == order.GuestRequestKey);
             if (index == -1)//meaning id not found
-                throw new Exception("No order was found!");
+                throw new KeyNotFoundException("No order was found!");
             DataSource.GetOrders()[index] = order.Clone();//update the order
 
         }

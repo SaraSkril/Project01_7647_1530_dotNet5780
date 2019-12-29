@@ -37,7 +37,7 @@ namespace BE
     }
     public enum CollectionClearance //if host lets access to bank accout to withdrawl money
     {
-        Yes//,No
+        Yes,No
     }
     public enum Status
     {
