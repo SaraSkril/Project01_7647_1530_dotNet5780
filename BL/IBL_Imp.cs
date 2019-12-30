@@ -114,7 +114,7 @@ namespace BL
         {
             Order orig = GetAllOrders().FirstOrDefault(t => t.OrderKey == order.OrderKey);
             if ((orig.Status == Status.Closed_ClientRequest || orig.Status == Status.Closed_NoReply) && orig.Status != order.Status)
-                throw new Exception("Status cannot be changed");
+                throw new TaskCanceledException("Status cannot be changed");
             if ((orig.Status == Status.Closed_ClientRequest || orig.Status == Status.Closed_NoReply) && orig.Status == order.Status)
                 try
                 {
@@ -200,7 +200,8 @@ namespace BL
                 {
                     throw e;
                 }
-            throw new TaskCanceledException("Hosting Unit cannot be deleted\n");
+            else
+                throw new TaskCanceledException("Hosting Unit cannot be deleted\n");
         }
         #endregion
         #region GetAll
@@ -305,11 +306,11 @@ namespace BL
         {
 
             var orders = from order in dal.GetAllOrders()//gets all orders from this unit
-                         where order.HostingUnitKey.Equals(hostingUnit.HostingUnitKey)
+                         where order.HostingUnitKey==GetHUkeyBuName(hostingUnit.HostingUnitName)
                          select order;
             foreach (var ord in orders)//checks if any order is active if so returns false so we cant delete the hosting unit
             {
-                if (ord.Status == Status.Active || ord.Status == Status.Closed_ClientRequest)
+                if (ord.Status == Status.Active || ord.Status == Status.Closed_ClientRequest||ord.Status==Status.Mail_Sent)
                     return true;
             }
             return false;

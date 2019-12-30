@@ -148,7 +148,8 @@ namespace DAL
                 DataSource.getHostingUnits().Remove(DataSource.getHostingUnits().Find(x => x.HostingUnitName == name));
 
             }
-            throw new KeyNotFoundException("Hosting Unit does not exist!");
+            else
+               throw new KeyNotFoundException("Hosting Unit does not exist!");
         }
         #endregion
 

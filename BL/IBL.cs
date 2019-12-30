@@ -67,9 +67,11 @@ namespace BL
         IEnumerable<IGrouping<int, Host>> GetHostsGroupsByHostingUnits();//groups hosts according to num of hosting units
         IEnumerable<IGrouping<Area, HostingUnit>> GetHUGroupsByArea();//groups hosting units according to area
 
-        //Func -דלגייט שקיים  מקבל משהו ומחזיר משהו
-        //predicate-בודק אם תנאי מסוים שמציבים בו מתקיים
-        // IEnumeable מאפשר לנו לעבור על איברי האובייקט שלנו, לסדר אותם, לסנן אותם או סתם לדלות מהם מידע.
         #endregion
     }
 }
+#region random
+//Func -דלגייט שקיים  מקבל משהו ומחזיר משהו
+//predicate-בודק אם תנאי מסוים שמציבים בו מתקיים
+// IEnumeable מאפשר לנו לעבור על איברי האובייקט שלנו, לסדר אותם, לסנן אותם או סתם לדלות מהם מידע.
+#endregion
