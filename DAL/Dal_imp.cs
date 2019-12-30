@@ -22,10 +22,61 @@ namespace DAL
         #endregion
         //Linq type 1
         //deal with all configuration issues 
-        public Host GetHost(string id) => DataSource.getHosts().FirstOrDefault(t => t.ID == id);//gets a code and return the host
-        public HostingUnit GetHostingUnit(string name) => DataSource.getHostingUnits().FirstOrDefault(t => t.HostingUnitName == name);//gets an id and returns the hosting unit
-        public Guest GetGuest(string id) => DataSource.getGuests().FirstOrDefault(t => t.ID == id);//gets an id and returns the guest
-        public Order GetOrder(int guestkey, int unitkey) => DataSource.GetOrders().FirstOrDefault(t => t.HostingUnitKey == unitkey && t.GuestRequestKey == guestkey);//returns order with the guest and unit 
+        public Host GetHost(string id) 
+            {
+            var Host = from host in DataSource.getHosts()
+                          where host.ID == id
+                          select host;
+            return Host.FirstOrDefault();
+            }
+
+        public HostingUnit GetHostingUnit(string name) //gets an id and returns the hosting unit
+            {
+             var request = from HU in DataSource.getHostingUnits()
+                          where HU.HostingUnitName==name
+                          select HU;
+            return request.FirstOrDefault();
+            }
+
+        public HostingUnit GetHostingUnit(int key) //gets an id and returns the hosting unit
+            {
+             var request = from HU in DataSource.getHostingUnits()
+                          where HU.HostingUnitKey==key
+                          select HU;
+            return request.FirstOrDefault();
+            }
+        
+        public Guest GetGuest(string id) //gets an id and returns the guest
+        {
+        var request = from guest in DataSource.getGuests()
+                          where guest.ID==id
+                          select guest;
+            return request.FirstOrDefault();
+         }
+
+        public Guest GetGuest(int key) //gets an id and returns the guest
+        {
+        var request = from guest in DataSource.getGuests()
+                          where guest.GuestRequestKey==key
+                          select guest;
+            return request.FirstOrDefault();
+         }
+
+        public Order GetOrder(int guestkey, int unitkey)
+            {
+          var request = from ord in DataSource.GetOrders()
+                          where ord.HostingUnitKey==unitkey&&ord.GuestRequestKey==guestkey
+                          select ord;
+            return request.FirstOrDefault();
+            }
+
+        public Order GetOrder(int OrderKey)
+            {
+           var request = from ord in DataSource.GetOrders()
+                          where ord.OrderKey==OrderKey
+                          select ord;
+            return request.FirstOrDefault();
+            }
 
         #region Guest 
         public void AddGuestReq(Guest guest)
@@ -101,10 +152,9 @@ namespace DAL
         #region Order
         public void AddOrder(Order order)
         {
-            Order order1 = GetOrder(order.GuestRequestKey, order.HostingUnitKey);
+            Order order1 = GetOrder(order.OrderKey);
             if (order1 == null)//if guest doesnt exist 
             {
-                //order.OrderKey = ++(Configuration.OrderKey);
                 DataSource.GetOrders().Add(order.Clone());//adds new order to list of orders(using clone funcion- sends a copy of the original)f 
             }
             else
@@ -113,7 +163,7 @@ namespace DAL
 
         public void UpdateOrder(Order order)
         {
-            int index = DataSource.GetOrders().FindIndex(t => t.HostingUnitKey == order.HostingUnitKey && t.GuestRequestKey == order.GuestRequestKey);
+            int index = DataSource.GetOrders().FindIndex(t => t.OrderKey==order.OrderKey);
             if (index == -1)//meaning id not found
                 throw new KeyNotFoundException("No order was found!");
             DataSource.GetOrders()[index] = order.Clone();//update the order

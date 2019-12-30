@@ -57,6 +57,8 @@ namespace BL
         int NumOfHostingUnits(Host h);//recieves a host and returns num of hosting units he ownes
         int NumForGuest(Guest guest);//counts and returns how many orders have been sent to him
         int NumForUnit(HostingUnit hostingUnit);//counts how many orders were  closed/sent for hosting unit
+        int GetGuestKeyByID(string id);
+        int GetHUkeyBuName(string name);
         #endregion
         #region Group
         IEnumerable<IGrouping<Area, Guest>> GetGuestsGroupsByArea();//groups geusts according to area

@@ -35,10 +35,14 @@ namespace DAL
 
         #region finds element
         Host GetHost(string id);
-        HostingUnit GetHostingUnit(string name);
+        HostingUnit GetHostingUnit(int key);
         Guest GetGuest(string id);
         Order GetOrder(int guestkey, int unitkey);
+        Order GetOrder(int orderkey);
+        HostingUnit GetHostingUnit(string name) ;
+        Guest GetGuest(int key);
         List<Host> GetHosts();
+        
         #endregion
     }
 }

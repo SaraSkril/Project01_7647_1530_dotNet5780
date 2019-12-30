@@ -19,10 +19,6 @@ namespace BL
         {
             dal = DAL.FactoryDal.GetDal();
         }
-
-
-        public HostingUnit GetHostingUnit(int key) => GetAllHostingUnits().FirstOrDefault(t => t.HostingUnitKey == key);
-        public Guest GetGuest(int id) => GetAllGuests().FirstOrDefault(t => t.GuestRequestKey == id);
         #region Add
         public void AddGuestReq(Guest guest)//Adds a new Guest Request
         {
@@ -61,12 +57,13 @@ namespace BL
         }
         public void AddOrder(Order order)//adds a new order
         {
-            HostingUnit hosting = GetHostingUnit(order.HostingUnitKey);
+            HostingUnit hosting = dal.GetHostingUnit(order.HostingUnitKey);
             if (hosting == null)
                 throw new KeyNotFoundException("Invalid Hosting Unit");
-            Guest guest = GetGuest(order.GuestRequestKey);
+            Guest guest = dal.GetGuest(order.GuestRequestKey);
             if (guest == null)
                 throw new KeyNotFoundException("Invalid Guest");
+            order.OrderKey=++Configuration.OrderKey;
             order.Status = Status.Active;
             order.CreateDate = DateTime.Now;
             
@@ -148,9 +145,9 @@ namespace BL
                 }
             if (order.Status == Status.Closed_ClientRequest)
             {
-                Guest guest = GetGuest(order.GuestRequestKey);
+                Guest guest = dal.GetGuest(order.GuestRequestKey);
                 Charge(FindHost(order.HostingUnitKey), DaysBetween(guest.EntryDate, guest.ReleaseDate));//charges the host 10 nis 
-                HostingUnit tmp = dal.GetAllHostingUnits().FirstOrDefault(t => t.HostingUnitKey == order.HostingUnitKey);
+                HostingUnit tmp = dal.GetHostingUnit(order.HostingUnitKey);
                 if (!CheckOffDates(tmp, guest.EntryDate, guest.ReleaseDate))
                     throw new TaskCanceledException("could not book dates");
                 foreach (Order order1 in dal.GetAllOrders())//closes all orders that are open for this guest
@@ -161,7 +158,7 @@ namespace BL
             }
             if (order.Status == Status.Mail_Sent)
             {
-                HostingUnit hosting = GetHostingUnit(order.HostingUnitKey);
+                HostingUnit hosting = dal.GetHostingUnit(order.HostingUnitKey);
                 if (!CheckIsBankAllowed(hosting.Owner, order))
                     throw new TaskCanceledException("Cannot send mail. No debit authorization");
                 SendMail(order);
@@ -178,7 +175,6 @@ namespace BL
             }
 
         }
-
         #endregion
         #region Delete
 
@@ -267,7 +263,7 @@ namespace BL
         }
         public Host FindHost(int key)//recieves hosting unit key and returns the host that ownes it
         {
-            HostingUnit hostingUnit = dal.GetAllHostingUnits().FirstOrDefault(t => t.HostingUnitKey == key);//fins hosting unit with given key
+            HostingUnit hostingUnit = dal.GetHostingUnit(key);
             return hostingUnit.Owner;//returns owner
         }
         public bool CheckOffDates(HostingUnit hostingUnit, DateTime start, DateTime end)//when status is changed to closed, update diary in hosting unit 
@@ -411,6 +407,18 @@ namespace BL
             }
             return count;
         }
+        public int GetGuestKeyByID(string id)
+            {
+            Guest g= dal.GetGuest(id);
+            return g.GuestRequestKey;
+             }
+
+        public int GetHUkeyBuName(string name)
+            {
+             HostingUnit h=dal.GetHostingUnit(name);
+            return h.HostingUnitKey;
+          
+           }
         #endregion
         #region Group
         public IEnumerable<IGrouping<Area, Guest>> GetGuestsGroupsByArea()//groups geusts according to area

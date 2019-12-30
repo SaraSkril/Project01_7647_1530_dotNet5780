@@ -80,14 +80,14 @@ namespace PL
            
             Order order1 = new Order();
             {
-                order1.GuestRequestKey = guest1.GuestRequestKey;
-                order1.HostingUnitKey = hostingUnit1.HostingUnitKey;
-                order1.OrderDate = DateTime.Now;
-                order1.Status = Status.Active;
+                order1.GuestRequestKey = ibl.GetGuestKeyByID(guest1.ID);
+                order1.HostingUnitKey = ibl.GetHUkeyBuName(hostingUnit1.HostingUnitName);
+               // order1.OrderDate = DateTime.Now;
+                //order1.Status = Status.Active;
             }
             try
             {
-                //ibl.AddOrder(order1);
+                ibl.AddOrder(order1);
             }
             catch (DuplicateWaitObjectException e)
             {
@@ -129,18 +129,22 @@ namespace PL
             {
                 Console.WriteLine(e.Message);
             }
-           order1.Status = Status.Not_Treated;
+           order1.Status = Status.Closed_ClientRequest;
             try
             {
                 ibl.UpdateOrder(order1);
             }
-            catch (Exception e)
+            catch ( Exception e)
             {
+               if(e is KeyNotFoundException ||e is TaskCanceledException)
                 Console.WriteLine(e.Message);
             }
+           
             
             #endregion
-           
+             
+
+           string s=Console.ReadLine();
         }
     }
 }
