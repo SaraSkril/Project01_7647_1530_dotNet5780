@@ -20,7 +20,7 @@ namespace DAL
         static Dal_imp() { }
 
         #endregion
-        //Linq type 1
+        
         //deal with all configuration issues 
         public Host GetHost(string id) 
             {
