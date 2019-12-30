@@ -104,7 +104,7 @@ namespace DAL
             Order order1 = GetOrder(order.GuestRequestKey, order.HostingUnitKey);
             if (order1 == null)//if guest doesnt exist 
             {
-                order.OrderKey = ++(Configuration.OrderKey);
+                //order.OrderKey = ++(Configuration.OrderKey);
                 DataSource.GetOrders().Add(order.Clone());//adds new order to list of orders(using clone funcion- sends a copy of the original)f 
             }
             else
