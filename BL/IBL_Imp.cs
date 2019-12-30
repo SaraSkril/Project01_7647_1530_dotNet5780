@@ -26,7 +26,9 @@ namespace BL
                 throw new ArgumentOutOfRangeException("Dates are not valid/n ");
 
             if (checkID(guest.ID) == false)
-                throw new ArgumentOutOfRangeException("ID not valid/n");
+                throw new ArgumentOutOfRangeException("ID not valid\n");
+            if (checkEmail(guest.EmailAddress) == false)
+                throw new ArgumentOutOfRangeException("Invalid Email Address\n");
             try
             {
                 dal.AddGuestReq(guest.Clone());
@@ -87,7 +89,7 @@ namespace BL
                 throw new ArgumentOutOfRangeException("ID not valid/n");
             try
             {
-                dal.UpdateGuestReq(guest);
+                dal.UpdateGuestReq(guest.Clone());
             }
             catch(KeyNotFoundException e)
             {
@@ -99,7 +101,7 @@ namespace BL
             if (checkID(hostingUnit.Owner.ID))
                 try
                 {
-                    dal.UpdateHostUnit(hostingUnit);
+                    dal.UpdateHostUnit(hostingUnit.Clone());
                 }
                 catch (DuplicateWaitObjectException e)
                 {
@@ -136,6 +138,8 @@ namespace BL
             if (order.Status == Status.Closed_NoReply)
                 try
                 {
+                    Guest guest = dal.GetGuest(order.GuestRequestKey);
+                    guest.GuestStatus = Status.Closed_NoReply;
                     dal.UpdateOrder(order.Clone());
 
                 }
@@ -146,10 +150,13 @@ namespace BL
             if (order.Status == Status.Closed_ClientRequest)
             {
                 Guest guest = dal.GetGuest(order.GuestRequestKey);
+                guest.GuestStatus = Status.Closed_ClientRequest;
+                UpdateGuestReq(guest);
                 Charge(FindHost(order.HostingUnitKey), DaysBetween(guest.EntryDate, guest.ReleaseDate));//charges the host 10 nis 
                 HostingUnit tmp = dal.GetHostingUnit(order.HostingUnitKey);
                 if (!CheckOffDates(tmp, guest.EntryDate, guest.ReleaseDate))
                     throw new TaskCanceledException("could not book dates");
+               UpdateHostUnit(tmp.Clone());//need if we figure out how to clone diary
                 foreach (Order order1 in dal.GetAllOrders())//closes all orders that are open for this guest
                 {
                     if (order1.GuestRequestKey == guest.GuestRequestKey)
@@ -161,6 +168,10 @@ namespace BL
                 HostingUnit hosting = dal.GetHostingUnit(order.HostingUnitKey);
                 if (!CheckIsBankAllowed(hosting.Owner, order))
                     throw new TaskCanceledException("Cannot send mail. No debit authorization");
+     
+                Guest guest = dal.GetGuest(order.GuestRequestKey);
+                guest.GuestStatus = Status.Mail_Sent;
+                UpdateGuestReq(guest);
                 SendMail(order);
                 order.OrderDate = DateTime.Now;
             }
@@ -211,6 +222,14 @@ namespace BL
         }
         #endregion
         #region check
+        public bool checkEmail(string email)
+        {
+            if (!email.Contains('@'))
+                return false;
+            if (!email.Contains('.'))
+                return false;
+            return true;
+        }
         public bool checkID(string id)
         {
             if (Int32.Parse(id) < 100000000 || Int32.Parse(id) > 999999999)
@@ -236,9 +255,9 @@ namespace BL
             DateTime tempstart = start;
             while (tempstart != end)
             {
-                if (hostingUnit.Diary[tempstart.Month, tempstart.Day] == true)//if date accupied
+                if (hostingUnit.Diary[tempstart.Month-1, tempstart.Day-1] == true)//if date accupied
                     return false;
-                tempstart.AddDays(1);
+                tempstart=tempstart.AddDays(1);
             }
             return true;//dates were available
         }
@@ -270,13 +289,13 @@ namespace BL
         {
             if (IsAvailible(hostingUnit, start, end) == false)
                 return false;
-            //throw new OperationCanceledException("Dates are not availible for this Unit.");
+            
             DateTime tempstart = start;
             while (tempstart != end)
             {
-                hostingUnit.Diary[tempstart.Month, tempstart.Day] = true;//marks that date is accupied
+                hostingUnit.Diary[tempstart.Month-1, tempstart.Day-1] = true;//marks that date is accupied
 
-                tempstart.AddDays(1);
+                tempstart=tempstart.AddDays(1);
             }
             return true;//dates were available
 

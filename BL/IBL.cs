@@ -59,6 +59,7 @@ namespace BL
         int NumForUnit(HostingUnit hostingUnit);//counts how many orders were  closed/sent for hosting unit
         int GetGuestKeyByID(string id);
         int GetHUkeyBuName(string name);
+        bool checkEmail(string email);
         #endregion
         #region Group
         IEnumerable<IGrouping<Area, Guest>> GetGuestsGroupsByArea();//groups geusts according to area

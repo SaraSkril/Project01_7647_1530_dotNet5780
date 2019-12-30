@@ -84,6 +84,7 @@ namespace DAL
             Guest guest1 = GetGuest(guest.ID);
             if (guest1 == null)//if guest doesnt exist 
             {
+                guest.GuestStatus = Status.Active;
                 if (guest.GuestRequestKey < 10000000)
                 {
                     guest.GuestRequestKey =++Configuration.GuestRequestKey;//update serial number
@@ -98,6 +99,7 @@ namespace DAL
         public void UpdateGuestReq(Guest guest)
         {
             int index = DataSource.getGuests().FindIndex(t => t.ID == guest.ID);//finds ondex of guest with id  
+            guest.GuestRequestKey = GetGuest(guest.ID).GuestRequestKey;
             if (index == -1)//meaning id not found
                 throw new KeyNotFoundException("No Guest with this id!");
          
@@ -127,6 +129,7 @@ namespace DAL
         public void UpdateHostUnit(HostingUnit hostingUnit)
         {
             int index = DataSource.getHostingUnits().FindIndex(t => t.HostingUnitName == hostingUnit.HostingUnitName);//finds ondex of guest with id  
+            hostingUnit.HostingUnitKey = GetHostingUnit(hostingUnit.HostingUnitName).HostingUnitKey;
             if (index == -1)//meaning name not found
                 throw new DuplicateWaitObjectException("No Hosting Unit with this name Exists!");
             DataSource.getHostingUnits()[index] = hostingUnit.Clone();//update the hosting unit 

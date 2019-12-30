@@ -24,8 +24,8 @@ namespace PL
                 guest1.EmailAddress = "parah@gmail.com";
                 guest1.GuestStatus = Status.Not_Treated;
                 guest1.RegistrationDate = DateTime.Now;
-                guest1.EntryDate = new DateTime(2020, 8, 1);
-                guest1.ReleaseDate = new DateTime(2020, 8, 5);
+                guest1.EntryDate = new DateTime(2020, 7, 31);
+                guest1.ReleaseDate = new DateTime(2020, 10, 2);
                 guest1.TypeUnit = TypeUnit.Hotel;
                 guest1.Area = Area.Jerusalem;
                 guest1.Adults = 2;
@@ -41,8 +41,10 @@ namespace PL
             {
                 ibl.AddGuestReq(guest1);
             }
-            catch (DuplicateWaitObjectException e)
+            catch(Exception e)
+            
             {
+                if (e is DuplicateWaitObjectException || e is ArgumentOutOfRangeException || e is Exception)
                 Console.WriteLine(e.Message);
             }
             Host host1 = new Host();
@@ -54,7 +56,7 @@ namespace PL
                 host1.EmailAddress = "srskriloff@gmail.com";
                 host1.BankDetails = new BankAccount() { BankName = "Poalim", BankNumber = 12, BranchAddress = "Kanfei Nesharim 55", BranchCity = "Jerusalem", BranchNumber = 446 };
                 host1.BankAccountNumber = 11245;
-                host1.CollectionClearance = CollectionClearance.Yes;
+                host1.CollectionClearance = CollectionClearance.No;
             }
             HostingUnit hostingUnit1 = new HostingUnit();
             {
@@ -73,17 +75,20 @@ namespace PL
             {
                 ibl.AddHostingUnit(hostingUnit1);
             }
-            catch (DuplicateWaitObjectException e)
+            catch (Exception e)
+
             {
-                Console.WriteLine(e.Message);
+                if (e is DuplicateWaitObjectException || e is ArgumentOutOfRangeException || e is Exception)
+                    Console.WriteLine(e.Message);
             }
-           
+
             Order order1 = new Order();
             {
+                
                 order1.GuestRequestKey = ibl.GetGuestKeyByID(guest1.ID);
+               
                 order1.HostingUnitKey = ibl.GetHUkeyBuName(hostingUnit1.HostingUnitName);
-               // order1.OrderDate = DateTime.Now;
-                //order1.Status = Status.Active;
+                
             }
             try
             {
@@ -94,7 +99,7 @@ namespace PL
                 Console.WriteLine(e.Message);
             }
             #endregion
-
+            
             #region print before update
             Console.WriteLine("--------------------------------------------------------------");
             foreach (HostingUnit hosting in ibl.GetAllHostingUnits())
@@ -129,7 +134,7 @@ namespace PL
             {
                 Console.WriteLine(e.Message);
             }
-           order1.Status = Status.Closed_ClientRequest;
+            order1.Status = Status.Closed_ClientRequest;
             try
             {
                 ibl.UpdateOrder(order1);
@@ -139,12 +144,17 @@ namespace PL
                if(e is KeyNotFoundException ||e is TaskCanceledException)
                 Console.WriteLine(e.Message);
             }
-           
-            
             #endregion
-             
+            #region print after update   
+            foreach (Order order in ibl.GetAllOrders())
+                Console.WriteLine(order.ToString());
+            Console.WriteLine("--------------------------------------------------------------");
+            #endregion
 
-           string s=Console.ReadLine();
+           
+
+
+            string s =Console.ReadLine();
         }
     }
 }
