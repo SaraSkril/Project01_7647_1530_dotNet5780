@@ -444,17 +444,15 @@ namespace BL
         public IEnumerable<IGrouping<Area, Guest>> GetGuestsGroupsByArea()//groups geusts according to area
         {
             return from item in dal.GetAllGuests()
-                   orderby item.LastName, item.FirstName
                    group item by item.Area
                          into g
-                   orderby g.Key
+                // orderby g.Key
                    select g;
 
         }
         public IEnumerable<IGrouping<int, Guest>> GetGuestsGroupsByVacationers()//groups guests according to num vacation
         {
             return from item in dal.GetAllGuests()
-                   orderby item.LastName, item.FirstName
                    group item by NumOfVacationers(item)
                        into g
                    orderby g.Key
@@ -463,16 +461,16 @@ namespace BL
         public IEnumerable<IGrouping<int, Host>> GetHostsGroupsByHostingUnits()//groups hosts according to num of hosting units
         {
             return from item in dal.GetHosts()
-                   orderby item.LastName, item.FirstName
                    group item by NumOfHostingUnits(item)
                        into g
                    orderby g.Key
                    select g;
+
+            
         }
         public IEnumerable<IGrouping<Area, HostingUnit>> GetHUGroupsByArea()//groups hosting units according to area
         {
             return from item in dal.GetAllHostingUnits()
-                   orderby item.HostingUnitName
                    group item by item.area
                        into g
                    orderby g.Key

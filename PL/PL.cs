@@ -12,8 +12,9 @@ namespace PL
     {
         static void Main(string[] args)
         {
-            #region add
+           
             IBL ibl = FactoryBl.GetBL();
+     /*       #region add
             Console.WriteLine("hello");
 
             Guest guest1 = new Guest();
@@ -100,7 +101,7 @@ namespace PL
             }
             #endregion
 
-            #region print before update
+        //    #region print before update
             Console.WriteLine("--------------------------------------------------------------");
             foreach (HostingUnit hosting in ibl.GetAllHostingUnits())
                 Console.WriteLine(hosting.ToString());
@@ -165,9 +166,17 @@ namespace PL
 
             Console.WriteLine("--------------------------------------------------------------");
             foreach (HostingUnit hosting in ibl.GetAllHostingUnits())
-                Console.WriteLine(hosting.ToString());
+                Console.WriteLine(hosting.ToString());*/
 
-
+          IEnumerable<IGrouping<Area,Guest>> g =  ibl.GetGuestsGroupsByArea();
+            foreach(IEnumerable<Guest> g1 in g )
+               
+              foreach(Guest g2 in g1)
+                    Console.WriteLine(g2);
+              }
+     //     Console.WriteLine("-----------------");
+                
+                
             string s = Console.ReadLine();
         
         }
