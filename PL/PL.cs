@@ -9,7 +9,7 @@ using BL;
 namespace PL
 {
     class PL
-    {
+    {/*
         static void Main(string[] args)
         {
            
@@ -168,17 +168,19 @@ namespace PL
             foreach (HostingUnit hosting in ibl.GetAllHostingUnits())
                 Console.WriteLine(hosting.ToString());*/
 
-          IEnumerable<IGrouping<Area,Guest>> g =  ibl.GetGuestsGroupsByArea();
-            foreach(IEnumerable<Guest> g1 in g )
-               
-              foreach(Guest g2 in g1)
-                    Console.WriteLine(g2);
-              }
-     //     Console.WriteLine("-----------------");
-                
-                
-            string s = Console.ReadLine();
-        
-        }
+        // IEnumerable<IGrouping<Area, Guest>> g = ibl.GetGuestsGroupsByArea();
+        //   foreach(IEnumerable<Guest> g1 in g )
+
+        //    foreach(Guest g2 in g1)
+        //         Console.WriteLine(g2);
+        //   }
+        // Console.WriteLine("-----------------");
+
+
+        //  string s = Console.ReadLine();
     }
+
 }
+    
+
+
