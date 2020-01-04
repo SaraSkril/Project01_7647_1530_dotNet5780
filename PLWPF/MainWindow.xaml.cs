@@ -23,10 +23,55 @@ namespace PLWPF
     {
         IBL ibl = FactoryBl.GetBL();
         public MainWindow()
+        { 
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+            //App.numOfActivatedMainWindow++;
+            this.FlowDirection = FlowDirection.RightToLeft;
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            InitializeComponent();
+            SystemCommands.MaximizeWindow(this);
+           // loadSystemWorker.DoWork += LoadSystem_DoWork;
+            //loadSystemWorker.RunWorkerCompleted += LoadSystemWorker_RunWorkerCompleted;
+            //updateAddresses.DoWork += UpdateAddresses_DoWork;
+           // updateAddresses.RunWorkerCompleted += UpdateAddresses_RunWorkerCompleted;
+        }
+       
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        }
+        private void Button_MouseEnter_RED(object sender, MouseEventArgs e)//change to when pressed red
         {
 
-
-            InitializeComponent();
+            ((Button)sender).Width *= 1.1;
+            ((Button)sender).Height *= 1.1;
+            ((Button)sender).Background = Binding{ }
+        }
+        private void Button_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ((Button)sender).Width *= 1.1;
+            ((Button)sender).Height *= 1.1;
+        }
+        private void Button_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((Button)sender).Width /= 1.1;
+            ((Button)sender).Height /= 1.1;
+        }
+        private void Button_Click_CloseWindow(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        private void Button_Click_MinimizeWindow(object sender, RoutedEventArgs e)
+        {
+            SystemCommands.MinimizeWindow(this);
+        }
+        private void Button_Click_MaximizeWindow(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+                SystemCommands.RestoreWindow(this);
+            else
+                SystemCommands.MaximizeWindow(this);
         }
     }
 }

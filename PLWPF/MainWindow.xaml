@@ -6,12 +6,65 @@
         xmlns:local="clr-namespace:PLWPF"
         mc:Ignorable="d"
        Title="MainWindow" MinHeight="720" MinWidth="1020" Height="700" Width="1000"  WindowStyle="None" FlowDirection="RightToLeft"
-        AllowsTransparency="False" Background="White"  WindowState="Maximized" >
- <!-- MouseDown="Window_MouseDown"-->
-  <!-- Closed="When_Window_CLosed"-->
-  <!--Icon="Icons/Wheel.png"-->
-    <TabItem x:Name="VAKANTIE" Header="VAKANTIE" Padding="4" Width="138" FontSize="16" HorizontalAlignment="Right" Height="39" VerticalAlignment="Top" FontFamily="Bookman Old Style" BorderThickness="1,0,0,0" FlowDirection="LeftToRight">
-    
+        AllowsTransparency="False" Background="White"     MouseDown="Window_MouseDown" >
+  <!--"Closed="When_Window_CLosed"-->
+  <!--WindowState="Maximized"-->
+  <Grid >
+    <Grid.RowDefinitions>
+      <RowDefinition Name="Top" Height="50*"/>
+      <RowDefinition Height="83*"/>
+      <RowDefinition Height="20*"/>
+      <RowDefinition Height="509*"/>
+      <RowDefinition Height="51*"/>
+    </Grid.RowDefinitions>
+    <Grid Grid.Row="0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="0.3*"/>
+        <ColumnDefinition Width="0.3*"/>
+        <ColumnDefinition Width="0.3*"/>
+        <ColumnDefinition Width="7*"/>
+      </Grid.ColumnDefinitions>
+      <Button Grid.Column="2" Click="Button_Click_MinimizeWindow" Width="25" Height="25" Template="{StaticResource TitleBarButtons}" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" >
+        <Button.Content>
+          <Image Source="IMAGE/minus-empty.png" />
+        </Button.Content>
+      </Button>
+      <Button x:Name="Max" Grid.Column="1" Click="Button_Click_MaximizeWindow" Width="25" Height="25" Template="{StaticResource TitleBarButtons}" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
+        <Button.Content>
+          <Image Source="IMAGE/squareIcon.png" Height="15" Width="21" />
+        </Button.Content>
+      </Button>
+      <Button x:Name="Close" Grid.Column="0" Click="Button_Click_CloseWindow" Width="25" Height="25" Template="{StaticResource TitleBarButtons}" MouseEnter="Button_MouseEnter_RED" MouseLeave="Button_MouseLeave">
+        <Button.Content>
+          <Image Source="IMAGE/xIcon.png" Width="23" Height="12" RenderTransformOrigin="0,0"/>
+        </Button.Content>
+      </Button>
 
-  </TabItem>
+    </Grid>
+    <Grid Grid.Row="1" Grid.RowSpan="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="0.1*"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="0.1*"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="0.1*"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Button Grid.Column="0" x:Name="Web_Owner" >
+        
+      </Button>
+    </Grid>
+    <Grid Grid.Row="3">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="0.5*"/>
+        <ColumnDefinition Width="5*"/>
+        <ColumnDefinition Width="0.5*"/>
+      </Grid.ColumnDefinitions>
+      <Image Grid.Column="1" Source="IMAGE/Logo1.jpeg"/>
+    </Grid>
+    <Label Padding="2" Content="    Created By: Elisheva Aronstam and Sara Raizel Skriloff, 2020" Grid.Row="4" Margin="1" VerticalContentAlignment="Center" FlowDirection="LeftToRight" FontSize="25"  />
+  </Grid>
+
+
 </Window>

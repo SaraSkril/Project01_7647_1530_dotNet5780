@@ -4,6 +4,34 @@
              xmlns:local="clr-namespace:PLWPF"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
+        <ControlTemplate x:Key="TitleBarButtons" TargetType="Button">
+            <Grid>
+                <Ellipse>
+                    <Ellipse.Fill>
+                        <LinearGradientBrush>
+                            
+                            <GradientStop Offset="0.5" Color="LightBlue" />
+                            
+                        </LinearGradientBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Key="RED" TargetType="Button">
+            <Grid>
+                <Ellipse>
+                    <Ellipse.Fill>
+                        <LinearGradientBrush>
+
+                            <GradientStop Offset="0.5" Color="RED" />
+                        </LinearGradientBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+        </ControlTemplate>
     </Application.Resources>
+    
 </Application>
