@@ -144,7 +144,7 @@
             </CheckBox.Style>
         </CheckBox>
 
-        <CheckBox Name="Wifi" Content="No" Grid.Row="8" Grid.Column="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding Path=Wifi, Mode=TwoWay}" >
+        <CheckBox Name="Wifi" Content="No" Grid.Row="" Grid.Column="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding Path=Wifi, Mode=TwoWay}" >
             <CheckBox.Style>
                 <Style TargetType="CheckBox">
                     <Style.Triggers>
@@ -157,7 +157,7 @@
                 </Style>
             </CheckBox.Style>
         </CheckBox>
-        <CheckBox Name="Nwifi" Content="Yes" Grid.Row="8" Grid.Column="1" VerticalContentAlignment="Center" VerticalAlignment="Center">
+        <CheckBox Name="Nwifi" Content="Yes" Grid.Row="0" Grid.Column="1" VerticalContentAlignment="Center" VerticalAlignment="Center">
             <CheckBox.Style>
                 <Style TargetType="CheckBox">
                     <Style.Triggers>
@@ -170,6 +170,8 @@
                 </Style>
             </CheckBox.Style>
         </CheckBox>
+        <RadioButton Grid.Row="8" Grid.Column="1" Content="Yes" Padding="2" VerticalAlignment="Center" HorizontalAlignment="Left" IsChecked="{Binding Path=Wifi, Mode=TwoWay}"></RadioButton>
+        <RadioButton Grid.Row="8" Grid.Column="1" Content="No" Padding="2" VerticalAlignment="Center" HorizontalAlignment="Center"></RadioButton>
 
     </Grid>
     
