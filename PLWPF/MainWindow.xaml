@@ -29,16 +29,16 @@
           <Image Source="IMAGE/minus-empty.png" />
         </Button.Content>
       </Button>
-      <Button x:Name="Max" Grid.Column="1" Click="Button_Click_MaximizeWindow" Width="25" Height="25" Template="{StaticResource TitleBarButtons}" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
+            <Button x:Name="Max" Grid.Column="1" Click="Button_Click_MaximizeWindow" Width="25" Height="25" Template="{StaticResource TitleBarButtons}" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave">
         <Button.Content>
           <Image Source="IMAGE/squareIcon.png" Height="15" Width="21" />
         </Button.Content>
       </Button>
-      <Button x:Name="Close" Grid.Column="0" Click="Button_Click_CloseWindow" Width="25" Height="25" Template="{StaticResource TitleBarButtons}" MouseEnter="Button_MouseEnter_RED" MouseLeave="Button_MouseLeave">
-        <Button.Content>
-          <Image Source="IMAGE/xIcon.png" Width="23" Height="12" RenderTransformOrigin="0,0"/>
-        </Button.Content>
-      </Button>
+            <Button x:Name="Close" Grid.Column="0" Click="Button_Click_CloseWindow" Width="25" Height="25" Template="{StaticResource TitleBarButtons}"  MouseEnter="Button_MouseEnter_RED" MouseLeave="Button_MouseLeave">
+                <Button.Content>
+                    <Image Source="IMAGE/xIcon.png" Width="23" Height="12" RenderTransformOrigin="0,0"/>
+                </Button.Content>
+            </Button>
 
     </Grid>
     <Grid Grid.Row="1" Grid.RowSpan="2">

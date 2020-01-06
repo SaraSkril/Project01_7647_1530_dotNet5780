@@ -43,10 +43,11 @@ namespace PLWPF
         }
         private void Button_MouseEnter_RED(object sender, MouseEventArgs e)//change to when pressed red
         {
-
+            ((Button)sender).Background = Brushes.Red;
             ((Button)sender).Width *= 1.1;
             ((Button)sender).Height *= 1.1;
-            ((Button)sender).Background = Binding{ }
+            
+            
         }
         private void Button_MouseEnter(object sender, MouseEventArgs e)
         {
