@@ -21,7 +21,7 @@ namespace PLWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        IBL ibl = FactoryBl.GetBL();
+       public static IBL ibl = FactoryBl.GetBL();
         public MainWindow()
         { 
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
@@ -43,9 +43,9 @@ namespace PLWPF
         }
         private void Button_MouseEnter_RED(object sender, MouseEventArgs e)//change to when pressed red
         {
-            ((Button)sender).Background = Brushes.Red;
+            ((Button)sender).Background = (Brush)Brushes.Red;
             ((Button)sender).Width *= 1.1;
-            ((Button)sender).Height *= 1.1;
+            ((Button)sender).Height *=1.1;
             
             
         }

@@ -10,24 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace PLWPF
 {
     /// <summary>
-    /// Interaction logic for GuestUserControl.xaml
+    /// Interaction logic for LoginUnit.xaml
     /// </summary>
-    public partial class GuestUserControl : UserControl
+    public partial class LoginUnit : Window
     {
-        public GuestUserControl()
+        public LoginUnit()
         {
             InitializeComponent();
-        }
-
-        private void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

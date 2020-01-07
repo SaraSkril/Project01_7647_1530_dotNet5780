@@ -32,6 +32,21 @@
                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
         </ControlTemplate>
+  
+    <ControlTemplate x:Key="general" TargetType="Button">
+            <Grid>
+                <Rectangle>
+                  <!--  <Border Background="DarkBlue"/>==-->
+                    <Rectangle.Fill>
+                        <LinearGradientBrush>
+
+                        <GradientStop Offset="0.5" Color="RED" />
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+                </Rectangle>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
+    </ControlTemplate>
     </Application.Resources>
-    
+
 </Application>

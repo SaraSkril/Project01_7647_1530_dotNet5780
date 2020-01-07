@@ -223,6 +223,21 @@ namespace BL
         }
         #endregion
         #region check
+        public bool checkifGuests(string id)
+        {
+            Guest g = dal.GetGuest(id);
+            if (g == null)
+                return false;
+            return true;
+        }
+        public bool checkifHost(string id)
+        {
+            Host h = dal.GetHost(id);
+            if (h == null)
+                return false;
+            return true;
+
+        }
         public bool checkEmail(string email)
         {
             if (!email.Contains('@'))

@@ -33,6 +33,9 @@ namespace BL
         IEnumerable<Guest> GetAllGuests(Func<Guest, bool> predicate = null);//recieves a predicate and returns all guests that  satisfy the predicate condition
         #endregion
         #region Check
+
+        bool checkifGuests(string id);
+        bool checkifHost(string id);
         bool checkID(string id);
         bool CheckDate(DateTime start, DateTime end);//check if end day is longer than 1 day by start
         bool CheckIsBankAllowed(Host host, Order order);//check if Host allows access to bank acct

@@ -9,7 +9,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="1.3*"/>
+            <ColumnDefinition Width="1.2*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -36,142 +36,26 @@
         <ComboBox Padding="2" Name="Area" Grid.Row="2" Grid.Column="1" VerticalContentAlignment="Center" SelectedItem="{Binding Path=area, Mode=TwoWay}" IsEditable="True" Text="Choose Area"/>
         <ComboBox Padding="2" Name="Resort" Grid.Row="3" Grid.Column="1" VerticalContentAlignment="Center" SelectedItem="{Binding Path=TypeUnit, Mode=TwoWay}" IsEditable="True" Text="Choose Resort"/>
 
-        <CheckBox Name="POOLBOX" Content="No" Grid.Row="4" Grid.Column="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding Path=pool, Mode=TwoWay}" >
-            <CheckBox.Style>
-                <Style TargetType="CheckBox">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsChecked, ElementName=NPOOL}"
-                             Value="True">
-                            <Setter Property="IsChecked"
-                            Value="False" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </CheckBox.Style>
-        </CheckBox>
-        <CheckBox Name="NPOOL" Content="Yes" Grid.Row="4" Grid.Column="1" VerticalContentAlignment="Center" VerticalAlignment="Center">  
-            <CheckBox.Style>
-                <Style TargetType="CheckBox">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsChecked, ElementName=POOLBOX}"
-                             Value="True">
-                            <Setter Property="IsChecked"
-                            Value="False" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </CheckBox.Style>
-        </CheckBox>
-
-        <CheckBox Name="Jac" Content="No" Grid.Row="5" Grid.Column="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding Path=Jacuzzi, Mode=TwoWay}" >
-            <CheckBox.Style>
-                <Style TargetType="CheckBox">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsChecked, ElementName=Njac}"
-                             Value="True">
-                            <Setter Property="IsChecked"
-                            Value="False" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </CheckBox.Style>
-        </CheckBox>
-        <CheckBox Name="Njac" Content="Yes" Grid.Row="5" Grid.Column="1" VerticalContentAlignment="Center" VerticalAlignment="Center">
-            <CheckBox.Style>
-                <Style TargetType="CheckBox">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsChecked, ElementName=Jac}"
-                             Value="True">
-                            <Setter Property="IsChecked"
-                            Value="False" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </CheckBox.Style>
-        </CheckBox>
-
-        <CheckBox Name="Garden" Content="No" Grid.Row="6" Grid.Column="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding Path=Garden, Mode=TwoWay}" >
-            <CheckBox.Style>
-                <Style TargetType="CheckBox">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsChecked, ElementName=Narden}"
-                             Value="True">
-                            <Setter Property="IsChecked"
-                            Value="False" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </CheckBox.Style>
-        </CheckBox>
-        <CheckBox Name="Narden" Content="Yes" Grid.Row="6" Grid.Column="1" VerticalContentAlignment="Center" VerticalAlignment="Center">
-            <CheckBox.Style>
-                <Style TargetType="CheckBox">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsChecked, ElementName=Garden}"
-                             Value="True">
-                            <Setter Property="IsChecked"
-                            Value="False" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </CheckBox.Style>
-        </CheckBox>
-
-        <CheckBox Name="Children" Content="No" Grid.Row="7" Grid.Column="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding Path=ChildrensAttractions, Mode=TwoWay}" >
-            <CheckBox.Style>
-                <Style TargetType="CheckBox">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsChecked, ElementName=Nchildren}"
-                             Value="True">
-                            <Setter Property="IsChecked"
-                            Value="False" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </CheckBox.Style>
-        </CheckBox>
-        <CheckBox Name="Nchildren" Content="Yes" Grid.Row="7" Grid.Column="1" VerticalContentAlignment="Center" VerticalAlignment="Center">
-            <CheckBox.Style>
-                <Style TargetType="CheckBox">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsChecked, ElementName=Children}"
-                             Value="True">
-                            <Setter Property="IsChecked"
-                            Value="False" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </CheckBox.Style>
-        </CheckBox>
-
-        <CheckBox Name="Wifi" Content="No" Grid.Row="" Grid.Column="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding Path=Wifi, Mode=TwoWay}" >
-            <CheckBox.Style>
-                <Style TargetType="CheckBox">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsChecked, ElementName=Nwifi}"
-                             Value="True">
-                            <Setter Property="IsChecked"
-                            Value="False" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </CheckBox.Style>
-        </CheckBox>
-        <CheckBox Name="Nwifi" Content="Yes" Grid.Row="0" Grid.Column="1" VerticalContentAlignment="Center" VerticalAlignment="Center">
-            <CheckBox.Style>
-                <Style TargetType="CheckBox">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsChecked, ElementName=Wifi}"
-                             Value="True">
-                            <Setter Property="IsChecked"
-                            Value="False" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </CheckBox.Style>
-        </CheckBox>
-        <RadioButton Grid.Row="8" Grid.Column="1" Content="Yes" Padding="2" VerticalAlignment="Center" HorizontalAlignment="Left" IsChecked="{Binding Path=Wifi, Mode=TwoWay}"></RadioButton>
-        <RadioButton Grid.Row="8" Grid.Column="1" Content="No" Padding="2" VerticalAlignment="Center" HorizontalAlignment="Center"></RadioButton>
+        <StackPanel  x:Name="Pool" Grid.Column="1"  Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="4"  VerticalAlignment="Center">
+            <RadioButton Margin="10 0 28 0" x:Name="Yes" Content="Yes" IsChecked="{Binding Path=pool ,Mode=OneWayToSource}" Width="37"/>
+            <RadioButton x:Name="No" Content="No"/>
+        </StackPanel>
+        <StackPanel  x:Name="Jacuzzi" Grid.Column="1"  Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="5"  VerticalAlignment="Center">
+            <RadioButton Margin="10 0 28 0" x:Name="Yes2" Content="Yes" IsChecked="{Binding Path=Jacuzzi ,Mode=OneWayToSource}" Width="37"/>
+            <RadioButton x:Name="No2" Content="No"/>
+        </StackPanel>
+        <StackPanel  x:Name="Garden" Grid.Column="1"  Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="6"  VerticalAlignment="Center">
+            <RadioButton Margin="10 0 28 0" x:Name="Yes3" Content="Yes" IsChecked="{Binding Path=Garden ,Mode=OneWayToSource}" Width="37"/>
+            <RadioButton x:Name="No3" Content="No"/>
+        </StackPanel>
+        <StackPanel  x:Name="Children" Grid.Column="1"  Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="7"  VerticalAlignment="Center">
+            <RadioButton Margin="10 0 28 0" x:Name="Yes4" Content="Yes" IsChecked="{Binding Path=ChildrenAttractions ,Mode=OneWayToSource}" Width="37"/>
+            <RadioButton x:Name="No4" Content="No"/>
+        </StackPanel>
+        <StackPanel  x:Name="Wifi" Grid.Column="1"  Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="8"  VerticalAlignment="Center">
+            <RadioButton Margin="10 0 28 0" x:Name="Yes5" Content="Yes" IsChecked="{Binding Path=Wifi ,Mode=OneWayToSource}" Width="37"/>
+            <RadioButton x:Name="No5" Content="No"/>
+        </StackPanel>
 
     </Grid>
     
