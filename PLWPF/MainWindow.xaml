@@ -51,7 +51,7 @@
         <ColumnDefinition Width="0.1*"/>
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" x:Name="Web_Owner" >
+            <Button Grid.Column="0" x:Name="Guest" Click="Add_Guest" Content="Guests" Height="103" VerticalAlignment="Top" >
             </Button>
 
         </Grid>

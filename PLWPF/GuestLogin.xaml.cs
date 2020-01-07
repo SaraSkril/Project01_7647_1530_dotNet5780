@@ -41,14 +41,14 @@ namespace PLWPF
                 if (MainWindow.ibl.checkifGuests(Idtextbox.Text) == false)
                 MessageBox.Show("This Id does not exist!");
 
-            //open up new update window with id given
+            
             Close();
 
 
         }
         private void button2_Click_addnewGuest(object sender, RoutedEventArgs e)
         {
-            //add new window to add guest
+            new AddGuest().ShowDialog();
             Close();
         }
     }

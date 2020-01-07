@@ -74,5 +74,10 @@ namespace PLWPF
             else
                 SystemCommands.MaximizeWindow(this);
         }
+
+        private void Add_Guest(object sender, RoutedEventArgs e)
+        {
+            new GuestLogin().ShowDialog();
+        }
     }
 }

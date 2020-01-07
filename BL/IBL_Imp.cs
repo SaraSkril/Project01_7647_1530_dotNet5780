@@ -23,7 +23,7 @@ namespace BL
         public void AddGuestReq(Guest guest)//Adds a new Guest Request
         {
             if (!CheckDate(guest.EntryDate, guest.ReleaseDate))
-                throw new ArgumentOutOfRangeException("Dates are not valid/n ");
+                throw new ArgumentOutOfRangeException("Dates are not valid\n ");
 
             if (checkID(guest.ID) == false)
                 throw new ArgumentOutOfRangeException("ID not valid\n");
@@ -54,7 +54,7 @@ namespace BL
             }
             else
             {
-                throw new KeyNotFoundException("Owner ID  is not valid/n");
+                throw new KeyNotFoundException("Owner ID  is not valid\n");
             }
         }
         public void AddOrder(Order order)//adds a new order
