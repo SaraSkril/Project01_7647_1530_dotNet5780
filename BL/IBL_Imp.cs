@@ -3,7 +3,7 @@ using System.Text;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Net.Mail;
 using System.Threading.Tasks;
 using BE;
 using DAL;
@@ -340,7 +340,41 @@ namespace BL
         }
         public void SendMail(Order order)//when status of order is changed to "sent mail", this function will send the mail
         {
+            Guest g = dal.GetGuest(order.GuestRequestKey);
+            HostingUnit hu = dal.GetHostingUnit(order.HostingUnitKey);
+            Host h = dal.GetHost(hu.Owner.ID);
+            try
+            {
+                checkEmail(g.EmailAddress);
+                checkEmail(h.EmailAddress);
+            }
+            catch(InvalidOperationException e)
+            {
+                throw e;
+                
+            }
             Console.WriteLine(" Email sent");
+
+            MailMessage mail = new MailMessage();
+            mail.To.Add("srskriloff@gmail.com");
+            mail.From = new MailAddress("elishevaronstam@gmail.com");
+            mail.Subject = "Vakantie vacation offer";
+            mail.Body = "Hi," + g.FirstName + " " + g.LastName + "!\n" + "Thank you for visiting Vakantie!\n" + "My Hosting Unit" + hu.HostingUnitName + "  fills your requirements and Id be more than glad to host you.\n" +
+                "Please contact me at:" + h.EmailAddress + " to follow up with your order.\n" + "ALL the best, " + h.FirstName + " " + h.LastName;
+            mail.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.gmail.com";
+
+            smtp.Credentials = new System.Net.NetworkCredential();//open an email account
+            smtp.EnableSsl = true;
+            try
+            {
+                smtp.Send(mail);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         public List<HostingUnit> AllDays(DateTime date, int duration)//returns all hosting units with avilble date
         {
@@ -494,5 +528,6 @@ namespace BL
 
 
         #endregion
+      
     }
 }
