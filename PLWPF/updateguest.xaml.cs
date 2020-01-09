@@ -38,7 +38,7 @@ namespace PLWPF
             this.Wifi.ItemsSource = Enum.GetValues(typeof(BE.Wifi));
 
             setAllDetails();
-            
+
 
         }
         private void setAllDetails()
@@ -104,6 +104,88 @@ namespace PLWPF
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
+        }
+
+        private void update_Click(object sender, RoutedEventArgs e)
+        {
+            if (fname.Text == "")
+            {
+                fname.BorderBrush = Brushes.Red;
+                return;
+            }
+            if (lname.Text == "")
+            {
+                lname.BorderBrush = Brushes.Red;
+                return;
+            }
+            if (email.Text == "")
+            {
+                email.BorderBrush = Brushes.Red;
+                return;
+            }
+            if (MainWindow.ibl.checkEmail(email.Text) == false)
+            {
+                MessageBox.Show("Invalid Email");
+                return;
+            }
+            if (edate.SelectedDate == null)
+            {
+                MessageBox.Show("No date selected!");
+                return;
+            }
+
+            if (rdate.SelectedDate == null)
+            {
+                MessageBox.Show("No date selected!");
+                return;
+            }
+            if (Area.SelectedItem != null && Resort.SelectedItem != null && Adult.Text != "" && Pool.SelectedItem != null
+                && Jaccuzi.SelectedItem != null && Garden.SelectedItem != null && childAtt.SelectedItem != null && Wifi.SelectedItem != null)
+            {
+                g.FirstName = fname.Text;
+                g.LastName = lname.Text;
+                g.RegistrationDate = DateTime.Now;
+                g.EntryDate = edate.SelectedDate.Value;
+                g.ReleaseDate = rdate.SelectedDate.Value;
+                g.Adults = int.Parse(Adult.Text);
+                if (Child.Text == "")
+                    g.Children = 0;
+                else
+                    g.Children = int.Parse(Child.Text);
+                g.EmailAddress = email.Text;
+                g.ChildrensAttractions = (ChildrensAttractions)childAtt.SelectedItem;
+                g.Area = (Area)Area.SelectedItem;
+                g.Garden = (Garden)Garden.SelectedItem;
+                g.Jacuzzi = (Jacuzzi)Jaccuzi.SelectedItem;
+                g.Pool = (Pool)Pool.SelectedItem;
+                g.Wifi = (Wifi)Wifi.SelectedItem;
+                g.TypeUnit = (TypeUnit)Resort.SelectedItem;
+
+                try
+                {
+                    MainWindow.ibl.UpdateGuestReq(g);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+                MessageBox.Show("Guest: " + fname.Text + " was updated succesfully!");
+                Close();
+            }
+        }
+
+        private void cancel_Click(object sender, RoutedEventArgs e)
+        {
+          MessageBoxResult r = MessageBox.Show("Are you sure you want to leave?\n Your changes willl not be saved!","", MessageBoxButton.YesNo);
+          /*  switch(r)
+            {
+                case MessageBoxResult.Yes:
+                    
+
+
+            }*/
+           
         }
     }
 }

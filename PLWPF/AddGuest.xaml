@@ -64,7 +64,7 @@
             <ComboBox Padding="2" Name="Wifi" Grid.Row="14" Grid.Column="1" VerticalContentAlignment="Center" SelectedItem="{Binding Path=Wifi, Mode=TwoWay}" IsEditable="True" Text="Are you interested ? "/>
 
         </Grid>
-        <Button Padding="2" Name="Add" Content="Add" Height="30" Width="50" Click="Add_Guest" Margin="436,342,527.333,341.333"/>
+        <Button Padding="2" Name="Add" Content="Add" Height="30" Width="50" Click="Add_Guest" Margin="462,220,500,462"/>
         <Button  x:Name="Min" Click="Button_Click_MinimizeWindow" Width="25" Height="25" Template="{StaticResource TitleBarButtons}" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Margin="73,6,915.333,682.333">
             <Button.Content>
                 <Image Source="IMAGE/minus-empty.png"></Image>

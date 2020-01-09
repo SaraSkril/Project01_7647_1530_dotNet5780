@@ -45,7 +45,8 @@
                 <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="1" Name="guests">
+            <Grid Grid.Column="1" Name="guests" ShowGridLines="False">
+               
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="1.3*"/>
@@ -68,7 +69,6 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
-
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" FontSize="13" Content="ID:"/>
                 <Label Grid.Row="1" Grid.Column="0" FontSize="13" Content="First Name:"/>
@@ -111,11 +111,14 @@
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Image Source="IMAGE/logonw.jpeg" Grid.Column="1"/>
-
+            <Image Source="IMAGE/logonw.jpeg" Grid.Column="3" Margin="2,0,-2,0"/>
+            <Button Name="update" Grid.Column="1" Click="update_Click" Content="Update" Height="50" Width="100"/>
+            <Button Name="cancel" Grid.Column="0" Click="cancel_Click"  Content="Cancel" Height="50" Width="100"/>
         </Grid>
     </Grid>
 </Window>
