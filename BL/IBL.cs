@@ -48,6 +48,7 @@ namespace BL
         bool GuestExist(Guest guest);
         bool HostingUnitExist(HostingUnit hostingUnit);
         Host FindHost(int key);//recieves hosting unit key and returns the host that ownes it
+        Guest GetGuest(string Id);
         #endregion
         #region Other Function
         bool ChangeCollectionClearance(HostingUnit hostingUnit);//checks if theres a open order, if so we cannot change collection clearance

@@ -29,27 +29,32 @@ namespace PLWPF
             if (Idtextbox.Text.Length != 9)
             {
                 MessageBox.Show("Invalid ID!");
+                return;
             }
             int number = 0;
 
             if (int.TryParse(Idtextbox.Text, out number) == false)
             {
                 MessageBox.Show("Invalid ID!");
-
+                return;
             }
             else
                 if (MainWindow.ibl.checkifGuests(Idtextbox.Text) == false)
+            {
                 MessageBox.Show("This Id does not exist!");
-
-            
+                return;
+            }
             Close();
+            new updateguest(Idtextbox.Text).ShowDialog();
+            
 
 
         }
         private void button2_Click_addnewGuest(object sender, RoutedEventArgs e)
         {
-            new AddGuest().ShowDialog();
             Close();
+            new AddGuest().ShowDialog();
+            
         }
     }
 }

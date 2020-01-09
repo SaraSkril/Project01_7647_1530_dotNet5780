@@ -223,6 +223,10 @@ namespace BL
         }
         #endregion
         #region check
+        public Guest  GetGuest(string Id)
+        {
+            return dal.GetGuest(Id);
+        }
         public bool checkifGuests(string id)
         {
             Guest g = dal.GetGuest(id);
