@@ -124,10 +124,68 @@ namespace PLWPF
                         MessageBox.Show(ex.Message);
                         return;
                     }
-                    MessageBox.Show("Guest: " + First_Name.Text + "was added!");
+                    MessageBox.Show("Guest: " + First_Name.Text + " was added succesfully!");
+                    ID.Text = "";
+                    First_Name.Text = "";
+                    Last_Name.Text = "";
+                    Email.Text = "";
+                    DatePicker_Entry.SelectedDate = null;
+                    DatePicker_Entry.DisplayDate = DateTime.Now;
+                    DatePicker_Release.SelectedDate = null;
+                    DatePicker_Release.DisplayDate = DateTime.Now;
+                    Resort.Text = "Choose Resort";
+                    Pool.Text = "Are You Intrested?";
+                    Jaccuzi.Text = "Are You Intrested?";
+                    Area.Text = "Choose Area";
+                    Garden.Text= "Are You Intrested?";
+                    Wifi.Text = "Are You Intrested?";
+                    Children_att.Text = "Are You Intrested?";
+                    Adult.Text = "";
+                    Children.Text = "";
+                    
+
                 }
 
             }
+        }
+
+        private void Button_Click_MinimizeWindow(object sender, RoutedEventArgs e)
+        {
+            SystemCommands.MinimizeWindow(this);
+        }
+
+        private void Button_Click_MaximizeWindow(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+                SystemCommands.RestoreWindow(this);
+            else
+                SystemCommands.MaximizeWindow(this);
+        }
+
+        private void Button_Click_CloseWindow(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Button_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((Button)sender).Width /= 1.1;
+            ((Button)sender).Height /= 1.1;
+        
+    }
+
+        private void Button_MouseEnter_RED(object sender, MouseEventArgs e)
+        {
+            ((Button)sender).Background = (Brush)Brushes.Red;
+            ((Button)sender).Width *= 1.1;
+            ((Button)sender).Height *= 1.1;
+
+        }
+
+        private void Button_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ((Button)sender).Width *= 1.1;
+            ((Button)sender).Height *= 1.1;
         }
     }
 }
