@@ -60,10 +60,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddGuests.xaml.cs">
+      <DependentUpon>AddGuests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HostLogin.xaml.cs">
+      <DependentUpon>HostLogin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="updateguest.xaml.cs">
       <DependentUpon>updateguest.xaml</DependentUpon>
     </Compile>
-    <Page Include="AddGuest.xaml">
+    <Page Include="AddGuests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -79,6 +85,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="HostLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginUnit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -87,9 +97,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="AddGuest.xaml.cs">
-      <DependentUpon>AddGuest.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>

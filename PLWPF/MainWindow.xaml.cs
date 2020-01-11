@@ -23,7 +23,8 @@ namespace PLWPF
     {
        public static IBL ibl = FactoryBl.GetBL();
         public MainWindow()
-        { 
+        {
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             //App.numOfActivatedMainWindow++;
             this.FlowDirection = FlowDirection.RightToLeft;

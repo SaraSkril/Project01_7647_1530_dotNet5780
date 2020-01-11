@@ -27,6 +27,8 @@ namespace PLWPF
         }
         public updateguest(string id)
         {
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+
             InitializeComponent();
             g = MainWindow.ibl.GetGuest(id);
             this.Resort.ItemsSource = Enum.GetValues(typeof(BE.TypeUnit));
@@ -177,15 +179,15 @@ namespace PLWPF
 
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
-          MessageBoxResult r = MessageBox.Show("Are you sure you want to leave?\n Your changes willl not be saved!","", MessageBoxButton.YesNo);
-          /*  switch(r)
+          
+            if (MessageBox.Show("Are you sure you want to leave?\n Your changes will not be saved!", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                case MessageBoxResult.Yes:
-                    
-
-
-            }*/
-           
+                Close();
+            }
+            else
+            {
+                // Do not close the window  
+            }
         }
     }
 }
