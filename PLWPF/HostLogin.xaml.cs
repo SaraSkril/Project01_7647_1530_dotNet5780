@@ -23,6 +23,7 @@ namespace PLWPF
     {
         public HostLogin()
         {
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
         }
 
@@ -55,6 +56,7 @@ namespace PLWPF
         private void button2_Click_addnewHost(object sender, RoutedEventArgs e)
         {
             Close();
+            new NewHost().ShowDialog();
             //add new window
         }
     }

@@ -80,5 +80,10 @@ namespace PLWPF
         {
             new GuestLogin().ShowDialog();
         }
+
+        private void Add_Host(object sender, RoutedEventArgs e)
+        {
+            new HostLogin().ShowDialog();
+        }
     }
 }

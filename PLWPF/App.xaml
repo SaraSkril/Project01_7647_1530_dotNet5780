@@ -18,6 +18,7 @@
                 </Ellipse>
                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
+
         </ControlTemplate>
         <ControlTemplate x:Key="RED" TargetType="Button">
             <Grid>
@@ -47,6 +48,26 @@
                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
     </ControlTemplate>
+        <Style x:Key="round" TargetType="ToggleButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid>
+                            <Ellipse>
+                                <Ellipse.Fill>
+                                    <LinearGradientBrush>
+
+                                    <GradientStop Offset="0.5" Color="Red" />
+
+                                </LinearGradientBrush>
+                                        </Ellipse.Fill>
+                            </Ellipse>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
+
 
 </Application>
