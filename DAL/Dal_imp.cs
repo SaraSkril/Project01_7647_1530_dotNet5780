@@ -113,6 +113,18 @@ namespace DAL
 
         #endregion
 
+        #region Host
+       public void AddHost(Host host)//adds a new host
+        {
+            Host h = GetHost(host.ID);
+            if (h != null)
+                throw new DuplicateWaitObjectException("Guest with this ID already exists!" );
+            DataSource.getHosts().Add(h);
+
+
+        }
+        #endregion
+        
         #region Hosting Unit
         public void AddHostingUnit(HostingUnit hostingUnit)
         {

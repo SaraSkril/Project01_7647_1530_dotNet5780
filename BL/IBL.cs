@@ -9,6 +9,9 @@ namespace BL
 {
     public interface IBL
     {
+        #region Host
+        void addHost(Host host);
+        #endregion
         #region Guest
         void AddGuestReq(Guest guest);//Adds a new Guest Request
         void UpdateGuestReq(Guest guest);//Updates guest

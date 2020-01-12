@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using BE;
 namespace PLWPF
 {
     /// <summary>
@@ -87,7 +87,84 @@ namespace PLWPF
 
         private void Add_Host_Click(object sender, RoutedEventArgs e)
         {
+            Host h = new Host();
 
+
+            if (ID.Text.Length != 9)
+            {
+                MessageBox.Show("Invalid ID!");
+                return;
+            }
+
+           int number1 = 0;
+
+            if (int.TryParse(ID.Text, out number1) == false)
+            {
+
+                MessageBox.Show("Invalid ID!");
+                return;
+            }
+            if (First_Name.Text == "")
+            {
+                First_Name.BorderBrush = Brushes.Red;
+                return;
+            }
+            if (Last_Name.Text == "")
+            {
+                Last_Name.BorderBrush = Brushes.Red;
+                return;
+            }
+            if (Email.Text == "")
+            {
+                Email.BorderBrush = Brushes.Red;
+                return;
+            }
+            if (MainWindow.ibl.checkEmail(Email.Text) == false)
+            {
+                MessageBox.Show("Invalid Email");
+                return;
+            }
+          
+                 if (int.TryParse(number.Text, out number1) == false)
+            {
+
+                MessageBox.Show("Invalid Number!");
+                return;
+            }
+                 //check if 9/10 digit
+            if(Yes.IsChecked==false&&No.IsChecked==false)
+            {
+
+                MessageBox.Show("Please select Automatic billing");
+                return;
+            }
+            h.ID = ID.Text;
+            h.FirstName = First_Name.Text;
+            h.LastName = Last_Name.Text;
+            h.PhoneNumber = int.Parse(number.Text);
+            if (Yes.IsChecked == true)
+                h.CollectionClearance = CollectionClearance.Yes;
+            else
+                h.CollectionClearance = CollectionClearance.No;
+            h.EmailAddress = Email.Text;
+            //bank
+            try
+            {
+                MainWindow.ibl.addHost(h);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            MessageBox.Show("Host " + First_Name.Text + " was added succefully!");
+            ID.Text = "";
+            First_Name.Text = "";
+            Last_Name.Text = "";
+            Email.Text = "";
+            Yes.IsChecked = false;
+            No.IsChecked = false;
+            number.Text = "";
+         
         }
     }
 }

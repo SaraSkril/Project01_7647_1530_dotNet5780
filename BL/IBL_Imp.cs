@@ -79,6 +79,24 @@ namespace BL
             }
 
         }
+
+        
+      
+        public void addHost(Host host)
+        {
+            if (checkID(host.ID))
+                try
+                {
+                    dal.AddHost(host);
+                }
+                catch (DuplicateWaitObjectException e)
+                {
+                    throw e;
+                }
+            else
+                throw new KeyNotFoundException("Invalid ID");
+        }
+      
         #endregion
         #region Update
         public void UpdateGuestReq(Guest guest)//Updates guest
