@@ -323,6 +323,10 @@ namespace BL
             HostingUnit hostingUnit = dal.GetHostingUnit(key);
             return hostingUnit.Owner;//returns owner
         }
+      public Host FindHost(string id)//recieves host id and returns the host
+        {
+            return dal.GetHost(id);
+        }
         public bool CheckOffDates(HostingUnit hostingUnit, DateTime start, DateTime end)//when status is changed to closed, update diary in hosting unit 
         {
             if (IsAvailible(hostingUnit, start, end) == false)

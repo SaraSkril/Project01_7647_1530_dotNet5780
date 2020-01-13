@@ -51,6 +51,7 @@ namespace BL
         bool GuestExist(Guest guest);
         bool HostingUnitExist(HostingUnit hostingUnit);
         Host FindHost(int key);//recieves hosting unit key and returns the host that ownes it
+        Host FindHost(string id);//recieves host id and returns the host
         Guest GetGuest(string Id);
         #endregion
         #region Other Function

@@ -24,6 +24,14 @@ namespace PLWPF
         {
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
+            this.Resort.ItemsSource = Enum.GetValues(typeof(BE.TypeUnit));
+            this.Area.ItemsSource = Enum.GetValues(typeof(BE.Area));
+            this.Pool.ItemsSource = Enum.GetValues(typeof(BE.Pool));
+            this.Jaccuzi.ItemsSource = Enum.GetValues(typeof(BE.Jacuzzi));
+            this.Garden.ItemsSource = Enum.GetValues(typeof(BE.Garden));
+            this.Children_att.ItemsSource = Enum.GetValues(typeof(BE.ChildrensAttractions));
+            this.Wifi.ItemsSource = Enum.GetValues(typeof(BE.Wifi));
+
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {

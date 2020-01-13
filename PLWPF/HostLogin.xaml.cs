@@ -48,7 +48,7 @@ namespace PLWPF
                 return;
             }
             Close();
-           // add neupdate host
+            new hostprop(Idtextbox.Text).ShowDialog();
 
 
         }

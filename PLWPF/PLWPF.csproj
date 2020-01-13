@@ -63,8 +63,14 @@
     <Compile Include="AddGuests.xaml.cs">
       <DependentUpon>AddGuests.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddHostingUnit.xaml.cs">
+      <DependentUpon>AddHostingUnit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HostLogin.xaml.cs">
       <DependentUpon>HostLogin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="hostprop.xaml.cs">
+      <DependentUpon>hostprop.xaml</DependentUpon>
     </Compile>
     <Compile Include="NewHost.xaml.cs">
       <DependentUpon>NewHost.xaml</DependentUpon>
@@ -73,6 +79,10 @@
       <DependentUpon>updateguest.xaml</DependentUpon>
     </Compile>
     <Page Include="AddGuests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddHostingUnit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -89,6 +99,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="HostLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="hostprop.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

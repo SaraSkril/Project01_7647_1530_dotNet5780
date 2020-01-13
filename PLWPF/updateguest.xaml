@@ -100,7 +100,7 @@
                 <TextBox Name="Adult" Grid.Row="10" Grid.Column="1"/>
                 <TextBox Name="Child" Grid.Row="11" Grid.Column="1"/>
                 <ComboBox Name="Pool" Grid.Row="12" Grid.Column="1"/>
-                <ComboBox Name="Jaccuzi" Grid.Row="13" Grid.Column="1"/>
+                <ComboBox Name="Jaccuzi" Grid.Row="13" Grid.Column="1" SelectionChanged="Jaccuzi_SelectionChanged"/>
                 <ComboBox Name="Garden" Grid.Row="14" Grid.Column="1"/>
                 <ComboBox Name="childAtt" Grid.Row="15" Grid.Column="1"/>
                 <ComboBox Name="Wifi" Grid.Row="16" Grid.Column="1"/>

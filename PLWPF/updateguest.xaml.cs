@@ -189,5 +189,10 @@ namespace PLWPF
                 // Do not close the window  
             }
         }
+
+        private void Jaccuzi_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
