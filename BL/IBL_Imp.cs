@@ -552,8 +552,17 @@ namespace BL
                    select g;
         }
 
-
+        public List<string> GetHubyHost(string id)
+        {
+            List<string> result = new List<string>();
+            foreach(HostingUnit unit in GetAllHostingUnits())
+            {
+                if (unit.Owner.ID == id)
+                    result.Add(unit.HostingUnitName);
+            }
+            return result;
+        }
         #endregion
-      
+
     }
 }

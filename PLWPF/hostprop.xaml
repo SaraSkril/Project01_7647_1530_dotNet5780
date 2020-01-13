@@ -28,8 +28,8 @@
             </Grid.RowDefinitions>
             <Label Name="welcome" Grid.Row="0"  FontSize="20" />
             <Button  Grid.Row="1" Name="addhu" Content="Add A New Property" Click="Addhu_Click" Height="30" Width="200"/>
-            <Button  Grid.Row="2" Name="update" Content="Edit A Property" Click="Update_Click" Height="30" Width="200"/>
-            <Button  Grid.Row="3" Name="delete" Content="Delete A Property" Click="Delete_Click" Height="30" Width="200"/>
+            <ComboBox Padding="2" Loaded="Update_Loaded"  Name="update" Grid.Row="2" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="Select a property to edit"  Height="30" Width="200" SelectionChanged="Update_SelectionChanged"/>
+            <ComboBox Padding="2" Name="delete" Grid.Row="2" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" SelectedItem="{Binding Path=hu, Mode=TwoWay}" IsEditable="True" Text="Select a property to edit"  Height="30" Width="200" SelectionChanged="Delete_SelectionChanged"/>
         </Grid>
        
      

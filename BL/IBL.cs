@@ -70,6 +70,7 @@ namespace BL
         bool checkEmail(string email);
         #endregion
         #region Group
+        List<string> GetHubyHost(string id);
         IEnumerable<IGrouping<Area, Guest>> GetGuestsGroupsByArea();//groups geusts according to area
         IEnumerable<IGrouping<int, Guest>> GetGuestsGroupsByVacationers();//groups guests according to num vacation
         IEnumerable<IGrouping<int, Host>> GetHostsGroupsByHostingUnits();//groups hosts according to num of hosting units
