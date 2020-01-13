@@ -105,10 +105,18 @@
                     <RadioButton x:Name="No5" Content="No"/>
                 </StackPanel>
 
+
             </Grid>
-            
-            <Button Name="add" Content="Add" Click="Add_Click" Grid.Column="3" Height="30" Margin="55,503,277,38"/>
-            <Button Name="cancel" Content="Cancel" Click="Cancel_Click" Grid.Column="3" Height="30" Margin="143,503,189,38"/>
+
+            <Button Name="add" Content="Add" Click="Add_Click" Grid.Column="2" Margin="41,506,340,20" Style="{StaticResource general1}" Grid.ColumnSpan="2"/>
+            <Button Name="cancel" Content="Cancel" Click="Cancel_Click" Grid.Column="3" Margin="68,506,235,20" Style="{StaticResource general1}"/>
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Source="IMAGE/logonw.jpeg" Grid.Column="1"/>
         </Grid>
     </Grid>
 

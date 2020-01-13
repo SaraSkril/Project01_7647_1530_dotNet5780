@@ -16,8 +16,8 @@
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="42,116,0,0" Name="textBlock1" Text="ID:" VerticalAlignment="Top" Width="67" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="71,115,0,0" Name="Idtextbox" VerticalAlignment="Top" Width="184" />
 
-        <Button Content="Login" Height="23" HorizontalAlignment="Left" Margin="75,159,0,0" Name="button1" VerticalAlignment="Top" Width="82" Click="button1_Click_Login_Guest"   VerticalContentAlignment="Center"/>
-        <Button Content="Register" Height="23" HorizontalAlignment="Left" Margin="173,159,0,0" Name="button2" VerticalAlignment="Top" Width="82" Click="button2_Click_addnewGuest" />
+        <Button Content="Login" Height="23" HorizontalAlignment="Left" FontSize="12" Margin="75,159,0,0" Name="button1" VerticalAlignment="Top" Width="82" Click="button1_Click_Login_Guest"   VerticalContentAlignment="Center" Style="{StaticResource general1}" />
+        <Button Content="Register" Height="23" HorizontalAlignment="Left" FontSize="12" Margin="173,159,0,0" Name="button2" VerticalAlignment="Top" Width="82" Click="button2_Click_addnewGuest" Style="{StaticResource general1}"/>
         
 
 

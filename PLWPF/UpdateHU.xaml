@@ -107,8 +107,8 @@
 
             </Grid>
 
-            <Button Name="update" Content="Update" Click="Update_Click"  Grid.Column="3" Height="30" Margin="55,503,277,38"/>
-            <Button Name="cancel" Content="Cancel" Click="Cancel_Click" Grid.Column="3" Height="30" Margin="143,503,189,38"/>
+            <Button Name="update" Content="Update" Click="Update_Click"  Grid.Column="3" Height="30" Margin="55,503,277,38" Style="{StaticResource general1}"/>
+            <Button Name="cancel" Content="Cancel" Click="Cancel_Click" Grid.Column="3" Height="30" Margin="143,503,189,38" Style="{StaticResource general1}"/>
         </Grid>
     </Grid>
 </Window>

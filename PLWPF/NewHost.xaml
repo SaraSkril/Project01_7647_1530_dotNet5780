@@ -86,7 +86,7 @@
                         <RadioButton x:Name="No" Content="No" />
                     </StackPanel>
                 </Grid>
-                <ToggleButton x:Name="btnFirst" Grid.Column="1" Grid.Row="13"  Height="30" Width="30" Margin="127,12,13,0" VerticalAlignment="Top" Content="Next" >
+                <ToggleButton x:Name="btnFirst" Grid.Column="1" Grid.Row="13"  Height="30" Width="30" Margin="127,12,13,0" VerticalAlignment="Top" Content="Next"  >
                     
                 </ToggleButton>
             </Grid>

@@ -159,6 +159,17 @@ namespace PLWPF
             MessageBox.Show("Hosting Unit " + Name.Text + " was updated succesfully!");
         }
 
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to leave?\n Your changes will not be saved!", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                Close();
+            }
+            else
+            {
+                // Do not close the window  
+            }
+        }
     }
     
     

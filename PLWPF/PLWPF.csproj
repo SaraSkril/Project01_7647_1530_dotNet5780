@@ -93,14 +93,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GuestUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="HostingUnitUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="HostLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -123,12 +115,6 @@
     </Compile>
     <Compile Include="GuestLogin.xaml.cs">
       <DependentUpon>GuestLogin.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GuestUserControl.xaml.cs">
-      <DependentUpon>GuestUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="HostingUnitUserControl.xaml.cs">
-      <DependentUpon>HostingUnitUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="LoginUnit.xaml.cs">
       <DependentUpon>LoginUnit.xaml</DependentUpon>

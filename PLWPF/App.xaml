@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:PLWPF"
              StartupUri="MainWindow.xaml">
+    
     <Application.Resources>
 
         <ControlTemplate x:Key="TitleBarButtons" TargetType="Button">
@@ -35,19 +36,9 @@
         </ControlTemplate>
   
     <ControlTemplate x:Key="general" TargetType="Button">
-            <Grid>
-                <Rectangle>
-                  <!--  <Border Background="DarkBlue"/>==-->
-                    <Rectangle.Fill>
-                        <LinearGradientBrush>
-
-                        <GradientStop Offset="0.5" Color="RED" />
-                    </LinearGradientBrush>
-                </Rectangle.Fill>
-                </Rectangle>
-                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        </Grid>
+           
     </ControlTemplate>
+        
         <Style x:Key="round" TargetType="ToggleButton">
             <Setter Property="Template">
                 <Setter.Value>
@@ -67,7 +58,56 @@
                 </Setter.Value>
             </Setter>
         </Style>
+   
+
+    <Style x:Key="general1" TargetType="Button">
+        <Setter Property="FontSize" Value="17" />
+            <Setter Property="FontFamily" Value="Comic Sans MS " />
+            <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="ButtonBorder" 
+                  CornerRadius="1" 
+                  BorderThickness="4"  
+                  BorderBrush="#253264"
+                  RenderTransformOrigin="0.5,0.5" Background="#00000000">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="1.7*"/>
+                            </Grid.RowDefinitions>
+                            <ContentPresenter x:Name="ButtonContentPresenter"
+                                VerticalAlignment="Center"  
+                                HorizontalAlignment="Center" 
+                                Grid.RowSpan="2" />
+                        </Grid>
+                    </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="RenderTransform" TargetName="ButtonBorder">
+                                    <Setter.Value>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                                            
+                                        </TransformGroup>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="RenderTransform" TargetName="ButtonBorder">
+                                    <Setter.Value>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+
+                                        </TransformGroup>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     </Application.Resources>
-
-
 </Application>

@@ -124,22 +124,22 @@
                 <ComboBox Padding="2" Name="Garden" Grid.Row="9" Grid.Column="1" VerticalContentAlignment="Center" SelectedItem="{Binding Path=Garden, Mode=TwoWay}" IsEditable="True" Text="Are you interested ?"/>
                 <ComboBox Padding="2" Name="Children_att" Grid.Row="11" Grid.Column="1" VerticalContentAlignment="Center" SelectedItem="{Binding Path=ChildrensAttractions, Mode=TwoWay}" IsEditable="True" Text="Are you interested ?"/>
                 <ComboBox Padding="2" Name="Wifi" Grid.Row="13" Grid.Column="1" VerticalContentAlignment="Center" SelectedItem="{Binding Path=Wifi, Mode=TwoWay}" IsEditable="True" Text="Are you interested ? "/>
-                <Button Padding="2" Name="Add" Content="Add" Grid.Column="1" Grid.Row="15" Height="30" Width="50" Click="Add_Guest" />
-                <Button Padding="2" Name="Cancel" Content="Cancel" Grid.Column="0" Grid.Row="15" Height="30" Width="50" Click="Cancel_Click"/>
+                <Button Padding="2" Name="Add" FontSize="15" Content="Add" Grid.Column="1" Grid.Row="15" Click="Add_Guest" Style="{StaticResource general1}" Margin="10,0,91,0" />
+                <Button Padding="2" Name="Cancel" FontSize="15" Content="Cancel" Grid.Column="0" Grid.Row="15" Click="Cancel_Click" Style="{StaticResource general1}" Margin="44,1,10,15" Grid.RowSpan="2"/>
             </Grid>
         </Grid>
         <Grid Grid.Row="3" FlowDirection="LeftToRight">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*">
-                    
+
                 </ColumnDefinition>
                 <ColumnDefinition Width="*">
-                    
+
                 </ColumnDefinition>
-                
+
             </Grid.ColumnDefinitions>
             <Image Source="IMAGE/logonw.jpeg" Grid.Column="1">
-                
+
             </Image>
         </Grid>
     </Grid>
