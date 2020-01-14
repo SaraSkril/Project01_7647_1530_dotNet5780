@@ -30,8 +30,8 @@
             <Button Grid.Row="1" Name="addhu" Content="Add A New Property" Click="Addhu_Click" Height="30" Width="200"/>
             <ComboBox Padding="2" Loaded="Update_Loaded"  Name="update" Grid.Row="2" Grid.Column="1" HorizontalContentAlignment="Center"  SelectedItem="{Binding Path=hu, Mode=TwoWay}" IsEditable="True" VerticalContentAlignment="Center" Text="Select a property to edit"  Height="30" Width="200" SelectionChanged="Update_SelectionChanged"/>
             <ComboBox Padding="2" Loaded="Update_Loaded" Name="delete" Grid.Row="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" SelectedItem="{Binding Path=hu, Mode=TwoWay}" IsEditable="True" Text="Select a property to delete"  Height="30" Width="200" SelectionChanged="Delete_SelectionChanged" />
+            <ComboBox Padding="2" Loaded="myorders_Loaded" Name="myorders" Grid.Row="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" SelectedItem="{Binding Path=opt, Mode=TwoWay}" IsEditable="True" Text="My Orders"  Height="30" Width="200" SelectionChanged="myorders_SelectionChanged" />
         </Grid>
-
 
     </Grid>
 </Window>

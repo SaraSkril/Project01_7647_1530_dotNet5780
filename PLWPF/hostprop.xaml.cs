@@ -81,5 +81,27 @@ namespace PLWPF
             Close();
             new UpdateHU(name).ShowDialog();
         }
+
+        private void myorders_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<string> opt = new List<string>();
+            opt.Add("Add Order");
+            opt.Add("Update Order");
+            var combo = sender as ComboBox;
+            combo.ItemsSource = opt;
+        }
+
+        private void myorders_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var result = sender as ComboBox;
+            string opt1 = result.SelectedItem as string;
+            if (opt1 == "Add Order")
+            {
+                Close();
+                new addorder(h.ID).ShowDialog();
+            }
+            else
+                return;
+        }
     }
 }

@@ -73,14 +73,14 @@ namespace DAL
 
             Guest guest1 = new Guest();
             guest1.GuestRequestKey = ++Configuration.GuestRequestKey;
-            guest1.ID = "345678902";
+            guest1.ID = "000000000";
             guest1.FirstName = "Harel";
             guest1.LastName = "Skaat";
             guest1.EmailAddress = "harelrox@gmail.com";
             guest1.GuestStatus = Status.Active;
             guest1.RegistrationDate = DateTime.Now;
-            guest1.EntryDate = new DateTime(11 / 12 / 2019);
-            guest1.ReleaseDate = new DateTime(20 / 1 / 2020);
+            guest1.EntryDate = new DateTime(2019,12,11);
+            guest1.ReleaseDate = new DateTime(2020,12,18);
             guest1.TypeUnit = TypeUnit.Hotel;
             guest1.Area = Area.Jerusalem;
             guest1.Adults = 2;

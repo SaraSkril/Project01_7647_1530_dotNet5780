@@ -10,34 +10,33 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BL;
-using BE;
+
 namespace PLWPF
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for addorder.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class addorder : Window
     {
-       public static IBL ibl = FactoryBl.GetBL();
-        public MainWindow()
+        string ID;
+        public addorder()
         {
-            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
-            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
-            //App.numOfActivatedMainWindow++;
-            this.FlowDirection = FlowDirection.RightToLeft;
-            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
-            Style = (Style)FindResource(typeof(Window));
-            SystemCommands.MaximizeWindow(this);
-           // loadSystemWorker.DoWork += LoadSystem_DoWork;
-            //loadSystemWorker.RunWorkerCompleted += LoadSystemWorker_RunWorkerCompleted;
-            //updateAddresses.DoWork += UpdateAddresses_DoWork;
-           // updateAddresses.RunWorkerCompleted += UpdateAddresses_RunWorkerCompleted;
         }
-       
+        public addorder(string id)
+        {
+            ID = id;
+            InitializeComponent();
+        }
+
+        private void select_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<string> hu = MainWindow.ibl.GetHubyHost(ID);
+            var combo = sender as ComboBox;
+            combo.ItemsSource = hu;
+        }
+
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
@@ -47,9 +46,9 @@ namespace PLWPF
         {
             ((Button)sender).Background = (Brush)Brushes.Red;
             ((Button)sender).Width *= 1.1;
-            ((Button)sender).Height *=1.1;
-            
-            
+            ((Button)sender).Height *= 1.1;
+
+
         }
         private void Button_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -77,17 +76,7 @@ namespace PLWPF
                 SystemCommands.MaximizeWindow(this);
         }
 
-        private void Add_Guest(object sender, RoutedEventArgs e)
-        {
-            new GuestLogin().ShowDialog();
-        }
-
-        private void Add_Host(object sender, RoutedEventArgs e)
-        {
-            new HostLogin().ShowDialog();
-        }
-
-        private void Orders_Click(object sender, RoutedEventArgs e)
+        private void select_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

@@ -64,16 +64,22 @@
                     <ImageBrush/>
                 </Button.Background>
             </Button>
+            <Button Grid.Column="5" x:Name="Orders" Click="Orders_Click" Content="blah" Height="103" VerticalAlignment="Top"  Margin="0,-2,0,0" FontSize="20" Style="{StaticResource general1}" Grid.ColumnSpan="2" >
+                <Button.Background>
+                    <ImageBrush/>
+                </Button.Background>
+            </Button>
 
 
         </Grid>
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.5*"/>
-                <ColumnDefinition Width="5*"/>
-                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="84*"/>
+                <ColumnDefinition Width="349*"/>
+                <ColumnDefinition Width="494*"/>
+                <ColumnDefinition Width="85*"/>
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="1" Source="IMAGE/Logo1.jpeg"/>
+            <Image Grid.Column="1" Source="IMAGE/Logo1.jpeg" Grid.ColumnSpan="2"/>
         </Grid>
         <Label Padding="2" Content="    Created By: Elisheva Aronstam and Sara Raizel Skriloff, 2020" Grid.Row="4" Margin="1" VerticalContentAlignment="Center" FlowDirection="LeftToRight" FontFamily="Comic Sans MS" FontSize="25"  />
     </Grid>

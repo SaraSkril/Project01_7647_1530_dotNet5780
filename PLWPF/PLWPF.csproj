@@ -66,6 +66,9 @@
     <Compile Include="AddHostingUnit.xaml.cs">
       <DependentUpon>AddHostingUnit.xaml</DependentUpon>
     </Compile>
+    <Compile Include="addorder.xaml.cs">
+      <DependentUpon>addorder.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HostLogin.xaml.cs">
       <DependentUpon>HostLogin.xaml</DependentUpon>
     </Compile>
@@ -86,6 +89,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddHostingUnit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="addorder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
