@@ -81,8 +81,8 @@
                 <Label Grid.Row="15" Grid.Column="0" FontSize="13" Content="Wifi:"/>
 
                 <TextBox Padding="2" Name="Name" Grid.Row="1" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=HostingUnitName, Mode=OneWay}"/>
-                <ComboBox Padding="2" Name="Area" Grid.Row="3" Grid.Column="1" VerticalContentAlignment="Center" SelectedItem="{Binding Path=area, Mode=TwoWay}" IsEditable="True" Text="Choose Area"/>
-                <ComboBox Padding="2" Name="Resort" Grid.Row="5" Grid.Column="1" VerticalContentAlignment="Center" SelectedItem="{Binding Path=TypeUnit, Mode=TwoWay}" IsEditable="True" Text="Choose Resort"/>
+                <ComboBox Padding="2" Name="Area" Grid.Row="3" Grid.Column="1" VerticalContentAlignment="Center"   />
+                <ComboBox Padding="2" Name="Resort" Grid.Row="5" Grid.Column="1" VerticalContentAlignment="Center"  />
 
                 <StackPanel  x:Name="Pool"  Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="7"  VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="169,7,0,31.333">
                     <RadioButton Margin="10 0 28 0" x:Name="Yes" Content="Yes" IsChecked="{Binding Path=pool ,Mode=OneWayToSource}" Width="37"/>

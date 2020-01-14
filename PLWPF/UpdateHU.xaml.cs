@@ -42,8 +42,8 @@ namespace PLWPF
             this.Resort.ItemsSource = Enum.GetValues(typeof(BE.TypeUnit));
             this.Area.ItemsSource = Enum.GetValues(typeof(BE.Area));
             Name.Text= hu.HostingUnitName;
-                Area.Text = hu.area.ToString();
-                Resort.Text = hu.TypeUnit.ToString();
+            Area.Text = hu.area.ToString();
+            Resort.Text = hu.TypeUnit.ToString();
                 if (hu.pool)
                     Yes.IsChecked = true;
                 else
@@ -160,6 +160,7 @@ namespace PLWPF
                 return;
             }
             MessageBox.Show("Hosting Unit " + Name.Text + " was updated succesfully!");
+            Close();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
