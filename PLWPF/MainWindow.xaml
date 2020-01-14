@@ -75,7 +75,7 @@
             </Grid.ColumnDefinitions>
             <Image Grid.Column="1" Source="IMAGE/Logo1.jpeg"/>
         </Grid>
-        <Label Padding="2" Content="    Created By: Elisheva Aronstam and Sara Raizel Skriloff, 2020" Grid.Row="4" Margin="1" VerticalContentAlignment="Center" FlowDirection="LeftToRight" FontSize="25"  />
+        <Label Padding="2" Content="    Created By: Elisheva Aronstam and Sara Raizel Skriloff, 2020" Grid.Row="4" Margin="1" VerticalContentAlignment="Center" FlowDirection="LeftToRight" FontFamily="Comic Sans MS" FontSize="25"  />
     </Grid>
 
 

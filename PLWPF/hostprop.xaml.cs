@@ -62,7 +62,8 @@ namespace PLWPF
                 MessageBox.Show("Oops!/n" + ex.Message);
                 return;
             }
-            MessageBox.Show(name + "was removed succesfully");
+            MessageBox.Show(name + "  was removed succesfully!");
+            Close();
         }
 
         private void Update_Loaded(object sender, RoutedEventArgs e)
@@ -70,14 +71,15 @@ namespace PLWPF
             List<string> hu = MainWindow.ibl.GetHubyHost(h.ID);
             var combo = sender as ComboBox;
             combo.ItemsSource = hu;
-            //combo.SelectedIndex = 0;
+           
         }
 
         private void Update_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var result = sender as ComboBox;
             string name = result.SelectedItem as string;
-            
+            Close();
+            new UpdateHU(name).ShowDialog();
         }
     }
 }

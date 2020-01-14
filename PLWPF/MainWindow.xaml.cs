@@ -30,6 +30,7 @@ namespace PLWPF
             this.FlowDirection = FlowDirection.RightToLeft;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
+            Style = (Style)FindResource(typeof(Window));
             SystemCommands.MaximizeWindow(this);
            // loadSystemWorker.DoWork += LoadSystem_DoWork;
             //loadSystemWorker.RunWorkerCompleted += LoadSystemWorker_RunWorkerCompleted;

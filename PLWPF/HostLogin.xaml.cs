@@ -59,5 +59,42 @@ namespace PLWPF
             new NewHost().ShowDialog();
             //add new window
         }
+
+        private void Button_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ((Button)sender).Width *= 1.1;
+            ((Button)sender).Height *= 1.1;
+        }
+
+        private void Button_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((Button)sender).Width /= 1.1;
+            ((Button)sender).Height /= 1.1;
+        }
+
+        private void Button_Click_MinimizeWindow(object sender, RoutedEventArgs e)
+        {
+            SystemCommands.MinimizeWindow(this);
+        }
+
+        private void Button_Click_MaximizeWindow(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+                SystemCommands.RestoreWindow(this);
+            else
+                SystemCommands.MaximizeWindow(this);
+        }
+
+        private void Button_Click_CloseWindow(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Button_MouseEnter_RED(object sender, MouseEventArgs e)
+        {
+            ((Button)sender).Width *= 1.1;
+            ((Button)sender).Height *= 1.1;
+        }
     }
-}
+    }
+

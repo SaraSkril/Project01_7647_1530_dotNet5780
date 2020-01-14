@@ -6,6 +6,10 @@
     
     <Application.Resources>
 
+        <Style TargetType="{x:Type Window}">
+            <Setter Property="FontFamily"
+            Value="Comic Sans MS" />
+        </Style>
         <ControlTemplate x:Key="TitleBarButtons" TargetType="Button">
             <Grid>
                 <Ellipse>
@@ -98,7 +102,7 @@
                                 <Setter Property="RenderTransform" TargetName="ButtonBorder">
                                     <Setter.Value>
                                         <TransformGroup>
-                                            <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                                            <ScaleTransform ScaleX="0.99" ScaleY="0.99"/>
 
                                         </TransformGroup>
                                     </Setter.Value>

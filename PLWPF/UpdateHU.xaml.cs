@@ -39,7 +39,9 @@ namespace PLWPF
             }
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
-                name = hu.HostingUnitName;
+            this.Resort.ItemsSource = Enum.GetValues(typeof(BE.TypeUnit));
+            this.Area.ItemsSource = Enum.GetValues(typeof(BE.Area));
+            Name.Text= hu.HostingUnitName;
                 Area.Text = hu.area.ToString();
                 Resort.Text = hu.TypeUnit.ToString();
                 if (hu.pool)
@@ -125,7 +127,8 @@ namespace PLWPF
             {
                 if ((Yes.IsChecked == true || No.IsChecked == true) && (Yes2.IsChecked == true || No2.IsChecked == true) && (Yes3.IsChecked == true || No3.IsChecked == true) && (Yes4.IsChecked == true || No4.IsChecked == true) && (Yes5.IsChecked == true || No5.IsChecked == true))
                 {
-                    
+                    hu.HostingUnitName = Name.Text;
+                   
                     hu.area = (Area)Area.SelectedItem;
                     hu.TypeUnit = (TypeUnit)Resort.SelectedItem;
                     hu.pool = (bool)Yes.IsChecked;
