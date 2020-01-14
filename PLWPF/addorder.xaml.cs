@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using BE;
 namespace PLWPF
 {
     /// <summary>
@@ -78,7 +78,60 @@ namespace PLWPF
 
         private void select_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var result = sender as ComboBox;
+            string name = result.SelectedItem as string;
+            HostingUnit unit = new HostingUnit();
+            foreach(HostingUnit hosting in MainWindow.ibl.GetAllHostingUnits())
+            {
+                if (hosting.HostingUnitName == name)
+                {
+                    unit = hosting;
+                    break;
+                }
+            }
+            //   IEnumerable<Guest> g = MainWindow.ibl.GetAllGuests(MainWindow.ibl.BuildPredicate(unit));
+            List<Guest> l = MainWindow.ibl.GetAllGuests();
+            Guests.Visibility = Visibility.Visible;
+            Guests.ItemsSource = l;
 
+        }
+
+        private void Guests_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<Guest> l = MainWindow.ibl.GetAllGuests();
+            var grid = sender as DataGrid;
+            
+        }
+
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+            /*foreach (DataGridCheckBoxColumn itemrow in Guests.Columns)
+            {
+                CheckBox d = (CheckBox)(itemrow.);
+                if ((bool)d.IsChecked)
+                {
+                    try
+                    {
+                        Order ord = new Order();
+                        ord.GuestRequestKey=
+
+                        MainWindow.ibl.AddOrder()
+                    }
+                }
+            }*/
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (MessageBox.Show("Are you sure you want to leave?\n Your changes will not be saved!", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                Close();
+            }
+            else
+            {
+                // Do not close the window  
+            }
         }
     }
 }

@@ -69,22 +69,21 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="0.3*"/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="1" Grid.Column="0" FontSize="13" Content="ID:"/>
-                <Label Grid.Row="3" Grid.Column="0" FontSize="13" Content="First Name:"/>
-                <Label Grid.Row="5" Grid.Column="0" FontSize="13" Content="Last Name:"/>
-                <Label Grid.Row="7" Grid.Column="0" FontSize="13" Content="Email:"/>
-                <Label Grid.Row="9" Grid.Column="0" FontSize="13" Content="Entry Date:"/>
-                <Label Grid.Row="11" Grid.Column="0" FontSize="13" Content="Release Date:"/>
-                <Label Grid.Row="13" Grid.Column="0" FontSize="13" Content="Number Of Adults:"/>
-                <Label Grid.Row="15" Grid.Column="0" FontSize="13" Content="Number Of Children:"/>
-                <TextBox Padding="2" Name="ID" Grid.Row="1" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=ID, Mode=OneWay}"/>
-                <TextBox Padding="2" Name="First_Name" Grid.Row="3" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=FirstName, Mode=TwoWay}"/>
-                <TextBox Padding="2" Name="Last_Name" Grid.Row="5" Grid.Column="1"  Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=LastName, Mode=TwoWay}"/>
-                <TextBox Padding="2" Name="Email" Grid.Row="7" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=EmailAddress, Mode=TwoWay}"/>
-                <DatePicker Padding="2" Name="DatePicker_Entry" Grid.Row="9" Grid.Column="1" VerticalContentAlignment="Center" SelectedDate="{Binding Path=EntryDate, Mode=TwoWay}" DisplayDate="{Binding Path=EntryDate}"/>
-                <DatePicker Padding="2" Name="DatePicker_Release" Grid.Row="11" Grid.Column="1" VerticalContentAlignment="Center" SelectedDate="{Binding Path=ReleaseDate, Mode=TwoWay}" DisplayDate="{Binding Path=ReleaseDate}"/>
-                <TextBox Padding="2" Name="Adult" Grid.Row="13" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=Adults, Mode=TwoWay}"/>
-                <TextBox Padding="2" Name="Children" Grid.Row="15" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=Children, Mode=TwoWay}"/>
+                <Label Grid.Row="1" Grid.Column="0" FontSize="13" Content="First Name:"/>
+                <Label Grid.Row="3" Grid.Column="0" FontSize="13" Content="Last Name:"/>
+                <Label Grid.Row="5" Grid.Column="0" FontSize="13" Content="Email:"/>
+                <Label Grid.Row="7" Grid.Column="0" FontSize="13" Content="Entry Date:"/>
+                <Label Grid.Row="9" Grid.Column="0" FontSize="13" Content="Release Date:"/>
+                <Label Grid.Row="11" Grid.Column="0" FontSize="13" Content="Number Of Adults:"/>
+                <Label Grid.Row="13" Grid.Column="0" FontSize="13" Content="Number Of Children:"/>
+               
+                <TextBox Padding="2" Name="First_Name" Grid.Row="1" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=FirstName, Mode=TwoWay}"/>
+                <TextBox Padding="2" Name="Last_Name" Grid.Row="3" Grid.Column="1"  Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=LastName, Mode=TwoWay}"/>
+                <TextBox Padding="2" Name="Email" Grid.Row="5" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=EmailAddress, Mode=TwoWay}"/>
+                <DatePicker Padding="2" Name="DatePicker_Entry" Grid.Row="7" Grid.Column="1" VerticalContentAlignment="Center" SelectedDate="{Binding Path=EntryDate, Mode=TwoWay}" DisplayDate="{Binding Path=EntryDate}"/>
+                <DatePicker Padding="2" Name="DatePicker_Release" Grid.Row="9" Grid.Column="1" VerticalContentAlignment="Center" SelectedDate="{Binding Path=ReleaseDate, Mode=TwoWay}" DisplayDate="{Binding Path=ReleaseDate}"/>
+                <TextBox Padding="2" Name="Adult" Grid.Row="11" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=Adults, Mode=TwoWay}"/>
+                <TextBox Padding="2" Name="Children" Grid.Row="13" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=Children, Mode=TwoWay}"/>
             </Grid>
             <Grid Grid.Row="2" Grid.Column="3">
                 <Grid.ColumnDefinitions>

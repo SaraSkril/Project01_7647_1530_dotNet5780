@@ -79,7 +79,7 @@ namespace PLWPF
 
         private void Add_Guest(object sender, RoutedEventArgs e)
         {
-            new GuestLogin().ShowDialog();
+            new AddGuests().ShowDialog();
         }
 
         private void Add_Host(object sender, RoutedEventArgs e)

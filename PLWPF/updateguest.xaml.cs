@@ -30,7 +30,7 @@ namespace PLWPF
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
 
             InitializeComponent();
-            g = MainWindow.ibl.GetGuest(id);
+            //g = MainWindow.ibl.GetGuest(id);
             this.Resort.ItemsSource = Enum.GetValues(typeof(BE.TypeUnit));
             this.Area.ItemsSource = Enum.GetValues(typeof(BE.Area));
             this.Pool.ItemsSource = Enum.GetValues(typeof(BE.Pool));

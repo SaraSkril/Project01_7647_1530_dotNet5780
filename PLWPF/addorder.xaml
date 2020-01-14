@@ -39,9 +39,37 @@
 
         </Grid>
         <Label Grid.Row="1" Content="Please select a unit:" Width="250" Height="80" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" FontFamily="Comic Sans MS" Margin="45,0,717,486" Grid.RowSpan="2"/>
-        <ComboBox Name="select" Grid.Row="1" Width="300" Height="30" Margin="302,29,410,19" SelectedItem="{Binding Path=hu, Mode=TwoWay}" Loaded="select_Loaded" SelectionChanged="select_SelectionChanged" IsEditable="True" />
-        <DataGrid Grid.Row="2" Name="Guests" >
-            
-        </DataGrid>
+        <ComboBox Name="select" Grid.Row="1" Height="30" Margin="302,29,428,19" SelectedItem="{Binding Path=hu, Mode=TwoWay}" Loaded="select_Loaded" SelectionChanged="select_SelectionChanged" IsEditable="True" />
+        <Grid Grid.Row="2" FlowDirection="LeftToRight">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <DataGrid Grid.Column="1" Background="White" Visibility="Hidden" Name="Guests" ItemsSource="{Binding Path= l}" Loaded="Guests_Loaded" AutoGenerateColumns="False" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding GuestRequestKey}" Header="Key"/>
+                    <DataGridTextColumn Binding="{Binding FirstName}" Header="First Name "/>
+                    <DataGridTextColumn Binding="{Binding LastName}" Header="Last Name"/>
+                    <DataGridTextColumn Binding="{Binding EntryDate}" Header="Entry Date"/>
+                    <DataGridTextColumn Binding="{Binding ReleaseDate}" Header="Releas Date"/>
+                    <DataGridTextColumn Binding="{Binding Adults}" Header="Adults"/>
+                    <DataGridTextColumn Binding="{Binding Children}" Header="Children" />
+                    <DataGridCheckBoxColumn Binding="{Binding d, Mode=OneWayToSource}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="2" Source="IMAGE/logonw.jpeg"/>
+            <Button Name="Add" Grid.Column="0" Content="Create orders" Click="Add_Click" Height="90" Width="200" Style="{StaticResource general1}" Margin="126,4,11,4"/>
+            <Button Name="Cancel" Grid.Column="1" Content="Cancel" Click="Cancel_Click" Height="90" Width="200" Style="{StaticResource general1}" Margin="19,4,119,4"/>
+        </Grid>
+
+
     </Grid>
 </Window>

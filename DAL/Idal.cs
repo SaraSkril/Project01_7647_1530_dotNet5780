@@ -39,7 +39,7 @@ namespace DAL
         #region finds element
         Host GetHost(string id);
         HostingUnit GetHostingUnit(int key);
-        Guest GetGuest(string id);
+       // Guest GetGuest(string id);
         Order GetOrder(int guestkey, int unitkey);
         Order GetOrder(int orderkey);
         HostingUnit GetHostingUnit(string name) ;

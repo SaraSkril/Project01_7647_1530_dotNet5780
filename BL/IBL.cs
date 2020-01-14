@@ -37,7 +37,7 @@ namespace BL
         #endregion
         #region Check
 
-        bool checkifGuests(string id);
+        //bool checkifGuests(string id);
         bool checkifHost(string id);
         bool checkID(string id);
         bool CheckDate(DateTime start, DateTime end);//check if end day is longer than 1 day by start
@@ -52,7 +52,7 @@ namespace BL
         bool HostingUnitExist(HostingUnit hostingUnit);
         Host FindHost(int key);//recieves hosting unit key and returns the host that ownes it
         Host FindHost(string id);//recieves host id and returns the host
-        Guest GetGuest(string Id);
+       // Guest GetGuest(string Id);
         #endregion
         #region Other Function
         bool ChangeCollectionClearance(HostingUnit hostingUnit);//checks if theres a open order, if so we cannot change collection clearance
@@ -65,11 +65,12 @@ namespace BL
         int NumOfHostingUnits(Host h);//recieves a host and returns num of hosting units he ownes
         int NumForGuest(Guest guest);//counts and returns how many orders have been sent to him
         int NumForUnit(HostingUnit hostingUnit);//counts how many orders were  closed/sent for hosting unit
-        int GetGuestKeyByID(string id);
+        //int GetGuestKeyByID(string id);
         int GetHUkeyBuName(string name);
         bool checkEmail(string email);
         #endregion
         #region Group
+        Predicate<Guest> BuildPredicate(HostingUnit hu);
         List<string> GetHubyHost(string id);
         IEnumerable<IGrouping<Area, Guest>> GetGuestsGroupsByArea();//groups geusts according to area
         IEnumerable<IGrouping<int, Guest>> GetGuestsGroupsByVacationers();//groups guests according to num vacation

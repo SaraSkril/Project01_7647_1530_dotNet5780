@@ -46,13 +46,13 @@ namespace DAL
             return request.FirstOrDefault();
             }
         
-        public Guest GetGuest(string id) //gets an id and returns the guest
+        /*public Guest GetGuest(string id) //gets an id and returns the guest
         {
         var request = from guest in DataSource.getGuests()
                           where guest.ID==id
                           select guest;
             return request.FirstOrDefault();
-         }
+         }*/
 
         public Guest GetGuest(int key) //gets an id and returns the guest
         {
@@ -81,7 +81,7 @@ namespace DAL
         #region Guest 
         public void AddGuestReq(Guest guest)
         {
-            Guest guest1 = GetGuest(guest.ID);
+            Guest guest1 = GetGuest(guest.GuestRequestKey);
             if (guest1 == null)//if guest doesnt exist 
             {
                 guest.GuestStatus = Status.Active;
@@ -98,10 +98,9 @@ namespace DAL
 
         public void UpdateGuestReq(Guest guest)
         {
-            int index = DataSource.getGuests().FindIndex(t => t.ID == guest.ID);//finds ondex of guest with id  
-            guest.GuestRequestKey = GetGuest(guest.ID).GuestRequestKey;
+            int index = DataSource.getGuests().FindIndex(t => t.GuestRequestKey == guest.GuestRequestKey);//finds ondex of guest with id 
             if (index == -1)//meaning id not found
-                throw new KeyNotFoundException("No Guest with this id!");
+                throw new KeyNotFoundException("No Guest with this Key!");
          
             DataSource.getGuests()[index] = guest.Clone();//update the guest
         }
@@ -171,6 +170,7 @@ namespace DAL
             Order order1 = GetOrder(order.OrderKey);
             if (order1 == null)//if guest doesnt exist 
             {
+                order.OrderKey = ++(Configuration.OrderKey);
                 DataSource.GetOrders().Add(order.Clone());//adds new order to list of orders(using clone funcion- sends a copy of the original)f 
             }
             else

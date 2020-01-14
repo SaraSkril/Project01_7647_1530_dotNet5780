@@ -26,7 +26,7 @@ namespace PLWPF
             InitializeComponent();
         }
         private void button1_Click_Login_Guest(object sender, RoutedEventArgs e)
-        {
+        {/*
             if (Idtextbox.Text.Length != 9)
             {
                 MessageBox.Show("Invalid ID!");
@@ -48,7 +48,7 @@ namespace PLWPF
             Close();
             new updateguest(Idtextbox.Text).ShowDialog();
             
-
+            */
 
         }
         private void button2_Click_addnewGuest(object sender, RoutedEventArgs e)
