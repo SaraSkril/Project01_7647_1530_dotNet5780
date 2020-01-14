@@ -26,6 +26,7 @@ namespace PLWPF
         }
         public addorder(string id)
         {
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             ID = id;
             InitializeComponent();
         }

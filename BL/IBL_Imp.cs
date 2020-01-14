@@ -24,9 +24,7 @@ namespace BL
         {
             if (!CheckDate(guest.EntryDate, guest.ReleaseDate))
                 throw new ArgumentOutOfRangeException("Dates are not valid\n ");
-
-            if (checkID(guest.ID) == false)
-                throw new ArgumentOutOfRangeException("ID not valid\n");
+            
             if (checkEmail(guest.EmailAddress) == false)
                 throw new ArgumentOutOfRangeException("Invalid Email Address\n");
             try

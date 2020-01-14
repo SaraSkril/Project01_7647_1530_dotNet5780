@@ -96,22 +96,7 @@ namespace PLWPF
         private void Add_Guest(object sender, RoutedEventArgs e)
         {
             Guest guest = new Guest();
-
-
-            if (ID.Text.Length != 9)
-            {
-                MessageBox.Show("Invalid ID!");
-                return;
-            }
-
-            int number = 0;
-
-            if (int.TryParse(ID.Text, out number) == false)
-            {
-
-                MessageBox.Show("Invalid ID!");
-                return;
-            }
+            
             if (First_Name.Text == "")
             {
                 First_Name.BorderBrush = Brushes.Red;
@@ -146,7 +131,6 @@ namespace PLWPF
             if (Area.SelectedItem != null && Resort.SelectedItem != null && Adult.Text != "" && Pool.SelectedItem != null
                 && Jaccuzi.SelectedItem != null && Garden.SelectedItem != null && Children_att.SelectedItem != null && Wifi.SelectedItem != null)
             {
-                guest.ID = ID.Text;
                 guest.FirstName = First_Name.Text;
                 guest.LastName = Last_Name.Text;
                 guest.RegistrationDate = DateTime.Now;
@@ -176,7 +160,6 @@ namespace PLWPF
                     return;
                 }
                 MessageBox.Show("Guest: " + First_Name.Text + " was added succesfully!");
-                ID.Text = "";
                 First_Name.Text = "";
                 Last_Name.Text = "";
                 Email.Text = "";
