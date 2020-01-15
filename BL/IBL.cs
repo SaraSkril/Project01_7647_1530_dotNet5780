@@ -36,8 +36,7 @@ namespace BL
         IEnumerable<Guest> GetAllGuests(Func<Guest, bool> predicate = null);//recieves a predicate and returns all guests that  satisfy the predicate condition
         #endregion
         #region Check
-
-        //bool checkifGuests(string id);
+        bool checkifOrderExist(int orderKey, int guestKey);//checks if theres a open order
         bool checkifHost(string id);
         bool checkID(string id);
         bool CheckDate(DateTime start, DateTime end);//check if end day is longer than 1 day by start
@@ -70,7 +69,7 @@ namespace BL
         bool checkEmail(string email);
         #endregion
         #region Group
-        Predicate<Guest> BuildPredicate(HostingUnit hu);
+       // Predicate<Guest> BuildPredicate(HostingUnit hu);
         List<string> GetHubyHost(string id);
         IEnumerable<IGrouping<Area, Guest>> GetGuestsGroupsByArea();//groups geusts according to area
         IEnumerable<IGrouping<int, Guest>> GetGuestsGroupsByVacationers();//groups guests according to num vacation

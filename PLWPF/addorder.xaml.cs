@@ -19,6 +19,7 @@ namespace PLWPF
     /// </summary>
     public partial class addorder : Window
     {
+        HostingUnit unit = new HostingUnit();
         string ID;
         public addorder()
         {
@@ -81,8 +82,8 @@ namespace PLWPF
         {
             var result = sender as ComboBox;
             string name = result.SelectedItem as string;
-            HostingUnit unit = new HostingUnit();
-            foreach(HostingUnit hosting in MainWindow.ibl.GetAllHostingUnits())
+          
+            foreach (HostingUnit hosting in MainWindow.ibl.GetAllHostingUnits())
             {
                 if (hosting.HostingUnitName == name)
                 {
@@ -90,10 +91,40 @@ namespace PLWPF
                     break;
                 }
             }
-            //   IEnumerable<Guest> g = MainWindow.ibl.GetAllGuests(MainWindow.ibl.BuildPredicate(unit));
-            List<Guest> l = MainWindow.ibl.GetAllGuests();
-            Guests.Visibility = Visibility.Visible;
-            Guests.ItemsSource = l;
+            Pool p;
+            Garden ga;
+            Jacuzzi j;
+            ChildrensAttractions c;
+            Wifi w;
+            if (unit.pool)
+                p = Pool.Interested;
+            else
+                p = Pool.NotIntersted;
+            if (unit.Garden)
+                ga = Garden.Interested;
+            else
+                ga = Garden.NotIntersted;
+            if (unit.Jacuzzi)
+                j = Jacuzzi.Interested;
+            else
+                j = Jacuzzi.NotIntersted;
+            if (unit.ChildrensAttractions)
+                c = ChildrensAttractions.Interested;
+            else
+                c = ChildrensAttractions.NotIntersted;
+            if (unit.Wifi)
+                w = Wifi.Interested;
+            else
+                w = Wifi.NotIntersted;
+
+
+            var list = MainWindow.ibl.GetAllGuests(g => (g.Area == unit.area || g.Area == Area.All) && (g.TypeUnit == unit.TypeUnit) && (g.Pool == Pool.Maybe || g.Pool == p) &&
+              (g.Garden == Garden.Maybe || g.Garden == ga) && (g.Jacuzzi == Jacuzzi.Maybe || g.Jacuzzi == j) && (g.ChildrensAttractions == ChildrensAttractions.Maybe || g.ChildrensAttractions == c)
+              && (g.Wifi == Wifi.Maybe || g.Wifi == w) && (MainWindow.ibl.IsAvailible(unit, g.EntryDate, g.ReleaseDate)) && (g.GuestStatus == Status.Active) && (!MainWindow.ibl.checkifOrderExist(unit.HostingUnitKey, g.GuestRequestKey)));
+
+
+            //Guests.Visibility = Visibility.Visible;
+            @try.ItemsSource = list;
 
         }
 
@@ -101,26 +132,31 @@ namespace PLWPF
         {
             List<Guest> l = MainWindow.ibl.GetAllGuests();
             var grid = sender as DataGrid;
-            
+
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            /*foreach (DataGridCheckBoxColumn itemrow in Guests.Columns)
+            Order order = new Order();
+          foreach(Guest guest in _selectedGuest)
             {
-                CheckBox d = (CheckBox)(itemrow.);
-                if ((bool)d.IsChecked)
+                try
                 {
-                    try
-                    {
-                        Order ord = new Order();
-                        ord.GuestRequestKey=
-
-                        MainWindow.ibl.AddOrder()
-                    }
+                    order.GuestRequestKey = guest.GuestRequestKey;
+                    order.HostingUnitKey = unit.HostingUnitKey;
+                    MainWindow.ibl.AddOrder(order);
                 }
-            }*/
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+            }
+            MessageBox.Show("Your orders were created successfully!\n you will be able to update them in the update window");
+            Close();
         }
+
+     
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
@@ -133,6 +169,23 @@ namespace PLWPF
             {
                 // Do not close the window  
             }
+        }
+
+        private  List<Guest> _selectedGuest = new List<Guest>();
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox ckhBox = sender as CheckBox;
+            Guest checkedGuest= ckhBox.DataContext as Guest;
+            if (!_selectedGuest.Contains(checkedGuest))
+                _selectedGuest.Add(checkedGuest);
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            CheckBox ckhBox = sender as CheckBox;
+            Guest checkedGuest = ckhBox.DataContext as Guest;
+            if (_selectedGuest.Contains(checkedGuest))
+                _selectedGuest.Remove(checkedGuest);
         }
     }
 }

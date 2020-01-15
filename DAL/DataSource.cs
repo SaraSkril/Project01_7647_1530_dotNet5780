@@ -147,6 +147,7 @@ namespace DAL
             hostingUnit1.TypeUnit = TypeUnit.Hotel;
             hostingUnits.Add(hostingUnit1);
 
+      
             HostingUnit hostingUnit2 = new HostingUnit();
             hostingUnit2.HostingUnitKey = ++Configuration.HostingUnitKey;
             hostingUnit2.HostingUnitName = "Golan Heights";

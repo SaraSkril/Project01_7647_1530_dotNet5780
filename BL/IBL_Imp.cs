@@ -250,6 +250,14 @@ namespace BL
                 return false;
             return true;
         }*/
+        public bool checkifOrderExist(int hostingkey, int guestKey)//if theres an open order with hu & guest then return true 
+        {
+            foreach (Order ord in GetAllOrders())
+                if (ord.HostingUnitKey == hostingkey && ord.GuestRequestKey == guestKey)
+                    return true;
+            return false;
+
+        }
         public bool checkifHost(string id)
         {
             Host h = dal.GetHost(id);
@@ -514,7 +522,7 @@ namespace BL
            }
         #endregion
         #region Group
-        public Predicate<Guest> BuildPredicate(HostingUnit hu)//based on a hosting unit builds a predicate to filter all guest requests
+        /*public Predicate<Guest> BuildPredicate(HostingUnit hu)//based on a hosting unit builds a predicate to filter all guest requests
         {
 
             IEnumerable<Guest> guestRequests = dal.GetAllGuests();//gets the list of requests
@@ -555,7 +563,7 @@ namespace BL
             pred += VacaType;
 
             return pred;
-        }
+        }*/
             public IEnumerable<IGrouping<Area, Guest>> GetGuestsGroupsByArea()//groups geusts according to area
         {
             return from item in dal.GetAllGuests()
