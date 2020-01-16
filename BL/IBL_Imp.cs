@@ -63,7 +63,6 @@ namespace BL
             Guest guest = dal.GetGuest(order.GuestRequestKey);
             if (guest == null)
                 throw new KeyNotFoundException("Invalid Guest");
-            order.OrderKey=++Configuration.OrderKey;
             order.Status = Status.Active;
             order.CreateDate = DateTime.Now;
             
@@ -101,8 +100,7 @@ namespace BL
         {
             if (!CheckDate(guest.EntryDate, guest.ReleaseDate))
                 throw new ArgumentOutOfRangeException("Dates are not valid/n ");
-            if (checkID(guest.ID) == false)
-                throw new ArgumentOutOfRangeException("ID not valid/n");
+           
             try
             {
                 dal.UpdateGuestReq(guest.Clone());
@@ -129,18 +127,9 @@ namespace BL
         public void UpdateOrder(Order order)//Updates Order
         {
             Order orig = GetAllOrders().FirstOrDefault(t => t.OrderKey == order.OrderKey);
-            if ((orig.Status == Status.Closed_ClientRequest || orig.Status == Status.Closed_NoReply) && orig.Status != order.Status)
+            if ((orig.Status == Status.Closed_ClientRequest || orig.Status == Status.Closed_NoReply) )
                 throw new TaskCanceledException("Status cannot be changed");
-            if ((orig.Status == Status.Closed_ClientRequest || orig.Status == Status.Closed_NoReply) && orig.Status == order.Status)
-                try
-                {
-                    dal.UpdateOrder(order.Clone());
-
-                }
-                catch (KeyNotFoundException e)
-                {
-                    throw e;
-                }
+          
             if (orig.Status == Status.Mail_Sent && order.Status == Status.Mail_Sent)
                 try
                 {
@@ -154,8 +143,7 @@ namespace BL
             if (order.Status == Status.Closed_NoReply)
                 try
                 {
-                    Guest guest = dal.GetGuest(order.GuestRequestKey);
-                    guest.GuestStatus = Status.Closed_NoReply;
+                 
                     dal.UpdateOrder(order.Clone());
 
                 }
@@ -223,15 +211,31 @@ namespace BL
         #region GetAll
         public List<HostingUnit> GetAllHostingUnits()//returns a lists with all hosting unit
         {
-            return dal.GetAllHostingUnits();
+            List<HostingUnit> hu = new List<HostingUnit>();
+            foreach(HostingUnit unit in dal.GetAllHostingUnits())
+            {
+                hu.Add(unit.Clone());
+            }
+            return hu;
         }
         public List<Guest> GetAllGuests()//returns a list with all Guests
         {
-            return dal.GetAllGuests();
+            List<Guest> g = new List<Guest>();
+            foreach (Guest guest in dal.GetAllGuests())
+            {
+                g.Add(guest.Clone());
+
+            }
+            return g;
         }
         public List<Order> GetAllOrders()//returns a list with all orders
         {
-            return dal.GetAllOrders();
+            List<Order> Order = new List<Order>();
+            foreach(Order orders in dal.GetAllOrders())
+            {
+                Order.Add(orders.Clone());
+            }
+            return Order;
         }
         public IEnumerable<BankAccount> GetAllBankAccounts()//returns a list with all Bank Accounts 
         {
@@ -239,17 +243,7 @@ namespace BL
         }
         #endregion
         #region check
-        /*public Guest  GetGuest(string Id)
-        {
-            return dal.GetGuest(Id);
-        }
-        public bool checkifGuests(string id)
-        {
-            Guest g = dal.GetGuest(id);
-            if (g == null)
-                return false;
-            return true;
-        }*/
+        
         public bool checkifOrderExist(int hostingkey, int guestKey)//if theres an open order with hu & guest then return true 
         {
             foreach (Order ord in GetAllOrders())
@@ -389,15 +383,14 @@ namespace BL
 
             MailMessage mail = new MailMessage();
             mail.To.Add("srskriloff@gmail.com");
-            mail.From = new MailAddress("elishevaronstam@gmail.com");
+            mail.From = new MailAddress("srskriloff@gmail.com");
             mail.Subject = "Vakantie vacation offer";
             mail.Body = "Hi," + g.FirstName + " " + g.LastName + "!\n" + "Thank you for visiting Vakantie!\n" + "My Hosting Unit" + hu.HostingUnitName + "  fills your requirements and Id be more than glad to host you.\n" +
                 "Please contact me at:" + h.EmailAddress + " to follow up with your order.\n" + "ALL the best, " + h.FirstName + " " + h.LastName;
             mail.IsBodyHtml = true;
             SmtpClient smtp = new SmtpClient();
             smtp.Host = "smtp.gmail.com";
-
-            smtp.Credentials = new System.Net.NetworkCredential();//open an email account
+            smtp.Credentials = new System.Net.NetworkCredential("vakantiebooking@gmail.com","vakantie2020");//open an email account
             smtp.EnableSsl = true;
             try
             {

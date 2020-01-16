@@ -122,10 +122,9 @@ namespace PLWPF
               (g.Garden == Garden.Maybe || g.Garden == ga) && (g.Jacuzzi == Jacuzzi.Maybe || g.Jacuzzi == j) && (g.ChildrensAttractions == ChildrensAttractions.Maybe || g.ChildrensAttractions == c)
               && (g.Wifi == Wifi.Maybe || g.Wifi == w) && (MainWindow.ibl.IsAvailible(unit, g.EntryDate, g.ReleaseDate)) && (g.GuestStatus == Status.Active) && (!MainWindow.ibl.checkifOrderExist(unit.HostingUnitKey, g.GuestRequestKey)));
 
-
-            //Guests.Visibility = Visibility.Visible;
+            
             @try.ItemsSource = list;
-
+            @try.Visibility = Visibility.Visible;
         }
 
         private void Guests_Loaded(object sender, RoutedEventArgs e)
@@ -153,7 +152,9 @@ namespace PLWPF
                 }
             }
             MessageBox.Show("Your orders were created successfully!\n you will be able to update them in the update window");
+            
             Close();
+           // new hostprop(ID).ShowDialog();
         }
 
      
@@ -164,6 +165,8 @@ namespace PLWPF
             if (MessageBox.Show("Are you sure you want to leave?\n Your changes will not be saved!", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 Close();
+               // new hostprop(ID).ShowDialog();
+
             }
             else
             {

@@ -85,7 +85,9 @@
                         <GridViewColumn Header="" Width="50">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <CheckBox Checked="CheckBox_Checked" />
+                                    <Button Name="Edit" Click="Edit_Click" Template="{StaticResource TitleBarButtons}">
+                                    <Image Source="IMAGE/edit.png" Height="20" Width="20"/>
+                                    </Button>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

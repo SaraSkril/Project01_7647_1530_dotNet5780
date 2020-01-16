@@ -97,11 +97,10 @@ namespace PLWPF
             string opt1 = result.SelectedItem as string;
             if (opt1 == "Add Order")
             {
-                Close();
                 new addorder(h.ID).ShowDialog();
             }
             else
-                return;
+                new UpdateOrder(h.ID).ShowDialog();
         }
     }
 }

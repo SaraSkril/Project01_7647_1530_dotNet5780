@@ -46,7 +46,6 @@ namespace PLWPF
         private void setAllDetails()
         {
             DateTime d = new DateTime(g.ReleaseDate.Year, g.ReleaseDate.Month, g.ReleaseDate.Day);
-            ID.Content = g.ID;
             fname.Text = g.FirstName;
             lname.Text = g.LastName;
             email.Text = g.EmailAddress;

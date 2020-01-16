@@ -9,7 +9,6 @@ namespace BE
     public class Guest
     {
         public int GuestRequestKey { get; set; }
-        public string ID { get; set; }
         public string FirstName { get; set; }//guest first name
         public string LastName { get; set; }//guest last name
         public string EmailAddress { get; set; }//guest email address

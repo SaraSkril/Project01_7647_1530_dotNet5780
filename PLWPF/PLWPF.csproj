@@ -87,6 +87,9 @@
     <Compile Include="UpdateOrder.xaml.cs">
       <DependentUpon>UpdateOrder.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UpdateOrderSpec.xaml.cs">
+      <DependentUpon>UpdateOrderSpec.xaml</DependentUpon>
+    </Compile>
     <Page Include="AddGuests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -146,6 +149,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UpdateOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UpdateOrderSpec.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -212,6 +219,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="IMAGE\arrow1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="IMAGE\edit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

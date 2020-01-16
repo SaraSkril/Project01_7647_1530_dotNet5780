@@ -47,7 +47,7 @@
                 <ColumnDefinition Width="93*"/>
             </Grid.ColumnDefinitions>
             
-            <ListView Name="try" ItemsSource="{Binding Path= list}" Grid.Column="1" Margin="4,51,89,39" Grid.ColumnSpan="2" >
+            <ListView Name="try" ItemsSource="{Binding Path= list}" Grid.Column="1" Margin="4,51,89,39" Grid.ColumnSpan="2" Visibility="Hidden" >
 
                 <ListView.View>
 

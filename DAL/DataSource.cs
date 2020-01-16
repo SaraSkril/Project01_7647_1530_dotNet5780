@@ -73,7 +73,6 @@ namespace DAL
 
             Guest guest1 = new Guest();
             guest1.GuestRequestKey = ++Configuration.GuestRequestKey;
-            guest1.ID = "000000000";
             guest1.FirstName = "Harel";
             guest1.LastName = "Skaat";
             guest1.EmailAddress = "harelrox@gmail.com";
@@ -94,7 +93,6 @@ namespace DAL
 
             Guest guest2 = new Guest();
             guest2.GuestRequestKey = ++Configuration.GuestRequestKey;
-            guest2.ID = "345678912";
             guest2.FirstName = "Noa";
             guest2.LastName = "Kirel";
             guest2.EmailAddress = "noakila@gmail.com";
@@ -115,7 +113,6 @@ namespace DAL
 
             Guest guest3 = new Guest();
             guest3.GuestRequestKey = ++Configuration.GuestRequestKey;
-            guest3.ID = "123678912";
             guest3.FirstName = "oshri";
             guest3.LastName = "cohen";
             guest3.EmailAddress = "oshri@gmail.com";
@@ -167,8 +164,8 @@ namespace DAL
             hostingUnit3.Owner = host1;
             hostingUnit3.area = Area.Jerusalem;
             hostingUnit3.pool = true;
-            hostingUnit3.Jacuzzi = false;
-            hostingUnit3.Garden = false;
+            hostingUnit3.Jacuzzi =true;
+            hostingUnit3.Garden = true;
             hostingUnit3.ChildrensAttractions = true;
             hostingUnit3.Wifi = true;
             hostingUnit3.TypeUnit = TypeUnit.Hotel;
@@ -187,6 +184,7 @@ namespace DAL
             bankAccounts.Add(b5);
 
             Order order = new Order();
+            order.OrderKey = ++(Configuration.OrderKey);
             order.GuestRequestKey = guest3.GuestRequestKey;
             order.HostingUnitKey = hostingUnit2.HostingUnitKey;
             order.CreateDate = DateTime.Now;

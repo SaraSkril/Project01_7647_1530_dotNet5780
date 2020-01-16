@@ -19,26 +19,29 @@ namespace PLWPF
     /// </summary>
     public partial class UpdateOrder : Window
     {
+        HostingUnit unit = new HostingUnit();
+        string ID;
         public UpdateOrder()
         {
             InitializeComponent();
         }
         public UpdateOrder(string id)
         {
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
-         
-            
+            ID = id;
+
         }
-        
-        
+
+
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            CheckBox ckhBox = sender as CheckBox;
+           /* CheckBox ckhBox = sender as CheckBox;
             Guest checkedGuest = ckhBox.DataContext as Guest;
             //open nee window to edit
             //update list
-
+            */
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -46,6 +49,7 @@ namespace PLWPF
             if (MessageBox.Show("Are you sure you want to leave?\n Your changes will not be saved!", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 Close();
+                new hostprop(ID).ShowDialog();
             }
             else
             {
@@ -58,11 +62,95 @@ namespace PLWPF
             if (MessageBox.Show("Are you sure you want to leave?\n Your changes will not be saved!", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 Close();
+                new hostprop(ID).ShowDialog();
             }
             else
             {
                 // Do not close the window  
             }
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        }
+        private void Button_MouseEnter_RED(object sender, MouseEventArgs e)//change to when pressed red
+        {
+            ((Button)sender).Background = (Brush)Brushes.Red;
+            ((Button)sender).Width *= 1.1;
+            ((Button)sender).Height *= 1.1;
+
+
+        }
+        private void Button_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ((Button)sender).Width *= 1.1;
+            ((Button)sender).Height *= 1.1;
+        }
+        private void Button_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((Button)sender).Width /= 1.1;
+            ((Button)sender).Height /= 1.1;
+        }
+        private void Button_Click_CloseWindow(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        private void Button_Click_MinimizeWindow(object sender, RoutedEventArgs e)
+        {
+            SystemCommands.MinimizeWindow(this);
+        }
+        private void Button_Click_MaximizeWindow(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+                SystemCommands.RestoreWindow(this);
+            else
+                SystemCommands.MaximizeWindow(this);
+        }
+
+        private void select_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var result = sender as ComboBox;
+            string name = result.SelectedItem as string;
+
+            foreach (HostingUnit hosting in MainWindow.ibl.GetAllHostingUnits())
+            {
+                if (hosting.HostingUnitName == name)
+                {
+                    unit = hosting;
+                    break;
+                }
+            }
+            List<Order> ord = new List<Order>();
+            foreach (Order order in MainWindow.ibl.GetAllOrders())
+            {
+                if (order.HostingUnitKey == unit.HostingUnitKey)
+                    ord.Add(order);
+            }
+            @try.ItemsSource = ord;
+            @try.Visibility = Visibility.Visible;
+        }
+
+        private void select_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<string> hu = MainWindow.ibl.GetHubyHost(ID);
+            var combo = sender as ComboBox;
+            combo.ItemsSource = hu;
+        }
+
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            Order order = button.DataContext as Order;
+            new UpdateOrderSpec(order.OrderKey,ID).ShowDialog();
+            List<Order> ord1 = new List<Order>();
+            foreach (Order order1 in MainWindow.ibl.GetAllOrders())
+            {
+                if (order1.HostingUnitKey == unit.HostingUnitKey)
+                    ord1.Add(order1);
+            }
+            @try.ItemsSource = null;
+            @try.ItemsSource = ord1;
         }
     }
 }
