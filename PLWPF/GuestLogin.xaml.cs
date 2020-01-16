@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 namespace PLWPF
 {
     /// <summary>
-    /// //hey
+   
     /// Interaction logic for GuestLogin.xaml
     /// </summary>
     public partial class GuestLogin : Window

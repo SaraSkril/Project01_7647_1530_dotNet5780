@@ -64,7 +64,7 @@
                     <ImageBrush/>
                 </Button.Background>
             </Button>
-            <Button Grid.Column="5" x:Name="Orders" Click="Orders_Click" Content="blah" Height="103" VerticalAlignment="Top"  Margin="0,-2,0,0" FontSize="20" Style="{StaticResource general1}" Grid.ColumnSpan="2" >
+            <Button Grid.Column="5" x:Name="Orders" Click="Orders_Click" Content="Administration" Height="103" VerticalAlignment="Top"  Margin="0,-2,0,0" FontSize="20" Style="{StaticResource general1}" Grid.ColumnSpan="2" >
                 <Button.Background>
                     <ImageBrush/>
                 </Button.Background>

@@ -159,7 +159,7 @@ namespace PLWPF
                     MessageBox.Show(ex.Message);
                     return;
                 }
-                MessageBox.Show("Guest: " + First_Name.Text + " was added succesfully!");
+                MessageBox.Show(First_Name.Text + ",\nThank You for your interest in Vakantie!\n  Your request was added succesfully!\n  We will be in touch with you shortly with offers for you perfect vacation. ");
                 First_Name.Text = "";
                 Last_Name.Text = "";
                 Email.Text = "";

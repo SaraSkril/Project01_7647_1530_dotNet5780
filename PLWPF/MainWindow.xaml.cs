@@ -89,7 +89,7 @@ namespace PLWPF
 
         private void Orders_Click(object sender, RoutedEventArgs e)
         {
-
+            //open the page
         }
     }
 }
