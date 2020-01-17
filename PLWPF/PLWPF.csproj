@@ -78,6 +78,9 @@
     <Compile Include="hostprop.xaml.cs">
       <DependentUpon>hostprop.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HostsInfo.xaml.cs">
+      <DependentUpon>HostsInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NewHost.xaml.cs">
       <DependentUpon>NewHost.xaml</DependentUpon>
     </Compile>
@@ -118,6 +121,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="hostprop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HostsInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

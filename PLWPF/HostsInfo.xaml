@@ -1,0 +1,65 @@
+﻿<Window x:Class="PLWPF.HostsInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PLWPF"
+        mc:Ignorable="d"
+        Title="MainWindow" MinHeight="720" MinWidth="1020" Height="700" Width="1000"  WindowStyle="None" FlowDirection="RightToLeft"
+        AllowsTransparency="False" Background="White"     MouseDown="Window_MouseDown" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="1.88*"/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock Text="Search And Display Hosts" HorizontalAlignment="Center" FontSize="18" Margin="0 10"/>
+            <Grid FlowDirection="LeftToRight">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.15*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.15*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label x:Name="label" FontSize="16" Grid.Column="1" Content="Enter First Name:" VerticalContentAlignment="Center"/>
+                <TextBox Name="FirstName" Padding="4" Grid.Column="2" Text="" TextChanged="SearchFilterChanged" Margin="1" VerticalContentAlignment="Center"/>
+                <Label x:Name="label2" Grid.Row="2" Grid.Column="1"  FontSize="16" Content="Enter Last Name:" VerticalContentAlignment="Center"/>
+                <TextBox Name="LastName" Padding="4" Grid.Row="1" Grid.Column="2" Text="" TextChanged="SearchFilterChanged" Margin="1" VerticalContentAlignment="Center"/>
+                <Label Grid.Row="1" Grid.Column="1" FontSize="16" Content="Enter ID:"/>
+                <TextBox Name="ID" Padding="4" Grid.Row="2" MaxLength="9" Grid.Column="2" TextChanged="SearchFilterChanged" Margin="1"/>
+            </Grid>
+        </StackPanel>
+    
+         
+           
+               
+        <ListView Grid.Row="1" x:Name="TestersList"  Margin="0 0 0 50" GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler" MouseDoubleClick="MenuItem_Click_InformationOfTester" SelectionChanged="TestersList_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="תעודת זהות" DisplayMemberBinding="{Binding ID}" Width="100"/>
+                    <GridViewColumn Header="שם פרטי" DisplayMemberBinding="{Binding FirstName}" Width="100"/>
+                    <GridViewColumn Header="שם משפחה" DisplayMemberBinding="{Binding LastName}" Width="100"/>
+                    <GridViewColumn Header="תאריך לידה" DisplayMemberBinding="{Binding DateOfBirth, StringFormat=d}" Width="100"/>
+                    <GridViewColumn Header="עיר מגורים" DisplayMemberBinding="{Binding City}" Width="100"/>
+                    <GridViewColumn Header="התמחות" DisplayMemberBinding="{Binding TypeCarToTest, Converter={StaticResource carTypeEnumToString}}" Width="120"/>
+                    <GridViewColumn Header="גיל" DisplayMemberBinding="{Binding DateOfBirth, Converter={StaticResource birthDateToAge}}" Width="50"/>
+                </GridView>
+            </ListView.View>
+            <ListView.ContextMenu >
+                <ContextMenu>
+                    <MenuItem Header="מידע נוסף" Click="MenuItem_Click_InformationOfTester" />
+                    <MenuItem Header="עדכן פרטי בוחן" Click="MenuItem_Click_UpdateTesterDetails" />
+                    <MenuItem Header="מחק בוחן" Click="MenuItem_ClickRemoveTester" />
+                </ContextMenu>
+            </ListView.ContextMenu>
+        </ListView>
+        <Button Grid.Row="2" HorizontalAlignment="Stretch" Content="סגור" Click="ButtonClick_Close" Margin="0 5" VerticalAlignment="Bottom"/>
+    </Grid>
+   
+</Window>
