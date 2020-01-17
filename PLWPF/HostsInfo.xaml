@@ -42,7 +42,7 @@
         <ListView Grid.Row="1" x:Name="TestersList"  Margin="0 0 0 50" GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler" MouseDoubleClick="MenuItem_Click_InformationOfTester" SelectionChanged="TestersList_SelectionChanged">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="תעודת זהות" DisplayMemberBinding="{Binding ID}" Width="100"/>
+                    <GridViewColumn Header="id" DisplayMemberBinding="{Binding ID}" Width="100"/>
                     <GridViewColumn Header="שם פרטי" DisplayMemberBinding="{Binding FirstName}" Width="100"/>
                     <GridViewColumn Header="שם משפחה" DisplayMemberBinding="{Binding LastName}" Width="100"/>
                     <GridViewColumn Header="תאריך לידה" DisplayMemberBinding="{Binding DateOfBirth, StringFormat=d}" Width="100"/>
