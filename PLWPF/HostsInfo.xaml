@@ -59,7 +59,7 @@
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>
-        <Button Grid.Row="2" HorizontalAlignment="Stretch" Content="סגור" Click="ButtonClick_Close" Margin="0 5" VerticalAlignment="Bottom"/>
+       
     </Grid>
    
 </Window>
