@@ -524,48 +524,7 @@ namespace BL
            }
         #endregion
         #region Group
-        /*public Predicate<Guest> BuildPredicate(HostingUnit hu)//based on a hosting unit builds a predicate to filter all guest requests
-        {
-
-            IEnumerable<Guest> guestRequests = dal.GetAllGuests();//gets the list of requests
-            Predicate<Guest> pred = default(Predicate<Guest>);
-            bool HasPool(Guest gr) { return gr.Pool == Pool.Interested || gr.Pool == Pool.Maybe; }
-            bool NoPool(Guest gr) { return gr.Pool == Pool.NotIntersted || gr.Pool == Pool.Maybe; }
-            bool HasJacuzzi(Guest gr) { return gr.Jacuzzi == Jacuzzi.Interested || gr.Jacuzzi == Jacuzzi.Maybe; }
-            bool NoJacuzzi(Guest gr) { return gr.Jacuzzi == Jacuzzi.NotIntersted || gr.Jacuzzi == Jacuzzi.Maybe; }
-            bool HasGarden(Guest gr) { return gr.Garden == Garden.Interested || gr.Garden == Garden.Maybe; }
-            bool NoGarden(Guest gr) { return gr.Garden == Garden.NotIntersted || gr.Garden == Garden.Maybe; }
-            bool HasWiFi(Guest gr) { return gr.Wifi == Wifi.Interested || gr.Wifi == Wifi.Maybe; }
-            bool NoWiFi(Guest gr) { return gr.Wifi == Wifi.NotIntersted || gr.Wifi == Wifi.Maybe; }
-            bool HasChildrensAttractions(Guest gr) { return gr.ChildrensAttractions == ChildrensAttractions.Interested || gr.ChildrensAttractions == ChildrensAttractions.Maybe; }
-            bool NoChildrensAttractions(Guest gr) { return gr.ChildrensAttractions == ChildrensAttractions.NotIntersted || gr.ChildrensAttractions == ChildrensAttractions.Maybe; }
-
-
-            bool VacaArea(Guest gr) { return gr.Area == hu.area || gr.Area == Area.All; }
-            bool VacaType(Guest gr) { return gr.TypeUnit == hu.TypeUnit; }
-
-            if (hu.pool)
-                pred += HasPool;
-            else pred += NoPool;
-            if (hu.Jacuzzi)
-                pred += HasJacuzzi;
-            else pred += NoJacuzzi;
-            if (hu.Garden)
-                pred += HasGarden;
-            else pred += NoGarden;
-            if (hu.Wifi)
-                pred += HasWiFi;
-            else pred += NoWiFi;
-            if (hu.ChildrensAttractions)
-                pred += HasChildrensAttractions;
-            else pred += NoChildrensAttractions;
-
-            pred += VacaArea;
-
-            pred += VacaType;
-
-            return pred;
-        }*/
+        
             public IEnumerable<IGrouping<Area, Guest>> GetGuestsGroupsByArea()//groups geusts according to area
         {
             return from item in dal.GetAllGuests()

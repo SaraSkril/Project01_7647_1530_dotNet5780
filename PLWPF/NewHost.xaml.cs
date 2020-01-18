@@ -147,6 +147,17 @@ namespace PLWPF
             else
                 h.CollectionClearance = CollectionClearance.No;
             h.EmailAddress = Email.Text;
+            {
+                h.BankAccountNumber = 11111;
+                BankAccount b = new BankAccount();
+                b.BankName = "bbb";
+                b.BankNumber = 12;
+                b.BranchAddress = "bbb";
+                b.BranchCity = "bbb";
+                b.BranchNumber = 2;
+                h.BankDetails = b;
+            }
+
             //bank
             try
             {
@@ -155,6 +166,7 @@ namespace PLWPF
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                return;
             }
             MessageBox.Show("Host " + First_Name.Text + " was added succefully!");
             ID.Text = "";
