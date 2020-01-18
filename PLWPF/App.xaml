@@ -6,7 +6,7 @@
     
     <Application.Resources>
 
-        <Style TargetType="{x:Type Window}">
+        <Style x:Name="window" TargetType="{x:Type Window}">
             <Setter Property="FontFamily"
             Value="Comic Sans MS" />
         </Style>
@@ -25,6 +25,23 @@
             </Grid>
 
         </ControlTemplate>
+
+        <ControlTemplate x:Key="icon" TargetType="Button">
+            <Grid>
+                <Ellipse>
+                    <Ellipse.Fill>
+                        <LinearGradientBrush>
+
+                            <GradientStop Offset="0.5" Color="White" />
+
+                        </LinearGradientBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+
+        </ControlTemplate>
+        
         <ControlTemplate x:Key="RED" TargetType="Button">
             <Grid>
                 <Ellipse>

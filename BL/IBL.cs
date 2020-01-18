@@ -30,6 +30,7 @@ namespace BL
         #endregion
         #region GetAll
         List<HostingUnit> GetAllHostingUnits();//returns a lists with all hosting unit
+        List<Host> GetAllHosts();//returns a lists with all hosts
         List<Guest> GetAllGuests();//returns a list with all Guests
         List<Order> GetAllOrders();//returns a list with all orders
         IEnumerable<BankAccount> GetAllBankAccounts();//returns a list with all Bank Accounts 
@@ -74,6 +75,7 @@ namespace BL
         IEnumerable<IGrouping<Area, Guest>> GetGuestsGroupsByArea();//groups geusts according to area
         IEnumerable<IGrouping<int, Guest>> GetGuestsGroupsByVacationers();//groups guests according to num vacation
         IEnumerable<IGrouping<int, Host>> GetHostsGroupsByHostingUnits();//groups hosts according to num of hosting units
+        IEnumerable<IGrouping<CollectionClearance, Host>> GetHostsGroupsByClearance();//groups hosts according to num of hosting units
         IEnumerable<IGrouping<Area, HostingUnit>> GetHUGroupsByArea();//groups hosting units according to area
 
         #endregion

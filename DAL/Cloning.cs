@@ -32,6 +32,28 @@ namespace DAL
             target.Wifi = original.Wifi;
             return target;
         }
+        public static Host Clone(this Host original)
+        {
+            Host target = new Host();
+            target.FirstName = original.FirstName;
+            target.LastName = original.LastName;
+            target.BankAccountNumber = original.BankAccountNumber;
+            BankAccount b= new BankAccount();
+            b.BankName = original.BankDetails.BankName;
+            b.BankNumber = original.BankDetails.BankNumber;
+            b.BranchAddress = original.BankDetails.BranchAddress;
+            b.BranchCity = original.BankDetails.BranchCity;
+            b.BranchNumber = original.BankDetails.BranchNumber;
+            target.BankDetails = b;
+            target.CollectionClearance = original.CollectionClearance;
+            target.commission = original.commission;
+            target.ID = original.ID;
+            target.PhoneNumber = original.PhoneNumber;
+            target.EmailAddress = original.EmailAddress;
+            
+            return target;
+
+        }
         public static T Clone<T>(this T original) where T : new() //generic clonig function 
         {
 

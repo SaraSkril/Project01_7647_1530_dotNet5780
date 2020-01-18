@@ -218,6 +218,15 @@ namespace BL
             }
             return hu;
         }
+        public List<Host> GetAllHosts()//returns a lists with all hosts
+        {
+            List<Host> hu = new List<Host>();
+            foreach (Host h in dal.GetHosts())
+            {
+                hu.Add(h.Clone());
+            }
+            return hu;
+        }
         public List<Guest> GetAllGuests()//returns a list with all Guests
         {
             List<Guest> g = new List<Guest>();
@@ -565,6 +574,7 @@ namespace BL
                 // orderby g.Key
                    select g;
 
+
         }
         public IEnumerable<IGrouping<int, Guest>> GetGuestsGroupsByVacationers()//groups guests according to num vacation
         {
@@ -576,13 +586,27 @@ namespace BL
         }
         public IEnumerable<IGrouping<int, Host>> GetHostsGroupsByHostingUnits()//groups hosts according to num of hosting units
         {
-            return from item in dal.GetHosts()
+            /*return from item in dal.GetHosts()
                    group item by NumOfHostingUnits(item)
                        into g
                    orderby g.Key
-                   select g;
+                   select g;*/
+           return from item in dal.GetHosts()
+                               let Host = item
+                               let numHU = NumOfHostingUnits(item)
+                                group Host by numHU into f1
+                                orderby f1.Key
+                               select f1;
 
-            
+        }
+        public IEnumerable<IGrouping<CollectionClearance, Host>> GetHostsGroupsByClearance()//groups hosts according to num of hosting units
+        {
+            return from item in dal.GetHosts()
+                   let Host = item
+                   let col = Host.CollectionClearance
+                   group Host by col into f1
+                   orderby f1.Key
+                   select f1;
         }
         public IEnumerable<IGrouping<Area, HostingUnit>> GetHUGroupsByArea()//groups hosting units according to area
         {

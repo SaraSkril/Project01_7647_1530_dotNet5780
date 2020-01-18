@@ -23,5 +23,11 @@ namespace PLWPF
         {
             InitializeComponent();
         }
+
+        private void Hosts_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+            new HostsInfo().ShowDialog();
+        }
     }
 }

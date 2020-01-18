@@ -74,11 +74,11 @@
                       Header="Status" Width="120" />
 
                         <GridViewColumn DisplayMemberBinding=
-                          "{Binding Path=CreateDate}" 
+                          "{Binding Path=CreateDate,StringFormat=d}" 
                       Header="CreateDate" Width="120"/>
 
                         <GridViewColumn DisplayMemberBinding=
-                          "{Binding Path=OrderDate }" 
+                          "{Binding Path=OrderDate,StringFormat=d }" 
                       Header="OrderDate " Width="100"/>
 
                         
