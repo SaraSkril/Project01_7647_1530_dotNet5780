@@ -118,7 +118,7 @@ namespace DAL
             Host h = GetHost(host.ID);
             if (h != null)
                 throw new DuplicateWaitObjectException("Guest with this ID already exists!" );
-            DataSource.getHosts().Add(h);
+            DataSource.getHosts().Add(host.Clone());
 
 
         }
