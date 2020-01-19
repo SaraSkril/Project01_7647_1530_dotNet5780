@@ -45,14 +45,7 @@ namespace DAL
                           select HU;
             return request.FirstOrDefault();
             }
-        
-        /*public Guest GetGuest(string id) //gets an id and returns the guest
-        {
-        var request = from guest in DataSource.getGuests()
-                          where guest.ID==id
-                          select guest;
-            return request.FirstOrDefault();
-         }*/
+     
 
         public Guest GetGuest(int key) //gets an id and returns the guest
         {
@@ -122,8 +115,16 @@ namespace DAL
 
 
         }
+        public void UpdateHost(Host host)
+        {
+            int index = DataSource.getHosts().FindIndex(t => t.ID == host.ID);//finds ondex of guest with id 
+           if(index!=-1)
+                DataSource.getHosts()[index] = host;
+           else
+                throw new DuplicateWaitObjectException("No Host with this id Exists!");
+        }
         #endregion
-        
+
         #region Hosting Unit
         public void AddHostingUnit(HostingUnit hostingUnit)
         {

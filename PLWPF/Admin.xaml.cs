@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using BE;
 namespace PLWPF
 {
     /// <summary>
@@ -23,6 +23,20 @@ namespace PLWPF
         {
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
+            int sum = 0;
+            List<Host> h = MainWindow.ibl.GetAllHosts();
+            List<Guest> g = MainWindow.ibl.GetAllGuests();
+            List<HostingUnit> hu = MainWindow.ibl.GetAllHostingUnits();
+            foreach(Host host in h)
+            {
+                sum += host.commission;
+            }
+            string s = "Current Commissiom: " + Configuration.commission + "\n";
+            s += "Total Profit to date: " + sum + "\n";
+            s += "Number of Hosts: " + h.Count + "\n";
+            s+= "Number of Guests: " + g.Count + "\n";
+            s += "Number of Hosting Units: " + hu.Count + "\n";
+            Info.Content = s;
         }
 
         private void Hosts_Click(object sender, RoutedEventArgs e)

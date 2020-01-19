@@ -14,8 +14,10 @@ namespace DAL
         void UpdateGuestReq(Guest guest);//Updates guest
 
         #endregion
+
         #region Host
         void AddHost(Host host);//adds a new host
+        void UpdateHost(Host host);
         #endregion
 
         #region HostingUnit

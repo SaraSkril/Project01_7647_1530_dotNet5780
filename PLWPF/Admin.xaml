@@ -52,14 +52,16 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="0.1*"/>
+                <RowDefinition Height="1.3*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
+            <Label Name="Info" Grid.Column="1" Grid.Row="3" FontFamily="Comic Sans MS" FontSize="18" Grid.ColumnSpan="4" Margin="0,52,10,115" Grid.RowSpan="2"/>
             <Button Name="Hosts" Click="Hosts_Click" Grid.Row="1" Grid.Column="1" Content="Group or search &#x0a;      Hosts" FontSize="20" Style="{StaticResource general1}"/>
             <Button Name="Guest" Click="Guest_Click"  Grid.Row="1" Grid.Column="3" Content="Group or search &#x0a;      Guests" FontSize="20" Style="{StaticResource general1}"/>
             <Button Name="order" Click="order_Click" Grid.Row="1" Grid.Column="5" Content="Group or search &#x0a;      Orders" FontSize="20" Style="{StaticResource general1}"/>
-            <Button Name="HostingUnit" Click="HostingUnit_Click" Grid.Row="1" Grid.Column="7" Content="Group or search &#x0a;  Hosting Units" FontSize="20" Style="{StaticResource general1}"/>
-            
+            <Button Name="HostingUnit" Click="HostingUnit_Click" Grid.Row="1" Grid.Column="7" Content="Group or search &#x0a; Hosting Units" FontSize="20" Style="{StaticResource general1}"/>
+
         </Grid>
         <Grid Grid.Row="2" FlowDirection="LeftToRight">
             <Grid.ColumnDefinitions>

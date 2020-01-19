@@ -93,7 +93,18 @@ namespace BL
             else
                 throw new KeyNotFoundException("Invalid ID");
         }
-      
+      public void UpdateHost(Host host)
+        {
+            if (checkID(host.ID))
+                try
+                {
+                    dal.UpdateHost(host);
+                }
+                catch(DuplicateWaitObjectException e)
+                {
+                    throw e;
+                }
+        }
         #endregion
         #region Update
         public void UpdateGuestReq(Guest guest)//Updates guest

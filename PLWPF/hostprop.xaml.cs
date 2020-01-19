@@ -102,5 +102,10 @@ namespace PLWPF
             else
                 new UpdateOrder(h.ID).ShowDialog();
         }
+
+        private void Update_Click(object sender, RoutedEventArgs e)
+        {
+            new UpdateHost(h.ID).ShowDialog();
+        }
     }
 }

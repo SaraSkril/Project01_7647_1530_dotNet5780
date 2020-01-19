@@ -11,6 +11,7 @@ namespace BL
     {
         #region Host
         void addHost(Host host);
+        void UpdateHost(Host host);
         #endregion
         #region Guest
         void AddGuestReq(Guest guest);//Adds a new Guest Request
