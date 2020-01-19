@@ -50,14 +50,15 @@
                 <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.3*"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <Button Name="Hosts" Click="Hosts_Click" Grid.Row="1" Grid.Column="1" Content="Group or search &#x0a;      Hosts" FontSize="20" Style="{StaticResource general1}"/>
-            <Button Name="Guest" Click="Hosts_Click" Grid.Row="1" Grid.Column="3" Content="Group or search &#x0a;      Guests" FontSize="20" Style="{StaticResource general1}"/>
+            <Button Name="Guest" Click="Guest_Click"  Grid.Row="1" Grid.Column="3" Content="Group or search &#x0a;      Guests" FontSize="20" Style="{StaticResource general1}"/>
             <Button Name="order" Click="Hosts_Click" Grid.Row="1" Grid.Column="5" Content="Group or search &#x0a;      Orders" FontSize="20" Style="{StaticResource general1}"/>
+            <Button Name="HostingUnit" Click="HostingUnit_Click" Grid.Row="1" Grid.Column="7" Content="Group or search &#x0a;  Hosting Units" FontSize="20" Style="{StaticResource general1}"/>
             
         </Grid>
         <Grid Grid.Row="2" FlowDirection="LeftToRight">

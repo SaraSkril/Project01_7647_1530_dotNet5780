@@ -73,10 +73,11 @@ namespace BL
        // Predicate<Guest> BuildPredicate(HostingUnit hu);
         List<string> GetHubyHost(string id);
         IEnumerable<IGrouping<Area, Guest>> GetGuestsGroupsByArea();//groups geusts according to area
-        IEnumerable<IGrouping<int, Guest>> GetGuestsGroupsByVacationers();//groups guests according to num vacation
+        IEnumerable<IGrouping<int, Guest>> GetGuestsGroupsByVacationers();//groups guests according to num vacationers
         IEnumerable<IGrouping<int, Host>> GetHostsGroupsByHostingUnits();//groups hosts according to num of hosting units
         IEnumerable<IGrouping<CollectionClearance, Host>> GetHostsGroupsByClearance();//groups hosts according to num of hosting units
         IEnumerable<IGrouping<Area, HostingUnit>> GetHUGroupsByArea();//groups hosting units according to area
+        IEnumerable<IGrouping<TypeUnit, HostingUnit>> GetHUGroupsByType();//groups hosting units according to area
 
         #endregion
     }

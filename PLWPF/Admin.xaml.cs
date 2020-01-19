@@ -21,6 +21,7 @@ namespace PLWPF
     {
         public Admin()
         {
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
         }
 
@@ -67,6 +68,17 @@ namespace PLWPF
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
+        }
+
+        private void Guest_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+            new GuestsInfo().ShowDialog();
+        }
+
+        private void HostingUnit_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

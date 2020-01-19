@@ -15,16 +15,15 @@ using BE;
 namespace PLWPF
 {
     /// <summary>
-    /// Interaction logic for HostsInfo.xaml
+    /// Interaction logic for GuestsInfo.xaml
     /// </summary>
-    public partial class HostsInfo : Window
+    public partial class GuestsInfo : Window
     {
-        public HostsInfo()
+        public GuestsInfo()
         {
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
         }
-
         private void Button_MouseEnter_RED(object sender, MouseEventArgs e)//change to when pressed red
         {
             ((Button)sender).Background = (Brush)Brushes.Red;
@@ -61,48 +60,48 @@ namespace PLWPF
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            List<Host> hosts = new List<Host>();
-            List<Host> ans = new List<Host>();
-            hosts = MainWindow.ibl.GetAllHosts();
-            if (FirstName.Text != "" && LastName.Text != "" )
+            List<Guest> Guests = new List<Guest>();
+            List<Guest> ans = new List<Guest>();
+            Guests = MainWindow.ibl.GetAllGuests();
+            if (FirstName.Text != "" && LastName.Text != "")
             {
-                foreach (Host h in hosts)
+                foreach (Guest G in Guests)
                 {
-                    if (h.FirstName.Contains(FirstName.Text) || h.LastName.Contains(LastName.Text))
-                        ans.Add(h);
+                    if (G.FirstName.Contains(FirstName.Text) || G.LastName.Contains(LastName.Text))
+                        ans.Add(G);
                 }
 
             }
             else
-               if (FirstName.Text != "" && LastName.Text == "" )
+               if (FirstName.Text != "" && LastName.Text == "")
             {
-                foreach (Host h in hosts)
+                foreach (Guest G in Guests)
                 {
-                    if (h.FirstName.Contains(FirstName.Text))
-                        ans.Add(h);
+                    if (G.FirstName.Contains(FirstName.Text))
+                        ans.Add(G);
                 }
             }
             else
-                  if (FirstName.Text == "" && LastName.Text != "" )
+                  if (FirstName.Text == "" && LastName.Text != "")
             {
-                foreach (Host h in hosts)
+                foreach (Guest G in Guests)
                 {
-                    if (h.LastName.Contains(LastName.Text))
-                        ans.Add(h);
+                    if (G.LastName.Contains(LastName.Text))
+                        ans.Add(G);
                 }
             }
             if (ans.Count == 0)
                 MessageBox.Show("Oops:( \n No results found , Please try again");
             HostList.ItemsSource = null;
             HostList.ItemsSource = ans;
-            
+
         }
 
         private void Opt_Loaded(object sender, RoutedEventArgs e)
         {
             List<string> opt = new List<string>();
-            opt.Add("Number of Hosting Units");
-            opt.Add("Automatic billing");
+            opt.Add("Area");
+            opt.Add("Number Of Vacationers");
             var combo = sender as ComboBox;
             combo.ItemsSource = opt;
         }
@@ -114,14 +113,14 @@ namespace PLWPF
             string name = result.SelectedItem as string;
             FirstName.Text = "";
             LastName.Text = "";
-            if (name.Equals("Number of Hosting Units"))
+            if (name.Equals("Number Of Vacationers"))
             {
                 ByNum.Text = "Please Enter a number";
                 COl.Visibility = Visibility.Collapsed;
                 ByNum.Visibility = Visibility.Visible;
                 b1.Visibility = Visibility.Visible;
             }
-            if (name.Equals("Automatic billing"))
+            if (name.Equals("Area"))
             {
                 ByNum.Visibility = Visibility.Collapsed;
                 b1.Visibility = Visibility.Collapsed;
@@ -129,7 +128,7 @@ namespace PLWPF
             }
         }
 
-       
+
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -148,42 +147,38 @@ namespace PLWPF
             int num1 = int.Parse(num);
             if (num1 < 0)
                 MessageBox.Show("Please Enter a valid number");
-            IEnumerable<Host> hosts = new List<Host>();
-            IEnumerable<IGrouping<int, Host>> g = MainWindow.ibl.GetHostsGroupsByHostingUnits();
+            IEnumerable<Guest> guests = new List<Guest>();
+            IEnumerable<IGrouping<int, Guest>> g = MainWindow.ibl.GetGuestsGroupsByVacationers();
             foreach (var g1 in g)
             {
                 if (g1.Key == num1)
                 {
-                    hosts = g1;
+                    guests = g1;
                     break;
                 }
             }
-            if(hosts.Count()==0)
+            if (guests.Count() == 0)
                 MessageBox.Show("Oops:( \n No results found , Please try again");
             HostList.ItemsSource = null;
-            HostList.ItemsSource = hosts;
+            HostList.ItemsSource = guests;
         }
 
         private void COl_Loaded(object sender, RoutedEventArgs e)
         {
-            List<string> opt = new List<string>();
-            opt.Add("Yes");
-            opt.Add("No");
-            var combo = sender as ComboBox;
-            combo.ItemsSource = opt;
+
+            this.COl.ItemsSource = Enum.GetValues(typeof(BE.Area));
         }
 
         private void COl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var result = sender as ComboBox;
-            string name = result.SelectedItem as string;
-            if (name.Equals("Yes"))
+         
+            if ((Area)COl.SelectedItem!=Area.All)
             {
-                IEnumerable<Host> hosts = new List<Host>();
-                IEnumerable<IGrouping<CollectionClearance, Host>> g = MainWindow.ibl.GetHostsGroupsByClearance();
+                IEnumerable<Guest> hosts = new List<Guest>();
+                IEnumerable<IGrouping<Area, Guest>> g = MainWindow.ibl.GetGuestsGroupsByArea();
                 foreach (var g1 in g)
                 {
-                    if (g1.Key == CollectionClearance.Yes)
+                    if (g1.Key == (Area)COl.SelectedItem)
                     {
                         hosts = g1;
                         break;
@@ -195,22 +190,14 @@ namespace PLWPF
                 HostList.ItemsSource = hosts;
             }
             else
-            if (name.Equals("No"))
+            
             {
-                IEnumerable<Host> hosts = new List<Host>();
-                IEnumerable<IGrouping<CollectionClearance, Host>> g = MainWindow.ibl.GetHostsGroupsByClearance();
-                foreach (var g1 in g)
-                {
-                    if (g1.Key == CollectionClearance.No)
-                    {
-                        hosts = g1;
-                        break;
-                    }
-                }
-                if (hosts.Count() == 0)
+                IEnumerable<Guest> guests = MainWindow.ibl.GetAllGuests();
+             
+                if (guests.Count() == 0)
                     MessageBox.Show("Oops:( \n No results found , Please try again");
                 HostList.ItemsSource = null;
-                HostList.ItemsSource = hosts;
+                HostList.ItemsSource = guests;
             }
         }
 

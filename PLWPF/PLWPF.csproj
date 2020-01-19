@@ -72,6 +72,9 @@
     <Compile Include="Admin.xaml.cs">
       <DependentUpon>Admin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GuestsInfo.xaml.cs">
+      <DependentUpon>GuestsInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HostLogin.xaml.cs">
       <DependentUpon>HostLogin.xaml</DependentUpon>
     </Compile>
@@ -80,6 +83,9 @@
     </Compile>
     <Compile Include="HostsInfo.xaml.cs">
       <DependentUpon>HostsInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HUinfo.xaml.cs">
+      <DependentUpon>HUinfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="NewHost.xaml.cs">
       <DependentUpon>NewHost.xaml</DependentUpon>
@@ -116,6 +122,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GuestsInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="HostLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -125,6 +135,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="HostsInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HUinfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

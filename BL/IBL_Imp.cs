@@ -575,7 +575,15 @@ namespace BL
                    orderby g.Key
                    select g;
         }
+        public IEnumerable<IGrouping<TypeUnit, HostingUnit>> GetHUGroupsByType()//groups hosting units according to area
+        {
+            return from item in dal.GetAllHostingUnits()
+                   group item by item.TypeUnit
+                          into g
+                   orderby g.Key
+                   select g;
 
+        }
         public List<string> GetHubyHost(string id)
         {
             List<string> result = new List<string>();
@@ -586,6 +594,8 @@ namespace BL
             }
             return result;
         }
+      
+
         #endregion
 
     }
