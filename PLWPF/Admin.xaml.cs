@@ -78,7 +78,14 @@ namespace PLWPF
 
         private void HostingUnit_Click(object sender, RoutedEventArgs e)
         {
+            Close();
+            new HUinfo().ShowDialog();
+        }
 
+        private void order_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+            new OrederInfo().ShowDialog();
         }
     }
 }

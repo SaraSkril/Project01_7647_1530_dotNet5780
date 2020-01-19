@@ -78,7 +78,8 @@ namespace BL
         IEnumerable<IGrouping<CollectionClearance, Host>> GetHostsGroupsByClearance();//groups hosts according to num of hosting units
         IEnumerable<IGrouping<Area, HostingUnit>> GetHUGroupsByArea();//groups hosting units according to area
         IEnumerable<IGrouping<TypeUnit, HostingUnit>> GetHUGroupsByType();//groups hosting units according to area
-
+        IEnumerable<IGrouping<Status, Order>> GetOrderByStatus();//groups orders according to status
+      
         #endregion
     }
 }

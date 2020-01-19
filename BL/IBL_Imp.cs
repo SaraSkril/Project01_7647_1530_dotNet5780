@@ -594,7 +594,16 @@ namespace BL
             }
             return result;
         }
-      
+       public IEnumerable<IGrouping<Status, Order>> GetOrderByStatus()//groups orders according to status
+        {
+
+            return from item in dal.GetAllOrders()
+                   group item by item.Status
+                          into g
+                   orderby g.Key
+                   select g;
+        }
+
 
         #endregion
 

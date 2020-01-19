@@ -90,6 +90,9 @@
     <Compile Include="NewHost.xaml.cs">
       <DependentUpon>NewHost.xaml</DependentUpon>
     </Compile>
+    <Compile Include="OrederInfo.xaml.cs">
+      <DependentUpon>OrederInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="updateguest.xaml.cs">
       <DependentUpon>updateguest.xaml</DependentUpon>
     </Compile>
@@ -165,6 +168,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="NewHost.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OrederInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
