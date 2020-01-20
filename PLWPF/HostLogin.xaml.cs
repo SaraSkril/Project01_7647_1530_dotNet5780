@@ -32,26 +32,26 @@ namespace PLWPF
         private void button1_Click_Login_Host(object sender, RoutedEventArgs e)
         {
            
-            if (Idtextbox.Text.Length != 9)
+            if (Idtextbox.Password.Length != 9)
             {
                 MessageBox.Show("Invalid ID!");
                 return;
             }
             int number = 0;
 
-            if (int.TryParse(Idtextbox.Text, out number) == false)
+            if (int.TryParse(Idtextbox.Password, out number) == false)
             {
                 MessageBox.Show("Invalid ID!");
                 return;
             }
             else
-                if (MainWindow.ibl.checkifHost(Idtextbox.Text) == false)
+                if (MainWindow.ibl.checkifHost(Idtextbox.Password) == false)
             {
                 MessageBox.Show("This Id does not exist!");
                 return;
             }
             Close();
-            new hostprop(Idtextbox.Text).ShowDialog();
+            new hostprop(Idtextbox.Password).ShowDialog();
 
 
         }

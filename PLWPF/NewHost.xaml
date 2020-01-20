@@ -86,7 +86,7 @@
                         <RadioButton x:Name="No" Content="No" />
                     </StackPanel>
                 </Grid>
-                <ToggleButton x:Name="btnFirst" Grid.Column="1" Grid.Row="13"  Height="30" Width="30" Margin="127,12,13,0" VerticalAlignment="Top" Content="Next"  >
+                <ToggleButton x:Name="btnFirst" Grid.Column="1" Grid.Row="13"  Height="30" Width="30" Margin="127,12,13,0"  VerticalAlignment="Top" Content="Next"  >
                     
                 </ToggleButton>
             </Grid>
@@ -131,8 +131,8 @@
                 <Label Grid.Column="0" Grid.Row="9" Content="Branch City:"/>
                 <Label Grid.Column="0" Grid.Row="11" Content="Branch Address:"/>
                 <Label Grid.Column="0" Grid.Row="13" Content="Account Number:"/>
-                <Button Name="Add_Host" Grid.Column="0" Grid.Row="15" Click="Add_Host_Click" Content="Add" Height="40" Width="90" Margin="66,7,14,7"/>
-                <Button Name="Cancel" Grid.Column="1" Grid.Row="15" Click="Cancel_Click" Content="Cancel" Height="40" Width="90" Margin="16,7,113,7"/>
+                <Button Name="Add_Host" Grid.Column="0" Grid.Row="15" Click="Add_Host_Click" Content="Add" Style="{StaticResource general1}" Height="40" Width="90" Margin="66,7,14,7"/>
+                <Button Name="Cancel" Grid.Column="1" Grid.Row="15" Click="Cancel_Click" Content="Cancel" Style="{StaticResource general1}" Height="40" Width="90" Margin="16,7,113,7"/>
 
 
             </Grid>
