@@ -31,6 +31,7 @@ namespace PLWPF
 
         private void button1_Click_Login_Host(object sender, RoutedEventArgs e)
         {
+           
             if (Idtextbox.Text.Length != 9)
             {
                 MessageBox.Show("Invalid ID!");

@@ -84,10 +84,11 @@ namespace PLWPF
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
+            bool flag = true;
             if (Name.Text == "")
             {
                 Name.BorderBrush = Brushes.Red;
-                return;
+                flag=false;
             }
             hu.HostingUnitName = Name.Text;
             if (MainWindow.ibl.HostingUnitExist(hu))
@@ -123,30 +124,33 @@ namespace PLWPF
                 MessageBox.Show("Please select all fields!");
                 return;
             }
-            try
+            if (flag)
             {
-                MainWindow.ibl.AddHostingUnit(hu);
+                try
+                {
+                    MainWindow.ibl.AddHostingUnit(hu);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+                MessageBox.Show("Hosting Unit " + Name.Text + " was added succesfully!");
+                
+                Name.Text = "";
+                Resort.Text = "Choose Resort";
+                Area.Text = "Choose Area";
+                Yes.IsChecked = false;
+                No.IsChecked = false;
+                Yes2.IsChecked = false;
+                No2.IsChecked = false;
+                Yes3.IsChecked = false;
+                No3.IsChecked = false;
+                Yes4.IsChecked = false;
+                No4.IsChecked = false;
+                Yes5.IsChecked = false;
+                No5.IsChecked = false;
             }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
-            MessageBox.Show("Hosting Unit " + Name.Text + " was added succesfully!");
-            Name.Text = "";
-            Resort.Text = "Choose Resort";
-            Area.Text = "Choose Area";
-            Yes.IsChecked = false;
-            No.IsChecked = false;
-            Yes2.IsChecked = false;
-            No2.IsChecked = false;
-            Yes3.IsChecked = false;
-            No3.IsChecked = false;
-            Yes4.IsChecked = false;
-            No4.IsChecked = false;
-            Yes5.IsChecked = false;
-            No5.IsChecked = false;
-
 
         }
 
@@ -155,6 +159,7 @@ namespace PLWPF
             if (MessageBox.Show("Are you sure you want to leave?\n Your changes will not be saved!", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 Close();
+                new hostprop(h.ID).ShowDialog();
             }
             else
             {

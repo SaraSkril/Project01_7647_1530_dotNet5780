@@ -97,14 +97,19 @@ namespace PLWPF
             string opt1 = result.SelectedItem as string;
             if (opt1 == "Add Order")
             {
+                Close();
                 new addorder(h.ID).ShowDialog();
             }
             else
+            {
+                Close();
                 new UpdateOrder(h.ID).ShowDialog();
+            }
         }
 
         private void Update_Click(object sender, RoutedEventArgs e)
         {
+            Close();
             new UpdateHost(h.ID).ShowDialog();
         }
     }

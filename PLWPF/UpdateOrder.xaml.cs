@@ -127,6 +127,8 @@ namespace PLWPF
                 if (order.HostingUnitKey == unit.HostingUnitKey)
                     ord.Add(order);
             }
+            if (ord.Count == 0)
+                MessageBox.Show("Oops:( You do not have any open orders");
             @try.ItemsSource = ord;
             @try.Visibility = Visibility.Visible;
         }

@@ -156,6 +156,8 @@ namespace PLWPF
                 return;
             }
             MessageBox.Show("Host " + First_Name.Text + " Was Updated Succefully!");
+            Close();
+            new hostprop(h.ID).ShowDialog();
         }
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {

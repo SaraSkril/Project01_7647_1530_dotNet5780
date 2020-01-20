@@ -88,7 +88,7 @@ namespace PLWPF
         private void Add_Host_Click(object sender, RoutedEventArgs e)
         {
             Host h = new Host();
-
+            bool flag = true;
 
             if (ID.Text.Length != 9)
             {
@@ -107,17 +107,17 @@ namespace PLWPF
             if (First_Name.Text == "")
             {
                 First_Name.BorderBrush = Brushes.Red;
-                return;
+                flag = false;
             }
             if (Last_Name.Text == "")
             {
                 Last_Name.BorderBrush = Brushes.Red;
-                return;
+                flag = false;
             }
             if (Email.Text == "")
             {
                 Email.BorderBrush = Brushes.Red;
-                return;
+                flag = false;
             }
             if (MainWindow.ibl.checkEmail(Email.Text) == false)
             {
@@ -127,7 +127,7 @@ namespace PLWPF
           
                  if (int.TryParse(number.Text, out number1) == false)
             {
-
+                number.BorderBrush = Brushes.Red;
                 MessageBox.Show("Invalid Number!");
                 return;
             }
@@ -138,6 +138,8 @@ namespace PLWPF
                 MessageBox.Show("Please select Automatic billing");
                 return;
             }
+            if (!flag)
+                return;
             h.ID = ID.Text;
             h.FirstName = First_Name.Text;
             h.LastName = Last_Name.Text;
