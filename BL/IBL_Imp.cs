@@ -168,6 +168,7 @@ namespace BL
             }
             if (order.Status == Status.Closed_ClientRequest)
             {
+                
 
                 if (order.OrderDate == default(DateTime))
                     throw new TaskCanceledException("Cannot Update order to closed before an email was sent");
@@ -189,11 +190,8 @@ namespace BL
             {
                 HostingUnit hosting = dal.GetHostingUnit(order.HostingUnitKey);
                 if (!CheckIsBankAllowed(hosting.Owner, order))
-                    throw new TaskCanceledException("Cannot send mail. No debit authorization");
+                    throw new TaskCanceledException("Cannot send mail. No debit authorization\n please update Automatic billing.");
      
-                Guest guest = dal.GetGuest(order.GuestRequestKey);
-                guest.GuestStatus = Status.Mail_Sent;
-                UpdateGuestReq(guest);
                 SendMail(order);
                 order.OrderDate = DateTime.Now;
             }
