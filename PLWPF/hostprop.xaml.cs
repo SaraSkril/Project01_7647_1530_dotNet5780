@@ -54,7 +54,7 @@ namespace PLWPF
             unit.HostingUnitName = name;
             if (name.Equals("No propertys found"))
                 return;
-           unit.HostingUnitKey= MainWindow.ibl.GetHUkeyBuName(name);
+            unit.HostingUnitKey = MainWindow.ibl.FindHostingUnit(name, h.ID).HostingUnitKey;
             try
             {
                 MainWindow.ibl.DelHostingUnit(unit);

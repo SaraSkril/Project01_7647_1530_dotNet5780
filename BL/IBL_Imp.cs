@@ -216,7 +216,7 @@ namespace BL
             if (!IsHostingUnitActive(hosting))
                 try
                 {
-                    dal.DelHostingUnit(hosting.HostingUnitName);
+                    dal.DelHostingUnit(hosting.HostingUnitKey);
                 }
                 catch (KeyNotFoundException e)
                 {
@@ -359,6 +359,10 @@ namespace BL
         {
             return dal.GetHost(id);
         }
+        public HostingUnit FindHostingUnit(string name, string id)//recieves host id and returns the host
+        {
+           return dal.GetHostingUnit(name, id);
+        }
         public bool CheckOffDates(HostingUnit hostingUnit, DateTime start, DateTime end)//when status is changed to closed, update diary in hosting unit 
         {
             if (IsAvailible(hostingUnit, start, end) == false)
@@ -379,7 +383,7 @@ namespace BL
         {
 
             var orders = from order in dal.GetAllOrders()//gets all orders from this unit
-                         where order.HostingUnitKey==GetHUkeyBuName(hostingUnit.HostingUnitName)
+                         where order.HostingUnitKey==hostingUnit.HostingUnitKey
                          select order;
             foreach (var ord in orders)//checks if any order is active if so returns false so we cant delete the hosting unit
             {
@@ -490,7 +494,7 @@ namespace BL
         }
         public bool HostingUnitExist(HostingUnit hostingUnit)
         {
-            HostingUnit unit = dal.GetHostingUnit(hostingUnit.HostingUnitName);
+            HostingUnit unit = dal.GetHostingUnit(hostingUnit.HostingUnitName,hostingUnit.Owner.ID);
             if (unit != null)
                 return true;
             return false;
@@ -533,12 +537,12 @@ namespace BL
         }
      
 
-        public int GetHUkeyBuName(string name)
+       /* public int GetHUkeyBuName(string name)
             {
              HostingUnit h=dal.GetHostingUnit(name);
             return h.HostingUnitKey;
           
-           }
+           }*/
         #endregion
         #region Group
         
@@ -547,8 +551,7 @@ namespace BL
             return from item in dal.GetAllGuests()
                    group item by item.Area
                          into g
-                // orderby g.Key
-                   select g;
+                         select g;
 
 
         }

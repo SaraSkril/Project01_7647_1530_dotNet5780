@@ -136,7 +136,7 @@ namespace PLWPF
                     return;
                 }
                 MessageBox.Show("Hosting Unit " + Name.Text + " was added succesfully!");
-                
+                Name.BorderBrush = Brushes.Gray;
                 Name.Text = "";
                 Resort.Text = "Choose Resort";
                 Area.Text = "Choose Area";
@@ -167,7 +167,10 @@ namespace PLWPF
             }
         }
 
-
+        private void Name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Name.BorderBrush = Brushes.Gray;
+        }
     }
 }
 

@@ -77,9 +77,9 @@
                 <Label Grid.Row="11" Grid.Column="0" FontSize="13" Content="Number Of Adults:"/>
                 <Label Grid.Row="13" Grid.Column="0" FontSize="13" Content="Number Of Children:"/>
                
-                <TextBox Padding="2" Name="First_Name" Grid.Row="1" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=FirstName, Mode=TwoWay}"/>
-                <TextBox Padding="2" Name="Last_Name" Grid.Row="3" Grid.Column="1"  Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=LastName, Mode=TwoWay}"/>
-                <TextBox Padding="2" Name="Email" Grid.Row="5" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=EmailAddress, Mode=TwoWay}"/>
+                <TextBox Padding="2" Name="First_Name" Grid.Row="1" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=FirstName, Mode=TwoWay}" TextChanged="First_Name_TextChanged"/>
+                <TextBox Padding="2" Name="Last_Name" Grid.Row="3" Grid.Column="1"  Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=LastName, Mode=TwoWay}" TextChanged="Last_Name_TextChanged"/>
+                <TextBox Padding="2" Name="Email" Grid.Row="5" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=EmailAddress, Mode=TwoWay}" TextChanged="Email_TextChanged"/>
                 <DatePicker Padding="2" Name="DatePicker_Entry" Grid.Row="7" Grid.Column="1" VerticalContentAlignment="Center" SelectedDate="{Binding Path=EntryDate, Mode=TwoWay}" DisplayDate="{Binding Path=EntryDate}"/>
                 <DatePicker Padding="2" Name="DatePicker_Release" Grid.Row="9" Grid.Column="1" VerticalContentAlignment="Center" SelectedDate="{Binding Path=ReleaseDate, Mode=TwoWay}" DisplayDate="{Binding Path=ReleaseDate}"/>
                 <TextBox Padding="2" Name="Adult" Grid.Row="11" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=Adults, Mode=TwoWay}"/>

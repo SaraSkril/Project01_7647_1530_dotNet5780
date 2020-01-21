@@ -30,17 +30,17 @@ namespace DAL
             return Host.FirstOrDefault();
             }
 
-        public HostingUnit GetHostingUnit(string name) //gets an id and returns the hosting unit
+       public HostingUnit GetHostingUnit(string name,string id) //gets an id and returns the hosting unit
             {
              var request = from HU in DataSource.getHostingUnits()
-                          where HU.HostingUnitName==name
+                          where HU.HostingUnitName==name && HU.Owner.ID==id
                           select HU;
             return request.FirstOrDefault();
             }
 
         public HostingUnit GetHostingUnit(int key) //gets an id and returns the hosting unit
             {
-             var request = from HU in DataSource.getHostingUnits()
+             var request = from HU in GetAllHostingUnits()
                           where HU.HostingUnitKey==key
                           select HU;
             return request.FirstOrDefault();
@@ -49,7 +49,7 @@ namespace DAL
 
         public Guest GetGuest(int key) //gets an id and returns the guest
         {
-        var request = from guest in DataSource.getGuests()
+        var request = from guest in GetAllGuests()
                           where guest.GuestRequestKey==key
                           select guest;
             return request.FirstOrDefault();
@@ -57,7 +57,7 @@ namespace DAL
 
         public Order GetOrder(int guestkey, int unitkey)
             {
-          var request = from ord in DataSource.GetOrders()
+          var request = from ord in GetAllOrders()
                           where ord.HostingUnitKey==unitkey&&ord.GuestRequestKey==guestkey
                           select ord;
             return request.FirstOrDefault();
@@ -65,8 +65,8 @@ namespace DAL
 
         public Order GetOrder(int OrderKey)
             {
-           var request = from ord in DataSource.GetOrders()
-                          where ord.OrderKey==OrderKey
+           var request = from ord in GetAllOrders()
+                         where ord.OrderKey==OrderKey
                           select ord;
             return request.FirstOrDefault();
             }
@@ -128,7 +128,7 @@ namespace DAL
         #region Hosting Unit
         public void AddHostingUnit(HostingUnit hostingUnit)
         {
-            HostingUnit hosting = GetHostingUnit(hostingUnit.HostingUnitName);
+            HostingUnit hosting = GetHostingUnit(hostingUnit.HostingUnitName,hostingUnit.Owner.ID);
             if (hosting == null)
             {
                 hostingUnit.HostingUnitKey = ++(Configuration.HostingUnitKey);
@@ -140,8 +140,8 @@ namespace DAL
 
         public void UpdateHostUnit(HostingUnit hostingUnit)
         {
-            int index = DataSource.getHostingUnits().FindIndex(t => t.HostingUnitName == hostingUnit.HostingUnitName);//finds ondex of guest with id  
-            hostingUnit.HostingUnitKey = GetHostingUnit(hostingUnit.HostingUnitName).HostingUnitKey;
+            int index = DataSource.getHostingUnits().FindIndex(t =>t.HostingUnitKey==hostingUnit.HostingUnitKey);//finds ondex of unit with key  
+          //  hostingUnit.HostingUnitKey = GetHostingUnit(hostingUnit.HostingUnitName).HostingUnitKey;
             if (index == -1)//meaning name not found
                 throw new DuplicateWaitObjectException("No Hosting Unit with this name Exists!");
             DataSource.getHostingUnits()[index] = hostingUnit.Clone();//update the hosting unit 
@@ -152,12 +152,12 @@ namespace DAL
             return DataSource.getHostingUnits();
         }
 
-        public void DelHostingUnit(string name)
+        public void DelHostingUnit(int key)
         {
 
-            if (DataSource.getHostingUnits().Exists(x => x.HostingUnitName == name))
+            if (DataSource.getHostingUnits().Exists(x => x.HostingUnitKey == key))
             {
-                DataSource.getHostingUnits().Remove(DataSource.getHostingUnits().Find(x => x.HostingUnitName == name));
+                DataSource.getHostingUnits().Remove(DataSource.getHostingUnits().Find(x => x.HostingUnitKey == key));
 
             }
             else

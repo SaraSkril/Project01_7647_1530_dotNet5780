@@ -96,26 +96,28 @@ namespace PLWPF
 
         private void Add_Guest(object sender, RoutedEventArgs e)
         {
+            bool flag = true;
             Guest guest = new Guest();
             
             if (First_Name.Text == "")
             {
                 First_Name.BorderBrush = Brushes.Red;
-                return;
+                flag = false;
             }
             if (Last_Name.Text == "")
             {
                 Last_Name.BorderBrush = Brushes.Red;
-                return;
+                flag = false;
             }
             if (Email.Text == "")
             {
                 Email.BorderBrush = Brushes.Red;
-                return;
+                flag = false; ;
             }
             if (MainWindow.ibl.checkEmail(Email.Text) == false)
             {
                 MessageBox.Show("Invalid Email");
+                Email.BorderBrush = Brushes.Red;
                 return;
             }
             if (DatePicker_Entry.SelectedDate == null)
@@ -129,6 +131,8 @@ namespace PLWPF
                 MessageBox.Show("No date selected!");
                 return;
             }
+            if (!flag)
+                MessageBox.Show("Please fill all");
             if (Area.SelectedItem != null && Resort.SelectedItem != null && Adult.Text != "" && Pool.SelectedItem != null
                 && Jaccuzi.SelectedItem != null && Garden.SelectedItem != null && Children_att.SelectedItem != null && Wifi.SelectedItem != null)
             {
@@ -161,6 +165,9 @@ namespace PLWPF
                     return;
                 }
                 MessageBox.Show(First_Name.Text + ",\nThank You for your interest in Vakantie!\n  Your request was added succesfully!\n  We will be in touch with you shortly with offers for you perfect vacation. ");
+                First_Name.BorderBrush = Brushes.Gray;
+                Last_Name.BorderBrush = Brushes.Gray;
+                Email.BorderBrush = Brushes.Gray;
                 First_Name.Text = "";
                 Last_Name.Text = "";
                 Email.Text = "";
@@ -178,6 +185,24 @@ namespace PLWPF
                 Adult.Text = "";
                 Children.Text = "";
             }
+            else
+                MessageBox.Show("Please select ");
+        }
+
+       
+        private void First_Name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            First_Name.BorderBrush = Brushes.Gray;
+        }
+
+        private void Last_Name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Last_Name.BorderBrush = Brushes.Gray;
+        }
+
+        private void Email_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Email.BorderBrush = Brushes.Gray;
         }
     }
 }

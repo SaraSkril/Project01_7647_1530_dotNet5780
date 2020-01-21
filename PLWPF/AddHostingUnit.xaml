@@ -80,7 +80,7 @@
                 <Label Grid.Row="13" Grid.Column="0" FontSize="13" Content="Children Attractions:"/>
                 <Label Grid.Row="15" Grid.Column="0" FontSize="13" Content="Wifi:"/>
 
-                <TextBox Padding="2" Name="Name" Grid.Row="1" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=HostingUnitName, Mode=OneWay}"/>
+                <TextBox Padding="2" Name="Name" Grid.Row="1" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=HostingUnitName, Mode=OneWay}" TextChanged="Name_TextChanged"/>
                 <ComboBox Padding="2" Name="Area" Grid.Row="3" Grid.Column="1" VerticalContentAlignment="Center" SelectedItem="{Binding Path=area, Mode=TwoWay}" IsEditable="True" Text="Choose Area"/>
                 <ComboBox Padding="2" Name="Resort" Grid.Row="5" Grid.Column="1" VerticalContentAlignment="Center" SelectedItem="{Binding Path=TypeUnit, Mode=TwoWay}" IsEditable="True" Text="Choose Resort"/>
 

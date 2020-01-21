@@ -22,7 +22,7 @@ namespace DAL
 
         #region HostingUnit
         void AddHostingUnit(HostingUnit hostingUnit);//Adds new Hosting unit;
-        void DelHostingUnit(string name);//Deletes Hosting Unit
+        void DelHostingUnit(int key);//Deletes Hosting Unit
         void UpdateHostUnit(HostingUnit hostingUnit);//Updates Hosting Unit;
 
         #endregion
@@ -41,10 +41,10 @@ namespace DAL
         #region finds element
         Host GetHost(string id);
         HostingUnit GetHostingUnit(int key);
-       // Guest GetGuest(string id);
+     
         Order GetOrder(int guestkey, int unitkey);
         Order GetOrder(int orderkey);
-        HostingUnit GetHostingUnit(string name) ;
+        HostingUnit GetHostingUnit(string name,string id) ;
         Guest GetGuest(int key);
         List<Host> GetHosts();
         
