@@ -52,6 +52,8 @@ namespace PLWPF
             string name = result.SelectedItem as string;
             HostingUnit unit = new HostingUnit();
             unit.HostingUnitName = name;
+            if (name.Equals("No propertys found"))
+                return;
            unit.HostingUnitKey= MainWindow.ibl.GetHUkeyBuName(name);
             try
             {
@@ -70,6 +72,8 @@ namespace PLWPF
         {
             List<string> hu = MainWindow.ibl.GetHubyHost(h.ID);
             var combo = sender as ComboBox;
+            if (hu.Count == 0)
+                hu.Add("No propertys found");
             combo.ItemsSource = hu;
            
         }
@@ -78,6 +82,8 @@ namespace PLWPF
         {
             var result = sender as ComboBox;
             string name = result.SelectedItem as string;
+            if (name.Equals("No propertys found"))
+                return;
             Close();
             new UpdateHU(name).ShowDialog();
         }
@@ -112,5 +118,39 @@ namespace PLWPF
             Close();
             new UpdateHost(h.ID).ShowDialog();
         }
+        private void Button_MouseEnter_RED(object sender, MouseEventArgs e)//change to when pressed red
+        {
+            ((Button)sender).Background = (Brush)Brushes.Red;
+            ((Button)sender).Width *= 1.1;
+            ((Button)sender).Height *= 1.1;
+
+
+        }
+        private void Button_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ((Button)sender).Width *= 1.1;
+            ((Button)sender).Height *= 1.1;
+        }
+        private void Button_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((Button)sender).Width /= 1.1;
+            ((Button)sender).Height /= 1.1;
+        }
+        private void Button_Click_CloseWindow(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        private void Button_Click_MinimizeWindow(object sender, RoutedEventArgs e)
+        {
+            SystemCommands.MinimizeWindow(this);
+        }
+        private void Button_Click_MaximizeWindow(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+                SystemCommands.RestoreWindow(this);
+            else
+                SystemCommands.MaximizeWindow(this);
+        }
+
     }
 }

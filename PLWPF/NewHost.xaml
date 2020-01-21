@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" MinHeight="720" MinWidth="1020" Height="700" Width="1000"  WindowStyle="None" FlowDirection="RightToLeft"
         AllowsTransparency="False" Background="White"     MouseDown="Window_MouseDown" >
-    <Grid FlowDirection="LeftToRight">
+    <Grid FlowDirection="LeftToRight" >
         <Grid.RowDefinitions>
             <RowDefinition Height=".5*"/>
             <RowDefinition Height="6*"/>
@@ -69,17 +69,17 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="0.3*"/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="1" Grid.Column="0" FontSize="13" Content="ID:"/>
-                <Label Grid.Row="3" Grid.Column="0" FontSize="13" Content="First Name:"/>
-                <Label Grid.Row="5" Grid.Column="0" FontSize="13" Content="Last Name:"/>
-                <Label Grid.Row="7" Grid.Column="0" FontSize="13" Content="Email:"/>
-                <Label Grid.Row="9" Grid.Column="0" FontSize="13" Content="Phone Number:"/>
-                <Label Grid.Row="11" Grid.Column="0" FontSize="13" Content="Automatic billing:"/>
-                <TextBox Padding="2" Name="ID" Grid.Row="1" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=ID, Mode=OneWay}"/>
-                <TextBox Padding="2" Name="First_Name" Grid.Row="3" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=FirstName, Mode=TwoWay}"/>
-                <TextBox Padding="2" Name="Last_Name" Grid.Row="5" Grid.Column="1"  Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=LastName, Mode=TwoWay}"/>
-                <TextBox Padding="2" Name="Email" Grid.Row="7" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=EmailAddress, Mode=TwoWay}"/>
-                <TextBox Padding="2" Name="number" Grid.Row="9" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=PhoneNumber, Mode=TwoWay}"/>
+                <Label Grid.Row="1" Grid.Column="0" FontSize="13" Content="ID:" FontFamily="Comic Sans MS"/>
+                <Label Grid.Row="3" Grid.Column="0" FontSize="13" Content="First Name:" FontFamily="Comic Sans MS"/>
+                <Label Grid.Row="5" Grid.Column="0" FontSize="13" Content="Last Name:" FontFamily="Comic Sans MS"/>
+                <Label Grid.Row="7" Grid.Column="0" FontSize="13" Content="Email:" FontFamily="Comic Sans MS"/>
+                <Label Grid.Row="9" Grid.Column="0" FontSize="13" Content="Phone Number:" FontFamily="Comic Sans MS"/>
+                <Label Grid.Row="11" Grid.Column="0" FontSize="13" Content="Automatic billing:" FontFamily="Comic Sans MS"/>
+                <TextBox Padding="2" Name="ID" Grid.Row="1" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=ID, Mode=OneWay}" FontFamily="Comic Sans MS"/>
+                <TextBox Padding="2" Name="First_Name" Grid.Row="3" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=FirstName, Mode=TwoWay}" FontFamily="Comic Sans MS"/>
+                <TextBox Padding="2" Name="Last_Name" Grid.Row="5" Grid.Column="1"  Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=LastName, Mode=TwoWay}" FontFamily="Comic Sans MS"/>
+                <TextBox Padding="2" Name="Email" Grid.Row="7" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=EmailAddress, Mode=TwoWay}" FontFamily="Comic Sans MS"/>
+                <TextBox Padding="2" Name="number" Grid.Row="9" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=PhoneNumber, Mode=TwoWay}" FontFamily="Comic Sans MS"/>
                 <Grid ShowGridLines="True" Grid.Column="1" Grid.Row="11" Margin="14,8,-14,8" Grid.RowSpan="2">
                     <StackPanel  x:Name="Billing" Grid.Column="1" Grid.Row="11"  Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
                         <RadioButton Margin="10 0 28 0" x:Name="Yes" Content="Yes" IsChecked="{Binding Path=CollectionClearance ,Mode=OneWayToSource}" Width="37"/>
@@ -124,15 +124,15 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="0.3*"/>
                 </Grid.RowDefinitions>
-                <Label Grid.Column="0" Grid.Row="1" Content="Please Fill In Your Bank Details:"/>
-                <Label Grid.Column="0" Grid.Row="3" Content="Bank Number:"/>
-                <Label Grid.Column="0" Grid.Row="5" Content="Bank Name:"/>
-                <Label Grid.Column="0" Grid.Row="7" Content="Branch Number:"/>
-                <Label Grid.Column="0" Grid.Row="9" Content="Branch City:"/>
-                <Label Grid.Column="0" Grid.Row="11" Content="Branch Address:"/>
-                <Label Grid.Column="0" Grid.Row="13" Content="Account Number:"/>
-                <Button Name="Add_Host" Grid.Column="0" Grid.Row="15" Click="Add_Host_Click" Content="Add" Style="{StaticResource general1}" Height="40" Width="90" Margin="66,7,14,7"/>
-                <Button Name="Cancel" Grid.Column="1" Grid.Row="15" Click="Cancel_Click" Content="Cancel" Style="{StaticResource general1}" Height="40" Width="90" Margin="16,7,113,7"/>
+                <Label Grid.Column="0" Grid.Row="1" Content="Please Fill In Your Bank Details:" FontFamily="Comic Sans MS"/>
+                <Label Grid.Column="0" Grid.Row="3" Content="Bank Number:" FontFamily="Comic Sans MS"/>
+                <Label Grid.Column="0" Grid.Row="5" Content="Bank Name:" FontFamily="Comic Sans MS"/>
+                <Label Grid.Column="0" Grid.Row="7" Content="Branch Number:" FontFamily="Comic Sans MS"/>
+                <Label Grid.Column="0" Grid.Row="9" Content="Branch City:" FontFamily="Comic Sans MS"/>
+                <Label Grid.Column="0" Grid.Row="11" Content="Branch Address:" FontFamily="Comic Sans MS"/>
+                <Label Grid.Column="0" Grid.Row="13" Content="Account Number:" FontFamily="Comic Sans MS"/>
+                <Button Name="Add_Host" Grid.Column="0" Grid.Row="15" Click="Add_Host_Click" Content="Add" Style="{StaticResource general1}" Height="40" Width="90" Margin="66,7,14,7" FontFamily="Comic Sans MS"/>
+                <Button Name="Cancel" Grid.Column="1" Grid.Row="15" Click="Cancel_Click" Content="Cancel" Style="{StaticResource general1}" Height="40" Width="90" Margin="16,7,113,7" FontFamily="Comic Sans MS"/>
 
 
             </Grid>

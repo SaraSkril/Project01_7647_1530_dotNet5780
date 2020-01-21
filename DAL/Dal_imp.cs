@@ -21,7 +21,7 @@ namespace DAL
 
         #endregion
         
-        //deal with all configuration issues 
+     
         public Host GetHost(string id) 
             {
             var Host = from host in DataSource.getHosts()

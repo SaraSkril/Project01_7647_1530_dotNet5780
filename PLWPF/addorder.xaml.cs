@@ -36,6 +36,9 @@ namespace PLWPF
         {
             List<string> hu = MainWindow.ibl.GetHubyHost(ID);
             var combo = sender as ComboBox;
+            if (hu.Count == 0)
+                hu.Add("No propertys found");
+                   
             combo.ItemsSource = hu;
         }
 
@@ -82,7 +85,8 @@ namespace PLWPF
         {
             var result = sender as ComboBox;
             string name = result.SelectedItem as string;
-          
+            if (name.Equals("No propertys found"))
+                return;
             foreach (HostingUnit hosting in MainWindow.ibl.GetAllHostingUnits())
             {
                 if (hosting.HostingUnitName == name)

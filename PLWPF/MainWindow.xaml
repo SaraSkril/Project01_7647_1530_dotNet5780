@@ -7,8 +7,7 @@
         mc:Ignorable="d"
        Title="MainWindow" MinHeight="720" MinWidth="1020" Height="700" Width="1000"  WindowStyle="None" FlowDirection="RightToLeft"
         AllowsTransparency="False" Background="White"     MouseDown="Window_MouseDown" >
-    <!--"Closed="When_Window_CLosed"-->
-    <!--WindowState="Maximized"-->
+
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Name="Top" Height="50*"/>

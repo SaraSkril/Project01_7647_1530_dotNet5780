@@ -161,6 +161,7 @@ namespace PLWPF
             }
             MessageBox.Show("Hosting Unit " + Name.Text + " was updated succesfully!");
             Close();
+            new hostprop(hu.Owner.ID).ShowDialog();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -168,6 +169,7 @@ namespace PLWPF
             if (MessageBox.Show("Are you sure you want to leave?\n Your changes will not be saved!", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 Close();
+                new hostprop(hu.Owner.ID).ShowDialog();
             }
             else
             {

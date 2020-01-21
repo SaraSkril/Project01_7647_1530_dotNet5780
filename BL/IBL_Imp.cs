@@ -152,9 +152,12 @@ namespace BL
                     throw e;
                 }
             if (order.Status == Status.Closed_NoReply)
+            {
+                if (order.OrderDate == default(DateTime))
+                    throw new TaskCanceledException("Cannot Update order to closed before an email was sent");
                 try
                 {
-                 
+
                     dal.UpdateOrder(order.Clone());
 
                 }
@@ -162,8 +165,12 @@ namespace BL
                 {
                     throw e;
                 }
+            }
             if (order.Status == Status.Closed_ClientRequest)
             {
+
+                if (order.OrderDate == default(DateTime))
+                    throw new TaskCanceledException("Cannot Update order to closed before an email was sent");
                 Guest guest = dal.GetGuest(order.GuestRequestKey);
                 guest.GuestStatus = Status.Closed_ClientRequest;
                 UpdateGuestReq(guest);
@@ -282,11 +289,16 @@ namespace BL
         }
         public bool checkEmail(string email)
         {
-            if (!email.Contains('@'))
+            
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
                 return false;
-            if (!email.Contains('.'))
-                return false;
-            return true;
+            }
         }
         public bool checkID(string id)
         {
@@ -399,14 +411,12 @@ namespace BL
                 throw e;
                 
             }
-            Console.WriteLine(" Email sent");
-
             MailMessage mail = new MailMessage();
-            mail.To.Add("srskriloff@gmail.com");
+            mail.To.Add(g.EmailAddress);
             mail.From = new MailAddress("srskriloff@gmail.com");
             mail.Subject = "Vakantie vacation offer";
-            mail.Body = "Hi," + g.FirstName + " " + g.LastName + "!\n" + "Thank you for visiting Vakantie!\n" + "My Hosting Unit" + hu.HostingUnitName + "  fills your requirements and Id be more than glad to host you.\n" +
-                "Please contact me at:" + h.EmailAddress + " to follow up with your order.\n" + "ALL the best, " + h.FirstName + " " + h.LastName;
+            mail.Body = "Hi," + g.FirstName + " " + g.LastName + "!" +"\n" + "Thank you for visiting Vakantie!\n" + "My Hosting Unit - " + hu.HostingUnitName + "  fills your requirements and I'd be more than glad to host you.\n" +
+                "Please contact me at: " + h.EmailAddress + " to follow up with your order.\n" + "All the best, " + h.FirstName + " " + h.LastName;
             mail.IsBodyHtml = true;
             SmtpClient smtp = new SmtpClient();
             smtp.Host = "smtp.gmail.com";
@@ -521,11 +531,7 @@ namespace BL
             }
             return count;
         }
-      /*  public int GetGuestKeyByID(string id)
-            {
-            Guest g= dal.GetGuest(id);
-            return g.GuestRequestKey;
-             }*/
+     
 
         public int GetHUkeyBuName(string name)
             {
@@ -556,11 +562,6 @@ namespace BL
         }
         public IEnumerable<IGrouping<int, Host>> GetHostsGroupsByHostingUnits()//groups hosts according to num of hosting units
         {
-            /*return from item in dal.GetHosts()
-                   group item by NumOfHostingUnits(item)
-                       into g
-                   orderby g.Key
-                   select g;*/
            return from item in dal.GetHosts()
                                let Host = item
                                let numHU = NumOfHostingUnits(item)
