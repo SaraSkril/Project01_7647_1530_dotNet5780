@@ -107,9 +107,27 @@
 
 
             </Grid>
-
-            <Button Name="add" Content="Add" Click="Add_Click" Grid.Column="2" Margin="41,506,340,20" Style="{StaticResource general1}" Grid.ColumnSpan="2"/>
-            <Button Name="cancel" Content="Cancel" Click="Cancel_Click" Grid.Column="3" Margin="68,506,235,20" Style="{StaticResource general1}"/>
+            <Grid Grid.Column="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Image Margin="12,12,16,71" Name="imgPhoto"
+        Stretch="Fill" Grid.Column="1" />
+                <Button Height="32" HorizontalAlignment="Left" Margin="137,0,0,22" Name="btnLoad" VerticalAlignment="Bottom" Width="84" Style="{StaticResource general1}" Content="Upload" Click="btnLoad_Click"></Button>
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.1*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.1*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Name="add" Content="Add" Click="Add_Click" Grid.Column="1" Margin="0,0,0,0" Style="{StaticResource general1}" />
+                    <Button Name="cancel" Content="Cancel" Click="Cancel_Click" Grid.Column="3" Margin="0,0,0,0" Style="{StaticResource general1}"/>
+                </Grid>
+            </Grid>
         </Grid>
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
