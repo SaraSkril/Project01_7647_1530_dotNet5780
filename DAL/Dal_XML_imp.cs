@@ -9,14 +9,13 @@ using System.IO;
 using System.Reflection;
 using System.ComponentModel;
 using System.Xml.Serialization;
-
+using BE;
 
 
 
 namespace DAL
 {
     class Dal_XML_imp:Idal
-
     {
         private XElement HostRoot;
         private XElement HostingUnitRoot;
@@ -231,6 +230,20 @@ namespace DAL
                     {
                         // guest.GuestRequestKey = ++Configuration.GuestRequestKey;//update serial number
                         //how do we get the config number
+                        XElement gu = null;
+
+                        try
+                        {
+                            gu = (from item in ConfigRoot.Elements()
+                                  where int.Parse(item.Element("GuestRequestKey")== Conf)
+                                  select item).FirstOrDefault();
+                        }
+                        catch (Exception)
+                        {
+                            return ;
+                        }
+                        
+                       
                     }
                     GuestRoot.Add(ConvertGuest(guest));
 
