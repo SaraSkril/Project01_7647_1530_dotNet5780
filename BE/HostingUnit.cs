@@ -17,7 +17,7 @@ namespace BE
         [XmlArray("Diary")]        public bool[] DairyDto
         {
             get { return Diary.Flatten(); }
-            set { Diary = value.Expand(12); } //5 is the number of roes in the matrix
+            set { Diary = value.Expand(12); } //12 is the number of roes in the matrix
         }
         public Area area { get; set; }
         public TypeUnit TypeUnit { get; set; }
@@ -29,7 +29,7 @@ namespace BE
 
         public override string ToString()
         {
-            // return "Hosting unit key: " + HostingUnitKey + "\n" + "Unit Name: " + HostingUnitName + "\n" + Owner.ToString();
+            
             return this.ToStringProperty();
         }
 

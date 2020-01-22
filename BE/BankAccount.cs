@@ -13,7 +13,6 @@ namespace BE
         public int BranchNumber { get; set; }
         public string BranchAddress { get; set; }
         public string BranchCity { get; set; }
-        ///public int BankAccountNumber { get; set; }
     
         public override string ToString()
         {
