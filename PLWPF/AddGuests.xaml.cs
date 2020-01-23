@@ -204,5 +204,48 @@ namespace PLWPF
         {
             Email.BorderBrush = Brushes.Gray;
         }
+        private void lessadult_Click(object sender, RoutedEventArgs e)//for adding to number of adults
+        {
+            adultTB.Text = (Convert.ToInt32(adultTB.Text) - 1).ToString();
+            Adult.Text = adultTB.Text;
+            if (adultTB.Text == "0")
+                minus.IsEnabled = false;
+        }
+
+        private void addadult_Click(object sender, RoutedEventArgs e)//for subtracting number of adults
+        {
+            adultTB.Text = (Convert.ToInt32(adultTB.Text) + 1).ToString();
+            Adult.Text = adultTB.Text;
+            if (adultTB.Text != "0")
+                minus.IsEnabled = true;
+        }
+        private void numadult_DropDownClosed(object sender, EventArgs e)
+        {
+            Adult.Text = adultTB.Text;
+        }
+        private void numkid_DropDownClosed(object sender, EventArgs e)
+        {
+            Children.Text = kidTB.Text;
+        }
+        private void lesskid_Click(object sender, RoutedEventArgs e)
+        {
+            kidTB.Text = (Convert.ToInt32(kidTB.Text) - 1).ToString();
+            Children.Text = kidTB.Text;
+            if (kidTB.Text == "0")
+                lesskid.IsEnabled = false;
+        }
+
+        private void addkid_Click(object sender, RoutedEventArgs e)
+        {
+            kidTB.Text = (Convert.ToInt32(kidTB.Text) + 1).ToString();
+            Children.Text = kidTB.Text;
+            if (kidTB.Text != "0")
+                lesskid.IsEnabled = true;
+        }
+
+        private void Children_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
