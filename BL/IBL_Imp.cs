@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
+
 using BE;
 using DAL;
 //blah
@@ -135,7 +136,7 @@ namespace BL
             else
                 throw new ArgumentOutOfRangeException("Owner ID  is not valid\n");
         }
-        public void UpdateOrder(Order order)//Updates Order
+        public void UpdateOrder(Order order,string text,string pic)//Updates Order
         {
             Order orig = GetAllOrders().FirstOrDefault(t => t.OrderKey == order.OrderKey);
             if ((orig.Status == Status.Closed_ClientRequest || orig.Status == Status.Closed_NoReply) )
@@ -192,7 +193,7 @@ namespace BL
                 if (!CheckIsBankAllowed(hosting.Owner, order))
                     throw new TaskCanceledException("Cannot send mail. No debit authorization\n please update Automatic billing.");
      
-                SendMail(order);
+                SendMail(order,text,pic);
                 order.OrderDate = DateTime.Now;
             }
             try
@@ -398,7 +399,7 @@ namespace BL
             hostingUnit.Owner.CollectionClearance = CollectionClearance.No;//change collection clearence
             return true;
         }
-        public void SendMail(Order order)//when status of order is changed to "sent mail", this function will send the mail
+        public void SendMail(Order order,string text, string pic)//when status of order is changed to "sent mail", this function will send the mail
         {
             Guest g = dal.GetGuest(order.GuestRequestKey);
             HostingUnit hu = dal.GetHostingUnit(order.HostingUnitKey);
@@ -413,25 +414,54 @@ namespace BL
                 throw e;
                 
             }
-            MailMessage mail = new MailMessage();
-            mail.To.Add(g.EmailAddress);
-            mail.From = new MailAddress("srskriloff@gmail.com");
-            mail.Subject = "Vakantie vacation offer";
-            mail.Body = "Hi," + g.FirstName + " " + g.LastName + "!" +"\n" + "Thank you for visiting Vakantie!\n" + "My Hosting Unit - " + hu.HostingUnitName + "  fills your requirements and I'd be more than glad to host you.\n" +
-                "Please contact me at: " + h.EmailAddress + " to follow up with your order.\n" + "All the best, " + h.FirstName + " " + h.LastName;
-            mail.IsBodyHtml = true;
-            SmtpClient smtp = new SmtpClient();
-            smtp.Host = "smtp.gmail.com";
-            smtp.Credentials = new System.Net.NetworkCredential("vakantiebooking@gmail.com","vakantie2020");//open an email account
-            smtp.EnableSsl = true;
+            /* MailMessage mail = new MailMessage();
+             mail.To.Add(g.EmailAddress);
+             mail.From = new MailAddress("srskriloff@gmail.com");
+             mail.Subject = "Vakantie vacation offer";
+             mail.Body = text;/* "Hi," + g.FirstName + " " + g.LastName + "!" +"\n" + "Thank you for visiting Vakantie!\n" + "My Hosting Unit - " + hu.HostingUnitName + "  fills your requirements and I'd be more than glad to host you.\n" +
+                 "Please contact me at: " + h.EmailAddress + " to follow up with your order.\n" + "All the best, " + h.FirstName + " " + h.LastName;*/
+            /* mail.AddAttachment(pic);
+             mail.IsBodyHtml = true;
+             SmtpClient smtp = new SmtpClient();
+             smtp.Host = "smtp.gmail.com";
+             smtp.Credentials = new System.Net.NetworkCredential("vakantiebooking@gmail.com","vakantie2020");//open an email account
+             smtp.EnableSsl = true;
+             try
+             {
+                 smtp.Send(mail);
+             }
+             catch (Exception ex)
+             {
+                 throw ex;
+             }*/
+
             try
             {
-                smtp.Send(mail);
+                MailMessage mail = new MailMessage();
+                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+                mail.From = new MailAddress("vakantiebooking@gmail.com");
+                mail.To.Add(g.EmailAddress);
+                mail.Subject = "Vakantie vacation offer";
+                mail.Body = text;
+
+                if (pic != "")
+                {
+                    System.Net.Mail.Attachment attachment;
+                    attachment = new System.Net.Mail.Attachment(pic);
+                    mail.Attachments.Add(attachment);
+                }
+
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("vakantiebooking@gmail.com", "vakantie2020");
+                SmtpServer.EnableSsl = true;
+
+                SmtpServer.Send(mail);
             }
-            catch (Exception ex)
+            catch(Exception e)
             {
-                throw ex;
+
             }
+            
         }
         public List<HostingUnit> AllDays(DateTime date, int duration)//returns all hosting units with avilble date
         {

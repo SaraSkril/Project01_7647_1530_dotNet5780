@@ -26,7 +26,7 @@ namespace BL
         #endregion
         #region Order
         void AddOrder(Order order);//adds a new order
-        void UpdateOrder(Order order);//Updates Order
+        void UpdateOrder(Order order,string text,string pic);//Updates Order
 
         #endregion
         #region GetAll
@@ -57,7 +57,7 @@ namespace BL
         #endregion
         #region Other Function
         bool ChangeCollectionClearance(HostingUnit hostingUnit);//checks if theres a open order, if so we cannot change collection clearance
-        void SendMail(Order order);//when status of order is changed to "sent mail", this function will send the mail
+        void SendMail(Order order,string text,string pic);//when status of order is changed to "sent mail", this function will send the mail
         List<HostingUnit> AllDays(DateTime date, int duration);//returns all hosting units with avilble date
         int DaysBetween(DateTime start/*end=now*/);//returns the days between the start day and now 
         int DaysBetween(DateTime start, DateTime end);//returns the days between the start and last day

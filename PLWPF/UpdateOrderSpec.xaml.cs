@@ -62,11 +62,18 @@ namespace PLWPF
         {
             if (stat.SelectedItem != null) 
                order.Status = (Status)stat.SelectedItem;
+            if ((Status)stat.SelectedItem == Status.Mail_Sent)
+            {
+                Close();
+                new Mail(order).ShowDialog();
+                
+                return;
+            }
             Host h = MainWindow.ibl.FindHost(ID);
            
             try
             {
-                MainWindow.ibl.UpdateOrder(order);
+                MainWindow.ibl.UpdateOrder(order,"","");
             }
             catch(Exception ex)
             {
