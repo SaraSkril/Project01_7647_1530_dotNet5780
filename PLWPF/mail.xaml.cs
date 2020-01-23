@@ -89,9 +89,10 @@ namespace PLWPF
                 MainWindow.ibl.UpdateOrder(ord, t, pic);
                 Close();
             }
-            catch(Exception )
+            catch(Exception ex )
             {
-                MessageBox.Show("Opps, your count not be sent"+"\n"+"Please try again.");
+                MessageBox.Show(ex.Message);
+                Close();
             }
         }
 

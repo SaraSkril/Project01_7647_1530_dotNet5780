@@ -178,7 +178,7 @@ namespace PLWPF
             Yes.IsChecked = false;
             No.IsChecked = false;
             number.Text = "";
-         
+            Close();
         }
     }
 }

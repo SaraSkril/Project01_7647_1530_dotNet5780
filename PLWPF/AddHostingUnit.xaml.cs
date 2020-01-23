@@ -92,6 +92,7 @@ namespace PLWPF
                 flag=false;
             }
             hu.HostingUnitName = Name.Text;
+            hu.Owner = h;
             if (MainWindow.ibl.HostingUnitExist(hu))
                 {
                    MessageBox.Show("Oops!/n  " + hu.HostingUnitName + " already exists");

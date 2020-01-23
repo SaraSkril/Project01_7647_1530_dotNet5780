@@ -83,7 +83,7 @@
                 <DatePicker Padding="2" Name="DatePicker_Entry" Grid.Row="7" Grid.Column="1" VerticalContentAlignment="Center" SelectedDate="{Binding Path=EntryDate, Mode=TwoWay}" DisplayDate="{Binding Path=EntryDate}"/>
                 <DatePicker Padding="2" Name="DatePicker_Release" Grid.Row="9" Grid.Column="1" VerticalContentAlignment="Center" SelectedDate="{Binding Path=ReleaseDate, Mode=TwoWay}" DisplayDate="{Binding Path=ReleaseDate}"/>
                 <!-- <TextBox Padding="2" Name="Adult" Grid.Row="11" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=Adults, Mode=TwoWay}"/>-->
-                <ComboBox Name="Adult"  Grid.Row="11" Grid.Column="1" Text="1" FontSize="16"  HorizontalAlignment="Center"  Width="189"  IsDropDownOpen="False" IsEditable="True" DropDownClosed="numadult_DropDownClosed" >
+                <ComboBox Name="Adult"  Grid.Row="11" Grid.Column="1" Text="1" FontSize="16"  HorizontalAlignment="Center"   IsDropDownOpen="False" IsEditable="True" DropDownClosed="numadult_DropDownClosed" SelectionChanged="Adult_SelectionChanged" Margin="1,0,0,0" Width="219" >
                     <ComboBoxItem>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -98,7 +98,7 @@
                     </ComboBoxItem>
                 </ComboBox>
                 <!--<TextBox Padding="2" Name="Children" Grid.Row="13" Grid.Column="1" Margin="1" VerticalContentAlignment="Center" Text="{Binding Path=Children, Mode=TwoWay}"/>-->
-                <ComboBox Name="Children"   Width="189" FontSize="16"  Grid.Row="13" Grid.Column="1" Text="0" HorizontalAlignment="Center"  IsDropDownOpen="False"  IsEditable="True" DropDownClosed="numkid_DropDownClosed" SelectionChanged="Children_SelectionChanged" >
+                <ComboBox Name="Children"   Width="219" FontSize="16"  Grid.Row="13" Grid.Column="1" Text="0" HorizontalAlignment="Center"  IsDropDownOpen="False"  IsEditable="True" DropDownClosed="numkid_DropDownClosed" SelectionChanged="Children_SelectionChanged" Margin="1,0,0,0" >
                     <ComboBoxItem>
                         <Grid>
                             <Grid.ColumnDefinitions>

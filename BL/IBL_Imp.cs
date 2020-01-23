@@ -141,11 +141,15 @@ namespace BL
             Order orig = GetAllOrders().FirstOrDefault(t => t.OrderKey == order.OrderKey);
             if ((orig.Status == Status.Closed_ClientRequest || orig.Status == Status.Closed_NoReply) )
                 throw new TaskCanceledException("Status cannot be changed");
-          
-            if (orig.Status == Status.Mail_Sent && order.Status == Status.Mail_Sent)
+
+            if (orig.Status == Status.Active && order.Status == Status.Active)
+                return;
+            if (orig.Status != Status.Active && order.Status == Status.Active)
+                return;
+                if (orig.Status == Status.Mail_Sent && order.Status == Status.Mail_Sent)
                 try
                 {
-                    dal.UpdateOrder(order.Clone());
+                    //dal.UpdateOrder(order.Clone());
 
                 }
                 catch (KeyNotFoundException e)

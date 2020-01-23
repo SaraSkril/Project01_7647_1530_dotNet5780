@@ -247,5 +247,10 @@ namespace PLWPF
         {
 
         }
+
+        private void Adult_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

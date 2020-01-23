@@ -86,7 +86,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Name="Edit" Click="Edit_Click" Template="{StaticResource TitleBarButtons}">
-                                    <Image Source="IMAGE/pen.png" Height="20" Width="20"/>
+                                    <Image Source="IMAGE/pen2.png" Height="20" Width="20"/>
                                     </Button>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
