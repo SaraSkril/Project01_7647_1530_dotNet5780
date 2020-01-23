@@ -10,6 +10,7 @@ using System.Reflection;
 using System.ComponentModel;
 using System.Xml.Serialization;
 using BE;
+using System.Net;
 
 
 
@@ -17,25 +18,57 @@ namespace DAL
 {
     class Dal_XML_imp:Idal
     {
+        bool bankDownloaded;
+        void DownloadBank()
+        {
+            #region downloadBank
+            const string xmlLocalPath = @"atm.xml";
+            WebClient wc = new WebClient();
+            try
+            {
+                string xmlServerPath =
+               @"http://www.boi.org.il/he/BankingSupervision/BanksAndBranchLocations/Lists/BoiBankBranchesDocs/atm.xml";
+                wc.DownloadFile(xmlServerPath, xmlLocalPath);
+            }
+            catch (Exception)
+            {
+                string xmlServerPath = @"http://www.jct.ac.il/~coshri/atm.xml";
+                wc.DownloadFile(xmlServerPath, xmlLocalPath);
+            }
+            finally
+            {
+                wc.Dispose();
+            }
+        }
+            #endregion
+
         private XElement HostRoot;
         private XElement HostingUnitRoot;
         private XElement GuestRoot;
         private XElement OrderRoot;
         private XElement ConfigRoot;
-        private const string HostRootPath = @"..\..\..\Xml\Hosts.xml";
-        private const string HostingUnitRootPath = @"..\..\..\Xml\HostingUnits.xml";
-        private const string GuestRootPath = @"..\..\..\Xml\Guests.xml";
-        private const string ConfigRootPath = @"..\..\..\Xml\Config.xml";
-        private const string OrderRootPath = @"..\..\..\Xml\Orders.xml";
-        protected static Dal_XML_imp instance = null;
-        public static Dal_XML_imp Getinstance()
+  //      private XElement AtmRoot;
+        private const string HostRootPath = @"Hosts.xml";
+        private const string HostingUnitRootPath = @"HostingUnits.xml";
+        private const string GuestRootPath = @"Guests.xml";
+        private const string ConfigRootPath = @"Config.xml";
+        private const string OrderRootPath = @"Orders.xml";
+  //      private const string AtmRootPath = @"atm.xml";
+
+        #region Singleton
+        private static readonly Dal_XML_imp instance = new Dal_XML_imp();
+        public static Dal_XML_imp Instance
         {
-            if (instance == null)
-                instance = new Dal_XML_imp();
-            return instance;
+            get { return instance; }
         }
 
-        protected Dal_XML_imp()
+       // public Dal_XML_imp() { }
+        static Dal_XML_imp() { }
+
+        #endregion
+     
+
+        public Dal_XML_imp()
         {
             try
             {
@@ -70,33 +103,50 @@ namespace DAL
                 if (!File.Exists(ConfigRootPath))
                 {
                     CreateConfig();
-                    LoadConfig();
+                    
                 }
                 else
-                    LoadConfig();
+                    ConfigRoot = XElement.Load(ConfigRootPath);
+               /* if (!File.Exists(AtmRootPath))
+                {
+                    OrderRoot = new XElement("Atm");
+                    OrderRoot.Save(AtmRootPath);
+                }
+                else
+                    LoadData(AtmRoot, AtmRootPath);*/
+
             }
             catch
             {
                 throw new Exception ("Issue with opening XML file");
             }
+            deleteDup();
 
         }
-
-        private void LoadConfig()
+        private void deleteDup()
         {
+           /* List<BankAccount> b = loadListFromXML<BankAccount>(AtmRootPath);
+            for(int i=0;i<b.Count;i++)
+            {
+                for (int j = i + 1; j < b.Count; j++)
+                    if (b[i].BankName == b[j].BankName && b[i].BankNumber == b[j].BankNumber && b[i].BranchAddress == b[j].BranchAddress && b[i].BranchCity == b[j].BranchCity && b[i].BranchNumber == b[j].BranchNumber)
+                        b.Remove(b[j]);
+            }
+            saveListToXML(b, AtmRootPath);*/
+        }
+        private void LoadConfig()
+        {/*
             ConfigRoot = XElement.Load(ConfigRootPath);
-            Configuration.GuestRequestKey = int.Parse(ConfigRoot.Element("GuestRequestKey").Value.ToString());
+            Configuration.GuestRequestKey = int.Parse((ConfigRoot.Element("config").ConfigRoot.Element("GuestRequestKey").Value));
             Configuration.OrderKey = int.Parse(ConfigRoot.Element("OrderKey").Value.ToString());
             Configuration.commission = int.Parse(ConfigRoot.Element("commission").Value.ToString());
-            Configuration.HostingUnitKey = int.Parse(ConfigRoot.Element("HostingUnitKey").Value.ToString());
+            Configuration.HostingUnitKey = int.Parse(ConfigRoot.Element("HostingUnitKey").Value.ToString());*/
         }
 
         private void CreateConfig()
         {
-            XElement GuestRequestKey = new XElement("GuestRequestKey", "10000000");
-            XElement OrderKey = new XElement("OrderKey", "10000000");
-            XElement HostingUnitKey = new XElement("HostingUnitKey", "10000000");
-            XElement commission = new XElement("commission", "10");
+            ConfigRoot = new XElement("config", new XElement("GuestRequestKey", "10000000"), new XElement("OrderKey", "10000000"), new XElement("HostingUnitKey", "10000000"), new XElement("commission", "10"));
+            
             ConfigRoot.Save(ConfigRootPath);
         }
 
@@ -398,6 +448,7 @@ namespace DAL
         public IEnumerable<BankAccount> GetAllBankAccounts()
         {
             throw new NotImplementedException();
+            
         }
 
         public Host GetHost(string id)
