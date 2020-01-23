@@ -65,9 +65,12 @@ namespace PLWPF
             Guests = MainWindow.ibl.GetAllGuests();
             if (FirstName.Text != "" && LastName.Text != "")
             {
+                string fn = (char.ToUpper(FirstName.Text[0]) + FirstName.Text.Substring(1));
+
+                string ln = (char.ToUpper(LastName.Text[0]) + LastName.Text.Substring(1));
                 foreach (Guest G in Guests)
                 {
-                    if (G.FirstName.Contains(FirstName.Text) || G.LastName.Contains(LastName.Text))
+                    if (G.FirstName.Contains(FirstName.Text) || G.LastName.Contains(LastName.Text)|| G.FirstName.Contains(fn)||G.LastName.Contains(ln))
                         ans.Add(G);
                 }
 
@@ -75,18 +78,20 @@ namespace PLWPF
             else
                if (FirstName.Text != "" && LastName.Text == "")
             {
+                string fn = (char.ToUpper(FirstName.Text[0]) + FirstName.Text.Substring(1));
                 foreach (Guest G in Guests)
                 {
-                    if (G.FirstName.Contains(FirstName.Text))
+                    if (G.FirstName.Contains(FirstName.Text)||G.FirstName.Contains(fn))
                         ans.Add(G);
                 }
             }
             else
                   if (FirstName.Text == "" && LastName.Text != "")
             {
+                string ln = (char.ToUpper(LastName.Text[0]) + LastName.Text.Substring(1));
                 foreach (Guest G in Guests)
                 {
-                    if (G.LastName.Contains(LastName.Text))
+                    if (G.LastName.Contains(LastName.Text)||G.LastName.Contains(ln))
                         ans.Add(G);
                 }
             }

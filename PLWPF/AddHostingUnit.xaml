@@ -113,9 +113,7 @@
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Image Margin="12,12,16,71" Name="imgPhoto"
-        Stretch="Fill" Grid.Column="1" />
-                <Button Height="32" HorizontalAlignment="Left" Margin="137,0,0,22" Name="btnLoad" VerticalAlignment="Bottom" Width="84" Style="{StaticResource general1}" Content="Upload" Click="btnLoad_Click"></Button>
+                
                 <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.1*"/>

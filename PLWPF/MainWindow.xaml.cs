@@ -89,7 +89,8 @@ namespace PLWPF
 
         private void Orders_Click(object sender, RoutedEventArgs e)
         {
-            new Admin().ShowDialog();
+            //new Admin().ShowDialog();
+            new AdminLogin().ShowDialog();
         }
     }
 }
