@@ -439,14 +439,17 @@ namespace BL
             {
                 MailMessage mail = new MailMessage();
                 SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
-                mail.From = new MailAddress("your mail@gmail.com");
+                mail.From = new MailAddress("vakantiebooking@gmail.com");
                 mail.To.Add(g.EmailAddress);
                 mail.Subject = "Vakantie vacation offer";
                 mail.Body = text;
 
-                System.Net.Mail.Attachment attachment;
-                attachment = new System.Net.Mail.Attachment(pic);
-                mail.Attachments.Add(attachment);
+                if (pic != "")
+                {
+                    System.Net.Mail.Attachment attachment;
+                    attachment = new System.Net.Mail.Attachment(pic);
+                    mail.Attachments.Add(attachment);
+                }
 
                 SmtpServer.Port = 587;
                 SmtpServer.Credentials = new System.Net.NetworkCredential("vakantiebooking@gmail.com", "vakantie2020");

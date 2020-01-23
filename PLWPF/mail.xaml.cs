@@ -41,6 +41,7 @@ namespace PLWPF
             ord = order;
             foreach(HostingUnit u in MainWindow.ibl.GetAllHostingUnits())
             {
+                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
                 if (u.HostingUnitKey == ord.HostingUnitKey)
                 {
                     hu = u;
@@ -82,7 +83,7 @@ namespace PLWPF
 
         private void send_Click(object sender, RoutedEventArgs e)
         {
-
+            t = main.Text;
             try
             {
                 MainWindow.ibl.UpdateOrder(ord, t, pic);
