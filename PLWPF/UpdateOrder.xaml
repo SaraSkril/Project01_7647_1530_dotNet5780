@@ -48,7 +48,7 @@
             </Grid.ColumnDefinitions>
            
 
-            <ListView Name="try" ItemsSource="{Binding Path= list}" Grid.Column="1" Margin="4,51,89,39" Grid.ColumnSpan="2" >
+            <ListView Name="try" ItemsSource="{Binding Path= list}" Grid.Column="1" Margin="60,51,41,39" Visibility="Hidden"  >
 
                 <ListView.View>
 
@@ -86,7 +86,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Name="Edit" Click="Edit_Click" Template="{StaticResource TitleBarButtons}">
-                                    <Image Source="IMAGE/edit.png" Height="20" Width="20"/>
+                                    <Image Source="IMAGE/pen.png" Height="20" Width="20"/>
                                     </Button>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
