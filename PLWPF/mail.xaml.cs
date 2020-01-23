@@ -22,23 +22,31 @@ namespace PLWPF
     /// </summary>
     public partial class Mail : Window
     {
-        int guestkey;
-        string id;
+        
         Guest gu;
         HostingUnit hu;
-        string text;
-        string pic;
+        string t;
+        string pic = "";
+        Order ord;
 
         public Mail()
         {
             InitializeComponent();
             starttextbox();
         }
-        public Mail(int Guestkey, HostingUnit hU)
+        public Mail(Order order)
         {
             InitializeComponent();
-            guestkey = Guestkey;
-            hu = hU;
+            
+            ord = order;
+            foreach(HostingUnit u in MainWindow.ibl.GetAllHostingUnits())
+            {
+                if (u.HostingUnitKey == ord.HostingUnitKey)
+                {
+                    hu = u;
+                    break;
+                }
+            }
             starttextbox();
         }
         private void starttextbox()
@@ -46,11 +54,11 @@ namespace PLWPF
             
             foreach(Guest g in MainWindow.ibl.GetAllGuests())
             {
-                if (g.GuestRequestKey == guestkey)
+                if (g.GuestRequestKey == ord.GuestRequestKey)
                     gu = g;
             }
 
-            string t = "Hello " + gu.FirstName + "," + "\n";
+             t = "Hello " + gu.FirstName + "," + "\n";
             t += "Thank you for visiting Vakantie!\n";
             t += "My Hosting Unit - " + hu.HostingUnitName + "  fills your requirements and I'd be more than glad to host you." + "\n";
             t += "Please contact me at: " + hu.Owner.EmailAddress + " to follow up with your order." + "\n";
@@ -60,7 +68,7 @@ namespace PLWPF
         }
         private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
-            string s= "";
+            
             OpenFileDialog op = new OpenFileDialog();
             op.Title = "Select a picture";
             op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
@@ -68,18 +76,27 @@ namespace PLWPF
               "Portable Network Graphic (*.png)|*.png";
             if (op.ShowDialog() == true)
             {
-                s = op.FileName;
+                pic = op.FileName;
             }
         }
 
         private void send_Click(object sender, RoutedEventArgs e)
         {
 
+            try
+            {
+                MainWindow.ibl.UpdateOrder(ord, t, pic);
+                Close();
+            }
+            catch(Exception )
+            {
+                MessageBox.Show("Opps, your count not be sent"+"\n"+"Please try again.");
+            }
         }
 
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
-
+            Close();
         }
     }
 }

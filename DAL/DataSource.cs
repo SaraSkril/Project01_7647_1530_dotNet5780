@@ -75,7 +75,7 @@ namespace DAL
             guest1.GuestRequestKey = ++Configuration.GuestRequestKey;
             guest1.FirstName = "Harel";
             guest1.LastName = "Skaat";
-            guest1.EmailAddress = "harelrox@gmail.com";
+            guest1.EmailAddress = "srskriloff@gmail.com";
             guest1.GuestStatus = Status.Active;
             guest1.RegistrationDate = DateTime.Now;
             guest1.EntryDate = new DateTime(2019,12,11);
