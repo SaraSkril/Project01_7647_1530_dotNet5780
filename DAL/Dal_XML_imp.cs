@@ -81,6 +81,7 @@ namespace DAL
             }
 
         }
+
         private void LoadConfig()
         {
             ConfigRoot = XElement.Load(ConfigRootPath);
@@ -228,19 +229,17 @@ namespace DAL
                 {
                     guest.GuestStatus = Status.Active;
                     {
-                        // guest.GuestRequestKey = ++Configuration.GuestRequestKey;//update serial number
-                        //how do we get the config number
-                        XElement gu = null;
-
                         try
                         {
-                            gu = (from item in ConfigRoot.Elements()
-                                  where int.Parse(item.Element("GuestRequestKey")== Conf)
-                                  select item).FirstOrDefault();
+                            LoadConfig();
+                            guest.GuestRequestKey = ++Configuration.GuestRequestKey;
+                            XElement GuestRequestKey = new XElement("GuestRequestKey",Configuration.GuestRequestKey);
+                            GuestRequestKey.Save(ConfigRootPath);
+
                         }
-                        catch (Exception)
+                        catch (Exception e)
                         {
-                            return ;
+                            throw e;
                         }
                         
                        
@@ -258,47 +257,130 @@ namespace DAL
 
         public void UpdateGuestReq(Guest guest)
         {
-            throw new NotImplementedException();
+            XElement toUpdate = (from item in GuestRoot.Elements()
+                                 let temp = ConvertGuest(item)
+                                 where temp.GuestRequestKey==guest.GuestRequestKey
+                                 select item).FirstOrDefault();
+            if (toUpdate == null)
+                throw new Exception("No Guest with this Key!");
+
+            foreach (PropertyInfo item in typeof(Guest).GetProperties())
+                toUpdate.Element(item.Name).SetValue(item.GetValue(guest));
+
+            GuestRoot.Save(GuestRootPath);
         }
 
         public void AddHost(Host host)
         {
-            throw new NotImplementedException();
+            Host h = GetHost(host.ID);
+            if (h != null)
+                throw new DuplicateWaitObjectException("Guest with this ID already exists!");
+            HostRoot.Add(ConvertHost(host));
+
+            HostRoot.Save(HostRootPath);
         }
 
         public void UpdateHost(Host host)
         {
-            throw new NotImplementedException();
+            List<Host> l = loadListFromXML<Host>(HostRootPath);
+            int index =l.FindIndex(t => t.ID == host.ID);//finds ondex of guest with id 
+            if (index != -1)
+               l[index] = host;
+            else
+                throw new DuplicateWaitObjectException("No Host with this id Exists!");
         }
 
         public void AddHostingUnit(HostingUnit hostingUnit)
         {
-            throw new NotImplementedException();
+
+            HostingUnit hosting = GetHostingUnit(hostingUnit.HostingUnitName, hostingUnit.Owner.ID);
+            if (hosting == null)
+            {
+                try
+                {
+                    LoadConfig();
+                    hostingUnit.HostingUnitKey = ++Configuration.HostingUnitKey;
+                    XElement HostingUnitKey = new XElement("HostingUnitKey", Configuration.HostingUnitKey);
+                    HostingUnitKey.Save(ConfigRootPath);
+
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+                
+                List<HostingUnit> list = loadListFromXML<HostingUnit>(HostingUnitRootPath);
+                list.Add(hostingUnit);
+                saveListToXML(list, HostingUnitRootPath);
+            }
+            else
+                throw new DuplicateWaitObjectException("Hosting Unit with the same name exists!");
         }
 
         public void DelHostingUnit(int key)
         {
-            throw new NotImplementedException();
+            List<HostingUnit> hu = loadListFromXML<HostingUnit>(HostingUnitRootPath);
+            if (hu.Exists(x => x.HostingUnitKey == key))
+            {
+               hu.Remove(hu.Find(x => x.HostingUnitKey == key));
+                saveListToXML(hu, HostingUnitRootPath);
+
+            }
+            else
+                throw new KeyNotFoundException("Hosting Unit does not exist!");
         }
 
         public void UpdateHostUnit(HostingUnit hostingUnit)
         {
-            throw new NotImplementedException();
+            List<HostingUnit> hu = loadListFromXML<HostingUnit>(HostingUnitRootPath);
+            int index = hu.FindIndex(t => t.HostingUnitKey == hostingUnit.HostingUnitKey);//finds ondex of unit with key  
+                                                                                                                    //  hostingUnit.HostingUnitKey = GetHostingUnit(hostingUnit.HostingUnitName).HostingUnitKey;
+            if (index == -1)//meaning name not found
+                throw new DuplicateWaitObjectException("No Hosting Unit with this name Exists!");
+            hu[index] = hostingUnit;//update the hosting unit 
+            saveListToXML(hu, HostingUnitRootPath);
+
         }
 
         public void AddOrder(Order order)
         {
-            throw new NotImplementedException();
+            Order order1 = GetOrder(order.OrderKey);
+            if (order1 == null)//if guest doesnt exist 
+            {
+                try
+                {
+                    LoadConfig();
+                    order.OrderKey = ++Configuration.OrderKey;
+                    XElement OrderKey = new XElement("OrderKey", Configuration.OrderKey);
+                    OrderKey.Save(ConfigRootPath);
+
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+                OrderRoot.Add(ConvertOrder(order));
+
+                OrderRoot.Save(OrderRootPath);
+            }
+            else
+                throw new DuplicateWaitObjectException("Same order already exists!");
         }
 
         public void UpdateOrder(Order order)
         {
-            throw new NotImplementedException();
+            List<Order> ord = loadListFromXML<Order>(OrderRootPath);
+            int index = ord.FindIndex(t => t.OrderKey == order.OrderKey);
+            if (index == -1)//meaning id not found
+                throw new KeyNotFoundException("No order was found!");
+            ord[index] = order;//update the order
+            saveListToXML(ord, OrderRootPath);
         }
 
         public List<HostingUnit> GetAllHostingUnits()
         {
-            throw new NotImplementedException();
+            List<HostingUnit> list = loadListFromXML<HostingUnit>(HostingUnitRootPath);
+            return list;
         }
 
         public List<Guest> GetAllGuests()
@@ -320,28 +402,20 @@ namespace DAL
 
         public Host GetHost(string id)
         {
-            XElement host = null;
-
-            try
-            {
-                host = (from item in HostRoot.Elements()
-                         where (item.Element("ID").Value) == id
-                         select item).FirstOrDefault();
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-            if (host == null)
-                return null;
-
-            return ConvertHost(host);
+            List<Host> list = loadListFromXML<Host>(HostRootPath);
+            foreach (Host h  in list)
+                if (h.ID == id)
+                    return h;
+            return null; 
         }
 
         public HostingUnit GetHostingUnit(int key)
         {
-            throw new NotImplementedException();
+            List<HostingUnit> list = loadListFromXML<HostingUnit>(HostingUnitRootPath);
+            foreach (HostingUnit unit in list)
+                if (unit.HostingUnitKey == key)
+                    return unit;
+            return null;
         }
 
         public Order GetOrder(int guestkey, int unitkey)
@@ -388,7 +462,11 @@ namespace DAL
 
         public HostingUnit GetHostingUnit(string name, string id)
         {
-            throw new NotImplementedException();
+            List<HostingUnit> list = loadListFromXML<HostingUnit>(HostingUnitRootPath);
+            foreach (HostingUnit unit in list)
+                if (unit.HostingUnitName == name && unit.Owner.ID == id)
+                    return unit;
+            return null;
         }
 
         public Guest GetGuest(int key)
@@ -415,8 +493,10 @@ namespace DAL
 
         public List<Host> GetHosts()
         {
-            return (List<Host>)from item in HostRoot.Elements()
-                                select ConvertHost(item);
+           /* return (List<Host>)from item in HostRoot.Elements()
+                                select ConvertHost(item);*/
+            List<Host> list = loadListFromXML<Host>(HostRootPath);
+            return list;
         }
 
         
