@@ -79,6 +79,9 @@ namespace PLWPF
             {
                 pic = op.FileName;
             }
+            imageloaded.Visibility = Visibility.Visible;
+            imageloaded.Text = op.FileName;
+            imageloaded.Background = Brushes.Beige;
         }
 
         private void send_Click(object sender, RoutedEventArgs e)
