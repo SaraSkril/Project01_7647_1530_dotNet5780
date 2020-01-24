@@ -101,5 +101,6 @@ namespace PLWPF
             Close();
             new OrederInfo().ShowDialog();
         }
+
     }
 }
