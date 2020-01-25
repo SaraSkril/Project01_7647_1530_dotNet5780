@@ -80,7 +80,7 @@ namespace PLWPF
                 pic = op.FileName;
             }
             imageloaded.Visibility = Visibility.Visible;
-            imageloaded.Text = op.FileName;
+            imageloaded.Content = op.FileName;
             imageloaded.Background = Brushes.Beige;
         }
 

@@ -16,44 +16,20 @@ using System.Net;
 
 namespace DAL
 {
-    class Dal_XML_imp:Idal
+    class Dal_XML_imp : Idal
     {
-        bool bankDownloaded;
-        void DownloadBank()
-        {
-            #region downloadBank
-            const string xmlLocalPath = @"atm.xml";
-            WebClient wc = new WebClient();
-            try
-            {
-                string xmlServerPath =
-               @"http://www.boi.org.il/he/BankingSupervision/BanksAndBranchLocations/Lists/BoiBankBranchesDocs/atm.xml";
-                wc.DownloadFile(xmlServerPath, xmlLocalPath);
-            }
-            catch (Exception)
-            {
-                string xmlServerPath = @"http://www.jct.ac.il/~coshri/atm.xml";
-                wc.DownloadFile(xmlServerPath, xmlLocalPath);
-            }
-            finally
-            {
-                wc.Dispose();
-            }
-        }
-            #endregion
-
         private XElement HostRoot;
         private XElement HostingUnitRoot;
         private XElement GuestRoot;
         private XElement OrderRoot;
         private XElement ConfigRoot;
-  //      private XElement AtmRoot;
+        //      private XElement AtmRoot;
         private const string HostRootPath = @"Hosts.xml";
         private const string HostingUnitRootPath = @"HostingUnits.xml";
         private const string GuestRootPath = @"Guests.xml";
         private const string ConfigRootPath = @"Config.xml";
         private const string OrderRootPath = @"Orders.xml";
-  //      private const string AtmRootPath = @"atm.xml";
+        //      private const string AtmRootPath = @"atm.xml";
 
         #region Singleton
         private static readonly Dal_XML_imp instance = new Dal_XML_imp();
@@ -62,105 +38,234 @@ namespace DAL
             get { return instance; }
         }
 
-       // public Dal_XML_imp() { }
+       
         static Dal_XML_imp() { }
-
-        #endregion
-     
 
         public Dal_XML_imp()
         {
-            try
+            if (!File.Exists(traineePath))
+                CreatFileTrainee();
+            else
+                LoadDataTrainee();
+
+            if (!File.Exists(testerPath))
+                CreatFileTester();
+            else
+                LoadDataTester();
+
+            if (!File.Exists(testPath))
+                CreatFileTest();
+            else
+                LoadDataTest();
+
+            if (!File.Exists(configPath))
             {
-                if (!File.Exists(HostRootPath))
-                {
-                    HostRoot = new XElement("Hosts");
-                    HostRoot.Save(HostRootPath);
-                }
-                else
-                    LoadData(HostRoot, HostRootPath);
-                if (!File.Exists(HostingUnitRootPath))
-                {
-                    HostingUnitRoot = new XElement("HostingUnit");
-                    HostingUnitRoot.Save(HostingUnitRootPath);
-                }
-                else
-                    LoadData(HostingUnitRoot, HostingUnitRootPath);
-                if (!File.Exists(GuestRootPath))
-                {
-                    GuestRoot = new XElement("Guest");
-                    GuestRoot.Save(GuestRootPath);
-                }
-                else
-                    LoadData(GuestRoot, GuestRootPath);
-                if (!File.Exists(OrderRootPath))
-                {
-                    OrderRoot = new XElement("Orders");
-                    OrderRoot.Save(OrderRootPath);
-                }
-                else
-                    LoadData(OrderRoot, OrderRootPath);
-                if (!File.Exists(ConfigRootPath))
-                {
-                    CreateConfig();
-                    
-                }
-                else
-                    ConfigRoot = XElement.Load(ConfigRootPath);
-               /* if (!File.Exists(AtmRootPath))
-                {
-                    OrderRoot = new XElement("Atm");
-                    OrderRoot.Save(AtmRootPath);
-                }
-                else
-                    LoadData(AtmRoot, AtmRootPath);*/
-
+                configRoot = new XElement("config", new XElement("config", "00000000"));
+                configRoot.Save(configPath);
             }
-            catch
-            {
-                throw new Exception ("Issue with opening XML file");
-            }
-            deleteDup();
-
-        }
-        private void deleteDup()
-        {
-           /* List<BankAccount> b = loadListFromXML<BankAccount>(AtmRootPath);
-            for(int i=0;i<b.Count;i++)
-            {
-                for (int j = i + 1; j < b.Count; j++)
-                    if (b[i].BankName == b[j].BankName && b[i].BankNumber == b[j].BankNumber && b[i].BranchAddress == b[j].BranchAddress && b[i].BranchCity == b[j].BranchCity && b[i].BranchNumber == b[j].BranchNumber)
-                        b.Remove(b[j]);
-            }
-            saveListToXML(b, AtmRootPath);*/
-        }
-        private void LoadConfig()
-        {/*
-            ConfigRoot = XElement.Load(ConfigRootPath);
-            Configuration.GuestRequestKey = int.Parse((ConfigRoot.Element("config").ConfigRoot.Element("GuestRequestKey").Value));
-            Configuration.OrderKey = int.Parse(ConfigRoot.Element("OrderKey").Value.ToString());
-            Configuration.commission = int.Parse(ConfigRoot.Element("commission").Value.ToString());
-            Configuration.HostingUnitKey = int.Parse(ConfigRoot.Element("HostingUnitKey").Value.ToString());*/
+            else configRoot = XElement.Load(configPath);
         }
 
-        private void CreateConfig()
-        {
-            ConfigRoot = new XElement("config", new XElement("GuestRequestKey", "10000000"), new XElement("OrderKey", "10000000"), new XElement("HostingUnitKey", "10000000"), new XElement("commission", "10"));
-            
-            ConfigRoot.Save(ConfigRootPath);
-        }
-
-        private void LoadData(XElement x, string s)
+        private void LoadDataTrainee()//load from file to program (סוג xelement)
         {
             try
             {
-                x = XElement.Load(s);
+                traineeRoot = XElement.Load(traineePath);
             }
             catch
             {
                 throw new Exception("File upload problem");
             }
         }
+
+        private void CreatFileTrainee()//for new file
+        {
+            traineeRoot = new XElement("Trainees");
+            traineeRoot.Save(traineePath);//add new main element
+        }
+
+        private void LoadDataTester()//load from file to program (סוג xelement)
+        {
+            try
+            {
+                testerRoot = XElement.Load(testerPath);
+            }
+            catch
+            {
+                throw new Exception("File upload problem");
+            }
+        }
+
+        private void CreatFileTester()//for new file
+        {
+            testerRoot = new XElement("Testers");
+            testerRoot.Save(testerPath);//add new main element
+        }
+
+        private void CreatFileTest()//for new file
+        {
+            testRoot = new XElement("Tests");
+            testRoot.Save(testPath);//add new main element
+        }
+
+        private void LoadDataTest()//load from file to program (סוג xelement)
+        {
+            try
+            {
+                testRoot = XElement.Load(testPath);
+            }
+            catch
+            {
+                throw new Exception("File upload problem");
+            }
+        }
+
+        private void LoadDataConfig()
+        {
+            try
+            {
+                configRoot = XElement.Load(configPath);
+            }
+            catch
+            {
+                throw new Exception("File upload problem");
+
+            }
+        }
+
+
+        #endregion
+
+
+        /*  public Dal_XML_imp()
+          {
+              try
+              {
+                  if (!File.Exists(HostRootPath))
+                  {
+                      HostRoot = new XElement("Hosts");
+                      HostRoot.Save(HostRootPath);
+                  }
+                  else
+                      LoadData(HostRoot, HostRootPath);
+                  if (!File.Exists(HostingUnitRootPath))
+                  {
+                      HostingUnitRoot = new XElement("HostingUnit");
+                      HostingUnitRoot.Save(HostingUnitRootPath);
+                  }
+                  else
+                      LoadData(HostingUnitRoot, HostingUnitRootPath);
+                  if (!File.Exists(GuestRootPath))
+                  {
+                      GuestRoot = new XElement("Guest");
+                      GuestRoot.Save(GuestRootPath);
+                  }
+                  else
+                      LoadData(GuestRoot, GuestRootPath);
+                  if (!File.Exists(OrderRootPath))
+                  {
+                      OrderRoot = new XElement("Orders");
+                      OrderRoot.Save(OrderRootPath);
+                  }
+                  else
+                      LoadData(OrderRoot, OrderRootPath);
+                  if (!File.Exists(ConfigRootPath))
+                  {
+                      CreateConfig();
+
+                  }
+                  else
+                      ConfigRoot = XElement.Load(ConfigRootPath);
+                  /* if (!File.Exists(AtmRootPath))
+                   {
+                       OrderRoot = new XElement("Atm");
+                       OrderRoot.Save(AtmRootPath);
+                   }
+                   else
+                       LoadData(AtmRoot, AtmRootPath);
+
+              }
+              catch
+              {
+                  throw new Exception("Issue with opening XML file");
+              }
+              deleteDup();
+
+          }
+
+          public static volatile bool bankDownloaded = false;//flag if bank was downloaded
+          void DownloadBank()
+          {
+              #region downloadBank
+              const string xmlLocalPath = @"atm.xml";
+              WebClient wc = new WebClient();
+              try
+              {
+                  string xmlServerPath =
+                 @"http://www.boi.org.il/he/BankingSupervision/BanksAndBranchLocations/Lists/BoiBankBranchesDocs/atm.xml";
+                  wc.DownloadFile(xmlServerPath, xmlLocalPath);
+                  bankDownloaded = true;
+              }
+              catch (Exception ex)
+              {
+                  try
+                  {
+                      string xmlServerPath = @"http://www.jct.ac.il/~coshri/atm.xml";
+                      wc.DownloadFile(xmlServerPath, xmlLocalPath);
+                      bankDownloaded = true;
+                  }
+                  catch (Exception exeption)
+                  {
+                      //tries again if the connection didn't allow to download it
+                  }
+              }
+              finally
+              {
+                  wc.Dispose();
+              }
+              #endregion
+
+          }
+
+          private void deleteDup()
+          {
+             /* List<BankAccount> b = loadListFromXML<BankAccount>(AtmRootPath);
+              for(int i=0;i<b.Count;i++)
+              {
+                  for (int j = i + 1; j < b.Count; j++)
+                      if (b[i].BankName == b[j].BankName && b[i].BankNumber == b[j].BankNumber && b[i].BranchAddress == b[j].BranchAddress && b[i].BranchCity == b[j].BranchCity && b[i].BranchNumber == b[j].BranchNumber)
+                          b.Remove(b[j]);
+              }
+              saveListToXML(b, AtmRootPath);
+          }
+          private void LoadConfig()
+          {/*
+              ConfigRoot = XElement.Load(ConfigRootPath);
+              Configuration.GuestRequestKey = int.Parse((ConfigRoot.Element("config").ConfigRoot.Element("GuestRequestKey").Value));
+              Configuration.OrderKey = int.Parse(ConfigRoot.Element("OrderKey").Value.ToString());
+              Configuration.commission = int.Parse(ConfigRoot.Element("commission").Value.ToString());
+              Configuration.HostingUnitKey = int.Parse(ConfigRoot.Element("HostingUnitKey").Value.ToString());
+          }
+
+          private void CreateConfig()
+          {
+              ConfigRoot = new XElement("config", new XElement("GuestRequestKey", "10000000"), new XElement("OrderKey", "10000000"), new XElement("HostingUnitKey", "10000000"), new XElement("commission", "10"));
+
+              ConfigRoot.Save(ConfigRootPath);
+          }
+
+          private void LoadData(XElement x, string s)
+          {
+              try
+              {
+                  x = XElement.Load(s);
+              }
+              catch
+              {
+                  throw new Exception("File upload problem");
+              }
+          }*/
+
         #region Convert
         XElement ConvertGuest(Guest guest)
         {
