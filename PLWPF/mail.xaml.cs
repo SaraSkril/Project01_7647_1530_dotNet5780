@@ -92,16 +92,16 @@ namespace PLWPF
 
         private void send_Click(object sender, RoutedEventArgs e)
         {
-            t = main.Text;
+           /* t = main.Text;
             worker.DoWork += new DoWorkEventHandler(bw_DoWork);
             worker.WorkerReportsProgress = false;
             worker.WorkerSupportsCancellation = true;
             worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompleted);
-            worker.RunWorkerAsync();
+            worker.RunWorkerAsync();*/
 
 
 
-           /* try
+           try
             {
                 MainWindow.ibl.UpdateOrder(ord, t, pic);
                 Close();
@@ -110,7 +110,7 @@ namespace PLWPF
             {
                 MessageBox.Show(ex.Message);
                 Close();
-            }*/
+            }
 
         }
         public static void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

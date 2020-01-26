@@ -32,16 +32,9 @@ namespace PLWPF
             ID = id;
 
         }
-
-
-
+        
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-           /* CheckBox ckhBox = sender as CheckBox;
-            Guest checkedGuest = ckhBox.DataContext as Guest;
-            //open nee window to edit
-            //update list
-            */
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

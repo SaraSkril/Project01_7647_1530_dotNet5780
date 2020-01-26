@@ -70,6 +70,15 @@ namespace DAL
             else ConfigRoot = XElement.Load(ConfigRootPath);
         }
         #region Load&Create
+        private void LoadConfig()
+        {
+            /* ConfigRoot = XElement.Load(ConfigRootPath);
+             Configuration.GuestRequestKey = int.Parse((ConfigRoot.Element("config").ConfigRoot.Element("GuestRequestKey").Value));
+             Configuration.OrderKey = int.Parse(ConfigRoot.Element("OrderKey").Value.ToString());
+             Configuration.commission = int.Parse(ConfigRoot.Element("commission").Value.ToString());
+             Configuration.HostingUnitKey = int.Parse(ConfigRoot.Element("HostingUnitKey").Value.ToString());*/
+        }
+
         private void LoadDataGuests()//load from file to program (סוג xelement)
         {
             try
@@ -105,6 +114,7 @@ namespace DAL
                 throw new Exception("File upload problem");
             }
         }
+
         private void LoadDataHU()//load from file to program 
         {
             try
@@ -285,14 +295,7 @@ namespace DAL
               }
           }*/
 
-        private void LoadConfig()
-        {
-             /* ConfigRoot = XElement.Load(ConfigRootPath);
-              Configuration.GuestRequestKey = int.Parse((ConfigRoot.Element("config").ConfigRoot.Element("GuestRequestKey").Value));
-              Configuration.OrderKey = int.Parse(ConfigRoot.Element("OrderKey").Value.ToString());
-              Configuration.commission = int.Parse(ConfigRoot.Element("commission").Value.ToString());
-              Configuration.HostingUnitKey = int.Parse(ConfigRoot.Element("HostingUnitKey").Value.ToString());*/
-          }
+     
            
       
         #region Convert
@@ -352,11 +355,24 @@ namespace DAL
         {
             XElement HUelement = new XElement("HostingUnit");
 
-           // HostElement.Add(new XElement("BankDetails", new XElement("BankName", host.BankDetails.BankName), new XElement("BankNumber", host.BankDetails.BankNumber), new XElement("BranchAddress", host.BankDetails.BranchAddress), new XElement("BranchCity", host.BankDetails.BranchCity), new XElement("BranchNumber", host.BankDetails.BranchNumber)));
+          
             HUelement.Add(new XElement("HostingUnitKey", hosting.HostingUnitKey));
-           // XElement Owner = ConvertHost(hosting.Owner);
-           // HUelement.Add(new XElement("Owner", ConvertHost(hosting.Owner)));
-           HUelement.Add(new XElement()
+            
+            #region Adds Host
+            XElement HostElement = new XElement("Owner");
+            HostElement.Add(new XElement("ID", hosting.Owner.ID));
+            HostElement.Add(new XElement("FirstName", hosting.Owner.FirstName));
+            HostElement.Add(new XElement("LastName", hosting.Owner.LastName));
+            HostElement.Add(new XElement("PhoneNumber", hosting.Owner.PhoneNumber));
+            HostElement.Add(new XElement("EmailAddress", hosting.Owner.EmailAddress));
+            HostElement.Add(new XElement("BankDetails", new XElement("BankName", hosting.Owner.BankDetails.BankName), new XElement("BankNumber", hosting.Owner.BankDetails.BankNumber), new XElement("BranchAddress", hosting.Owner.BankDetails.BranchAddress), new XElement("BranchCity", hosting.Owner.BankDetails.BranchCity), new XElement("BranchNumber", hosting.Owner.BankDetails.BranchNumber)));
+            
+            HostElement.Add(new XElement("BankAccountNumber", hosting.Owner.BankAccountNumber));
+            HostElement.Add(new XElement("CollectionClearance", hosting.Owner.CollectionClearance));
+            HostElement.Add(new XElement("commission", hosting.Owner.commission));
+            #endregion
+
+            HUelement.Add(HostElement);
             HUelement.Add(new XElement("HostingUnitName", hosting.HostingUnitName));
             HUelement.Add(new XElement("area", hosting.area));
             HUelement.Add(new XElement("TypeUnit", hosting.TypeUnit));
@@ -400,9 +416,9 @@ namespace DAL
             return t;
 
         }
-        XElement ConvertHostHU(this XElement HostElement, Host host)
+        XElement ConvertHostHU( XElement HostElement, Host host)
         {
-           // XElement HostElement = new XElement("Host");
+           
 
             HostElement.Add(new XElement("ID", host.ID));
             HostElement.Add(new XElement("FirstName", host.FirstName));
@@ -410,7 +426,7 @@ namespace DAL
             HostElement.Add(new XElement("PhoneNumber", host.PhoneNumber));
             HostElement.Add(new XElement("EmailAddress", host.EmailAddress));
             HostElement.Add(new XElement("BankDetails", new XElement("BankName", host.BankDetails.BankName), new XElement("BankNumber", host.BankDetails.BankNumber), new XElement("BranchAddress", host.BankDetails.BranchAddress), new XElement("BranchCity", host.BankDetails.BranchCity), new XElement("BranchNumber", host.BankDetails.BranchNumber)));
-            // HostElement.Add(new XElement("BankDetails").Element("BankName").Value = host.BankDetails.BankName.ToString());
+           
             HostElement.Add(new XElement("BankAccountNumber", host.BankAccountNumber));
             HostElement.Add(new XElement("CollectionClearance", host.CollectionClearance));
             HostElement.Add(new XElement("commission", host.commission));
@@ -429,7 +445,7 @@ namespace DAL
             HostElement.Add(new XElement("PhoneNumber", host.PhoneNumber));
             HostElement.Add(new XElement("EmailAddress", host.EmailAddress));
             HostElement.Add(new XElement("BankDetails", new XElement("BankName", host.BankDetails.BankName), new XElement("BankNumber", host.BankDetails.BankNumber), new XElement("BranchAddress", host.BankDetails.BranchAddress), new XElement("BranchCity", host.BankDetails.BranchCity), new XElement("BranchNumber", host.BankDetails.BranchNumber)));
-         // HostElement.Add(new XElement("BankDetails").Element("BankName").Value = host.BankDetails.BankName.ToString());
+         
             HostElement.Add(new XElement("BankAccountNumber", host.BankAccountNumber));
             HostElement.Add(new XElement("CollectionClearance", host.CollectionClearance));
             HostElement.Add(new XElement("commission", host.commission));
@@ -473,6 +489,8 @@ namespace DAL
         }
 
         #endregion
+
+        #region Guest
         public void AddGuestReq(Guest guest)
         {
             try
@@ -486,7 +504,7 @@ namespace DAL
                         {
                             LoadConfig();
                             guest.GuestRequestKey = ++Configuration.GuestRequestKey;
-                            XElement GuestRequestKey = new XElement("GuestRequestKey",Configuration.GuestRequestKey);
+                            XElement GuestRequestKey = new XElement("GuestRequestKey", Configuration.GuestRequestKey);
                             GuestRequestKey.Save(ConfigRootPath);
 
                         }
@@ -494,15 +512,15 @@ namespace DAL
                         {
                             throw e;
                         }
-                        
-                       
+
+
                     }
                     GuestRoot.Add(ConvertGuest(guest));
 
                     GuestRoot.Save(GuestRootPath);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
@@ -512,7 +530,7 @@ namespace DAL
         {
             XElement toUpdate = (from item in GuestRoot.Elements()
                                  let temp = ConvertGuest(item)
-                                 where temp.GuestRequestKey==guest.GuestRequestKey
+                                 where temp.GuestRequestKey == guest.GuestRequestKey
                                  select item).FirstOrDefault();
             if (toUpdate == null)
                 throw new Exception("No Guest with this Key!");
@@ -522,6 +540,9 @@ namespace DAL
 
             GuestRoot.Save(GuestRootPath);
         }
+        #endregion
+
+        #region Host
 
         public void AddHost(Host host)
         {
@@ -537,9 +558,9 @@ namespace DAL
         {
             LoadDataHost();
             XElement HostElement = (from item in HostRoot.Elements()
-                                 let temp = ConvertHost(item)
-                                 where temp.ID == host.ID
-                                 select item).FirstOrDefault();
+                                    let temp = ConvertHost(item)
+                                    where temp.ID == host.ID
+                                    select item).FirstOrDefault();
             if (HostElement == null)
                 throw new Exception("No Host with this Id found!");
             HostElement.Remove();
@@ -548,6 +569,9 @@ namespace DAL
 
         }
 
+        #endregion
+
+        #region HostingUnit
         public void AddHostingUnit(HostingUnit hostingUnit)
         {
 
@@ -582,31 +606,33 @@ namespace DAL
 
             //find wanted to be deleted
             removeHUElement = (from HUElement in HostingUnitRoot.Elements()
-                                    where int.Parse(HUElement.Element("HostingUnitKey").Value) == key
-                                    select HUElement).FirstOrDefault();
+                               where int.Parse(HUElement.Element("HostingUnitKey").Value) == key
+                               select HUElement).FirstOrDefault();
 
             if (removeHUElement == null)//cant remove cause didnt find
                 throw new Exception("No such Hosting Unit in the system");
 
             removeHUElement.Remove();//delete from root
             HostingUnitRoot.Save(HostingUnitRootPath);//save to file
-            
+
         }
 
         public void UpdateHostUnit(HostingUnit hostingUnit)
         {
             LoadDataHU();
             XElement HostUElement = (from item in HostingUnitRoot.Elements()
-                                    let temp = ConvertHU(item)
-                                    where temp.HostingUnitKey == hostingUnit.HostingUnitKey
-                                    select item).FirstOrDefault();
+                                     let temp = ConvertHU(item)
+                                     where temp.HostingUnitKey == hostingUnit.HostingUnitKey
+                                     select item).FirstOrDefault();
             if (HostUElement == null)
                 throw new Exception("No Host with this Id found!");
             HostUElement.Remove();
             HostingUnitRoot.Add(ConvertHU(hostingUnit));
             HostingUnitRoot.Save(HostingUnitRootPath);
         }
+        #endregion
 
+        #region Order
         public void AddOrder(Order order)
         {
             Order order1 = GetOrder(order.OrderKey);
@@ -645,6 +671,9 @@ namespace DAL
             OrderRoot.Add(ConvertOrder(order));
             OrderRoot.Save(OrderRootPath);
         }
+        #endregion
+
+        #region Gets
 
         public List<HostingUnit> GetAllHostingUnits()
         {
@@ -670,12 +699,12 @@ namespace DAL
                 guest.Add(t);
             }
             return guest;
-        
-    }
+
+        }
 
         public List<Order> GetAllOrders()
         {
-            
+
             LoadDataOrder();
             List<Order> allorder = new List<Order>();
             foreach (XElement o in OrderRoot.Elements())
@@ -690,7 +719,7 @@ namespace DAL
         public IEnumerable<BankAccount> GetAllBankAccounts()
         {
             throw new NotImplementedException();
-            
+
         }
 
         public Host GetHost(string id)
@@ -699,7 +728,7 @@ namespace DAL
             foreach (Host h in list)
                 if (h.ID == id)
                     return h;
-            return null; 
+            return null;
 
         }
 
@@ -710,14 +739,14 @@ namespace DAL
                 if (unit.HostingUnitKey == key)
                     return unit;
             return null;
-            
+
         }
 
         public Order GetOrder(int guestkey, int unitkey)
         {
             LoadDataOrder();
             XElement order = null;
-           
+
             try
             {
                 order = (from item in OrderRoot.Elements()
@@ -739,11 +768,11 @@ namespace DAL
         {
             LoadDataOrder();
             XElement order = null;
-            
+
             try
             {
                 order = (from item in OrderRoot.Elements()
-                      where int.Parse(item.Element("OrderKey").Value) == orderkey
+                         where int.Parse(item.Element("OrderKey").Value) == orderkey
                          select item).FirstOrDefault();
             }
             catch (Exception)
@@ -760,7 +789,7 @@ namespace DAL
         public HostingUnit GetHostingUnit(string name, string id)
         {
             List<HostingUnit> list = GetAllHostingUnits();
-            foreach(HostingUnit h in list)
+            foreach (HostingUnit h in list)
             {
                 if (h.HostingUnitName == name && h.Owner.ID == id)
                     return h;
@@ -776,8 +805,8 @@ namespace DAL
             try
             {
                 gu = (from item in GuestRoot.Elements()
-                       where int.Parse(item.Element("GuestRequestKey").Value) == key
-                       select item).FirstOrDefault();
+                      where int.Parse(item.Element("GuestRequestKey").Value) == key
+                      select item).FirstOrDefault();
             }
             catch (Exception)
             {
@@ -792,7 +821,7 @@ namespace DAL
 
         public List<Host> GetHosts()//works bh
         {
-         
+
             LoadDataHost();
             List<Host> allHosts = new List<Host>();
             foreach (XElement hostElement in HostRoot.Elements())
@@ -801,12 +830,15 @@ namespace DAL
 
                 allHosts.Add(t);
             }
-           return  allHosts;
-           
+            return allHosts;
+
 
         }
+        #endregion
 
-        
+
+
+
 
     }
 }

@@ -181,16 +181,19 @@ namespace BL
                 Guest guest = dal.GetGuest(order.GuestRequestKey);
                 guest.GuestStatus = Status.Closed_ClientRequest;
                 UpdateGuestReq(guest);
-                Charge(FindHost(order.HostingUnitKey), DaysBetween(guest.EntryDate, guest.ReleaseDate));//charges the host 10 nis 
+                
                 HostingUnit tmp = dal.GetHostingUnit(order.HostingUnitKey);
                 if (!CheckOffDates(tmp, guest.EntryDate, guest.ReleaseDate))
                     throw new TaskCanceledException("could not book dates");
-               UpdateHostUnit(tmp.Clone());//need if we figure out how to clone diary
+                Charge(FindHost(order.HostingUnitKey), DaysBetween(guest.EntryDate, guest.ReleaseDate));//charges the host 10 nis 
+               // Charge(tmp, DaysBetween(guest.EntryDate, guest.ReleaseDate));
+                UpdateHostUnit(tmp.Clone());//need if we figure out how to clone diary
                 foreach (Order order1 in dal.GetAllOrders())//closes all orders that are open for this guest
                 {
                     if (order1.GuestRequestKey == guest.GuestRequestKey)
                         order1.Status = Status.Closed_ClientRequest;
                 }
+                return;
             }
             if (order.Status == Status.Mail_Sent)
             {
@@ -346,6 +349,7 @@ namespace BL
             try
             {
                 host.commission += Configuration.commission * numdays;
+                dal.UpdateHost(host);
                 return true;
             }
             catch
@@ -354,6 +358,7 @@ namespace BL
             }
 
         }
+        
         public Host FindHost(int key)//recieves hosting unit key and returns the host that ownes it
         {
             HostingUnit hostingUnit = dal.GetHostingUnit(key);
