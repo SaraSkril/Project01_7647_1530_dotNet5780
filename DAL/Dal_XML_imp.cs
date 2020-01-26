@@ -18,17 +18,18 @@ namespace DAL
 {
     class Dal_XML_imp : Idal
     {
-        private XElement HostRoot;
-        private XElement HostingUnitRoot;
-        private XElement GuestRoot;
-        private XElement OrderRoot;
-        private XElement ConfigRoot;
+         XElement HostRoot;
+         XElement HostingUnitRoot;
+         XElement GuestRoot;
+        XElement OrderRoot;
+         XElement ConfigRoot;
         //      private XElement AtmRoot;
-        private const string HostRootPath = @"Hosts.xml";
-        private const string HostingUnitRootPath = @"HostingUnits.xml";
-        private const string GuestRootPath = @"Guests.xml";
-        private const string ConfigRootPath = @"Config.xml";
-        private const string OrderRootPath = @"Orders.xml";
+         string HostRootPath = @"Hosts.xml";
+        string hostRootXml= "HostxmlBySerilalizer.xml";
+        string HostingUnitRootPath = @"HostingUnits.xml";
+        string GuestRootPath = @"Guests.xml";
+         string ConfigRootPath = @"Config.xml";
+        string OrderRootPath = @"Orders.xml";
         //      private const string AtmRootPath = @"atm.xml";
 
         #region Singleton
@@ -43,34 +44,38 @@ namespace DAL
 
         public Dal_XML_imp()
         {
-            if (!File.Exists(traineePath))
-                CreatFileTrainee();
+            if (!File.Exists(GuestRootPath))
+                CreatFileGuests();
             else
-                LoadDataTrainee();
+                LoadDataGuests();
 
-            if (!File.Exists(testerPath))
-                CreatFileTester();
+            if (!File.Exists(HostingUnitRootPath))
+                CreatFileHU();
             else
-                LoadDataTester();
+                LoadDataHU();
 
-            if (!File.Exists(testPath))
-                CreatFileTest();
+            if (!File.Exists(HostRootPath))
+                CreatFileHost();
             else
-                LoadDataTest();
+                LoadDataHost();
+            if (!File.Exists(OrderRootPath))
+                CreatFileOrder();
+            else
+                LoadDataOrder();
 
-            if (!File.Exists(configPath))
+            if (!File.Exists(ConfigRootPath))
             {
-                configRoot = new XElement("config", new XElement("config", "00000000"));
-                configRoot.Save(configPath);
+                ConfigRoot = new XElement("config", new XElement("config", "00000000"));
+                ConfigRoot.Save(ConfigRootPath);
             }
-            else configRoot = XElement.Load(configPath);
+            else ConfigRoot = XElement.Load(ConfigRootPath);
         }
 
-        private void LoadDataTrainee()//load from file to program (סוג xelement)
+        private void LoadDataGuests()//load from file to program (סוג xelement)
         {
             try
             {
-                traineeRoot = XElement.Load(traineePath);
+                GuestRoot = XElement.Load(GuestRootPath);
             }
             catch
             {
@@ -78,17 +83,34 @@ namespace DAL
             }
         }
 
-        private void CreatFileTrainee()//for new file
+        private void CreatFileGuests()//for new file
         {
-            traineeRoot = new XElement("Trainees");
-            traineeRoot.Save(traineePath);//add new main element
+            GuestRoot = new XElement("Guest");
+            GuestRoot.Save(GuestRootPath);//add new main element
         }
 
-        private void LoadDataTester()//load from file to program (סוג xelement)
+        private void CreatFileOrder()
+        {
+            OrderRoot = new XElement("Order");
+            OrderRoot.Save(OrderRootPath);
+        }
+
+        private void LoadDataOrder()
         {
             try
             {
-                testerRoot = XElement.Load(testerPath);
+                OrderRoot = XElement.Load(OrderRootPath);
+            }
+            catch
+            {
+                throw new Exception("File upload problem");
+            }
+        }
+        private void LoadDataHU()//load from file to program 
+        {
+            try
+            {
+                HostingUnitRoot = XElement.Load(HostingUnitRootPath);
             }
             catch
             {
@@ -96,23 +118,23 @@ namespace DAL
             }
         }
 
-        private void CreatFileTester()//for new file
+        private void CreatFileHU()//for new file
         {
-            testerRoot = new XElement("Testers");
-            testerRoot.Save(testerPath);//add new main element
+            HostingUnitRoot = new XElement("HostingUnit");
+            HostingUnitRoot.Save(HostingUnitRootPath);//add new main element
         }
 
-        private void CreatFileTest()//for new file
+        private void CreatFileHost()//for new file
         {
-            testRoot = new XElement("Tests");
-            testRoot.Save(testPath);//add new main element
+            HostRoot = new XElement("Host");
+            HostRoot.Save(HostRootPath);//add new main element
         }
 
-        private void LoadDataTest()//load from file to program (סוג xelement)
+        private void LoadDataHost()//load from file to program (סוג xelement)
         {
             try
             {
-                testRoot = XElement.Load(testPath);
+                HostRoot = XElement.Load(HostRootPath);
             }
             catch
             {
@@ -124,7 +146,7 @@ namespace DAL
         {
             try
             {
-                configRoot = XElement.Load(configPath);
+                ConfigRoot = XElement.Load(ConfigRootPath);
             }
             catch
             {
@@ -266,6 +288,16 @@ namespace DAL
               }
           }*/
 
+        private void LoadConfig()
+        {
+             /* ConfigRoot = XElement.Load(ConfigRootPath);
+              Configuration.GuestRequestKey = int.Parse((ConfigRoot.Element("config").ConfigRoot.Element("GuestRequestKey").Value));
+              Configuration.OrderKey = int.Parse(ConfigRoot.Element("OrderKey").Value.ToString());
+              Configuration.commission = int.Parse(ConfigRoot.Element("commission").Value.ToString());
+              Configuration.HostingUnitKey = int.Parse(ConfigRoot.Element("HostingUnitKey").Value.ToString());*/
+          }
+           
+      
         #region Convert
         XElement ConvertGuest(Guest guest)
         {
@@ -331,6 +363,7 @@ namespace DAL
             HostElement.Add(new XElement("PhoneNumber", host.PhoneNumber));
             HostElement.Add(new XElement("EmailAddress", host.EmailAddress));
             HostElement.Add(new XElement("BankDetails", new XElement("BankName", host.BankDetails.BankName), new XElement("BankNumber", host.BankDetails.BankNumber), new XElement("BranchAddress", host.BankDetails.BranchAddress), new XElement("BranchCity", host.BankDetails.BranchCity), new XElement("BranchNumber", host.BankDetails.BranchNumber)));
+            HostElement.Add(new XElement("BankDetails").Element("BankName").Value = host.BankDetails.BankName.ToString());
             HostElement.Add(new XElement("BankAccountNumber", host.BankAccountNumber));
             HostElement.Add(new XElement("CollectionClearance", host.CollectionClearance));
             HostElement.Add(new XElement("commission", host.commission));
@@ -357,19 +390,35 @@ namespace DAL
             return h;
         }
 
-        public static void saveListToXML<T>(List<T> list, string path)
+        public static void saveListToXML(List<Host> list, string path)
         {
             XmlSerializer x = new XmlSerializer(list.GetType());
             FileStream fs = new FileStream(path, FileMode.Create);
             x.Serialize(fs, list);
         }
 
-        public static List<T> loadListFromXML<T>(string path)
+        public static List<Host> loadListFromXML(string path)
         {
-            List<T> list;
-            XmlSerializer x = new XmlSerializer(typeof(List<T>));
+            List<Host> list;
+            XmlSerializer x = new XmlSerializer(typeof(List<Host>));
             FileStream fs = new FileStream(path, FileMode.Open);
-            list = (List<T>)x.Deserialize(fs);
+            list = (List<Host>)x.Deserialize(fs);
+            return list;
+
+        }
+        public static void saveListToXML(List<HostingUnit> list, string path)
+        {
+            XmlSerializer x = new XmlSerializer(list.GetType());
+            FileStream fs = new FileStream(path, FileMode.Create);
+            x.Serialize(fs, list);
+        }
+
+        public static List<HostingUnit> loadListFromXMLHU(string path)
+        {
+            List<HostingUnit> list;
+            XmlSerializer x = new XmlSerializer(typeof(List<HostingUnit>));
+            FileStream fs = new FileStream(path, FileMode.Open);
+            list = (List<HostingUnit>)x.Deserialize(fs);
             return list;
 
         }
@@ -437,7 +486,7 @@ namespace DAL
 
         public void UpdateHost(Host host)
         {
-            List<Host> l = loadListFromXML<Host>(HostRootPath);
+            List<Host> l = loadListFromXML(HostRootPath);
             int index =l.FindIndex(t => t.ID == host.ID);//finds ondex of guest with id 
             if (index != -1)
                l[index] = host;
@@ -464,9 +513,9 @@ namespace DAL
                     throw e;
                 }
                 
-                List<HostingUnit> list = loadListFromXML<HostingUnit>(HostingUnitRootPath);
+              /*  List<HostingUnit> list = loadListFromXML<HostingUnit>(HostingUnitRootPath);
                 list.Add(hostingUnit);
-                saveListToXML(list, HostingUnitRootPath);
+                saveListToXML(list, HostingUnitRootPath);*/
             }
             else
                 throw new DuplicateWaitObjectException("Hosting Unit with the same name exists!");
@@ -474,7 +523,7 @@ namespace DAL
 
         public void DelHostingUnit(int key)
         {
-            List<HostingUnit> hu = loadListFromXML<HostingUnit>(HostingUnitRootPath);
+            List<HostingUnit> hu = loadListFromXMLHU(HostingUnitRootPath);
             if (hu.Exists(x => x.HostingUnitKey == key))
             {
                hu.Remove(hu.Find(x => x.HostingUnitKey == key));
@@ -487,7 +536,7 @@ namespace DAL
 
         public void UpdateHostUnit(HostingUnit hostingUnit)
         {
-            List<HostingUnit> hu = loadListFromXML<HostingUnit>(HostingUnitRootPath);
+            List<HostingUnit> hu = loadListFromXMLHU(HostingUnitRootPath);
             int index = hu.FindIndex(t => t.HostingUnitKey == hostingUnit.HostingUnitKey);//finds ondex of unit with key  
                                                                                                                     //  hostingUnit.HostingUnitKey = GetHostingUnit(hostingUnit.HostingUnitName).HostingUnitKey;
             if (index == -1)//meaning name not found
@@ -524,17 +573,17 @@ namespace DAL
 
         public void UpdateOrder(Order order)
         {
-            List<Order> ord = loadListFromXML<Order>(OrderRootPath);
+           /* List<Order> ord = loadListFromXML<Order>(OrderRootPath);
             int index = ord.FindIndex(t => t.OrderKey == order.OrderKey);
             if (index == -1)//meaning id not found
                 throw new KeyNotFoundException("No order was found!");
             ord[index] = order;//update the order
-            saveListToXML(ord, OrderRootPath);
+            saveListToXML(ord, OrderRootPath);*/
         }
 
         public List<HostingUnit> GetAllHostingUnits()
         {
-            List<HostingUnit> list = loadListFromXML<HostingUnit>(HostingUnitRootPath);
+            List<HostingUnit> list = loadListFromXMLHU(HostingUnitRootPath);
             return list;
         }
 
@@ -558,20 +607,27 @@ namespace DAL
 
         public Host GetHost(string id)
         {
-            List<Host> list = loadListFromXML<Host>(HostRootPath);
+            /*List<Host> list = loadListFromXML<Host>(HostRootPath);
             foreach (Host h  in list)
                 if (h.ID == id)
                     return h;
+            return null; */
+            List<Host> list = GetHosts();
+            foreach (Host h in list)
+                if (h.ID == id)
+                    return h;
             return null; 
+
         }
 
         public HostingUnit GetHostingUnit(int key)
         {
-            List<HostingUnit> list = loadListFromXML<HostingUnit>(HostingUnitRootPath);
+            List<HostingUnit> list = loadListFromXMLHU(HostingUnitRootPath);
             foreach (HostingUnit unit in list)
                 if (unit.HostingUnitKey == key)
                     return unit;
             return null;
+            
         }
 
         public Order GetOrder(int guestkey, int unitkey)
@@ -618,7 +674,7 @@ namespace DAL
 
         public HostingUnit GetHostingUnit(string name, string id)
         {
-            List<HostingUnit> list = loadListFromXML<HostingUnit>(HostingUnitRootPath);
+            List<HostingUnit> list = loadListFromXMLHU(HostingUnitRootPath);
             foreach (HostingUnit unit in list)
                 if (unit.HostingUnitName == name && unit.Owner.ID == id)
                     return unit;
@@ -651,7 +707,7 @@ namespace DAL
         {
            /* return (List<Host>)from item in HostRoot.Elements()
                                 select ConvertHost(item);*/
-            List<Host> list = loadListFromXML<Host>(HostRootPath);
+            List<Host> list = loadListFromXML(hostRootXml);
             return list;
         }
 
