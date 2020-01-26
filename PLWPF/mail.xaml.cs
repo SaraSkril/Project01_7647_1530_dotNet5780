@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.ComponentModel;
 using BE;
 using BL;
 
@@ -22,7 +23,7 @@ namespace PLWPF
     /// </summary>
     public partial class Mail : Window
     {
-        
+        BackgroundWorker worker = new BackgroundWorker();
         Guest gu;
         HostingUnit hu;
         string t;
@@ -49,7 +50,12 @@ namespace PLWPF
                 }
             }
             starttextbox();
+            //worker.DoWork += AddChosenTestThreadFunc;
+            //worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+           // worker.WorkerSupportsCancellation = true;
         }
+
+
         private void starttextbox()
         {
             
@@ -87,7 +93,15 @@ namespace PLWPF
         private void send_Click(object sender, RoutedEventArgs e)
         {
             t = main.Text;
-            try
+            worker.DoWork += new DoWorkEventHandler(bw_DoWork);
+            worker.WorkerReportsProgress = false;
+            worker.WorkerSupportsCancellation = true;
+            worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompleted);
+            worker.RunWorkerAsync();
+
+
+
+           /* try
             {
                 MainWindow.ibl.UpdateOrder(ord, t, pic);
                 Close();
@@ -96,7 +110,27 @@ namespace PLWPF
             {
                 MessageBox.Show(ex.Message);
                 Close();
+            }*/
+
+        }
+        public static void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+
+        }
+        public void bw_DoWork(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => MainWindow.ibl.UpdateOrder(ord, t, pic)));
+                MainWindow.ibl.UpdateOrder(ord, t, pic);
+                Close();
             }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                Close();
+            }
+
         }
 
         private void cancel_Click(object sender, RoutedEventArgs e)

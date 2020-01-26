@@ -14,11 +14,11 @@ namespace BE
         public string HostingUnitName { get; set; }//name of the hosting unit
         [XmlIgnore]
          public bool[,] Diary = new bool[12, 31];//matrix of hosting unit status
-        [XmlArray("Diary")]        public bool[] DairyDto
+        /*[XmlArray("Diary")]        public bool[] DairyDto
         {
             get { return Diary.Flatten(); }
             set { Diary = value.Expand(12); } //12 is the number of roes in the matrix
-        }
+        }*/
         public Area area { get; set; }
         public TypeUnit TypeUnit { get; set; }
         public bool pool { get; set; }

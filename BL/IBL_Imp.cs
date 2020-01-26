@@ -197,13 +197,7 @@ namespace BL
                 HostingUnit hosting = dal.GetHostingUnit(order.HostingUnitKey);
                 if (!CheckIsBankAllowed(hosting.Owner, order))
                     throw new TaskCanceledException("Cannot send mail. No debit authorization\n please update Automatic billing.");
-
-             /*   BackgroundWorker bw = new BackgroundWorker();
-                this.Controls.Add(bw);
-                bw.DoWork += new DoWorkEventHandler(bw_DoWork(order,text,pic));
-                bw.RunWorkerAsync();*/
-
-                
+                SendMail(order, text,pic);
                 order.OrderDate = DateTime.Now;
             }
             try
@@ -217,15 +211,7 @@ namespace BL
             }
 
         }
-        private bool quit = false;
-        void bw_DoWork(Order order, string text, string pic)
-        {
-            while (!quit)
-            {
-                SendMail(order, text, pic);
-                // Code to send email here
-            }
-        }
+        
         #endregion
         #region Delete
 

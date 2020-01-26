@@ -21,9 +21,9 @@ namespace BE
             int rows = arr.GetLength(0);
             int columns = arr.GetLength(1);
             T[] arrFlattened = new T[rows * columns];
-            for (int j = 0; j < rows; j++)
+            for (int i = 0; i< rows; i++)
             {
-                for (int i = 0; i < columns; i++)
+                for (int j = 0; j < columns; j++)
                 {
                     var test = arr[i, j];
                     arrFlattened[i * rows + j] = arr[i, j];
@@ -36,9 +36,9 @@ namespace BE
             int length = arr.GetLength(0);
             int columns = length / rows;
             T[,] arrExpanded = new T[rows, columns];
-            for (int j = 0; j < rows; j++)
+            for (int i = 0; i < rows; i++)
             {
-                for (int i = 0; i < columns; i++)
+                for (int j = 0; j < columns; j++)
                 {
                     arrExpanded[i, j] = arr[i * rows + j];
                 }
