@@ -352,9 +352,11 @@ namespace DAL
         {
             XElement HUelement = new XElement("HostingUnit");
 
+           // HostElement.Add(new XElement("BankDetails", new XElement("BankName", host.BankDetails.BankName), new XElement("BankNumber", host.BankDetails.BankNumber), new XElement("BranchAddress", host.BankDetails.BranchAddress), new XElement("BranchCity", host.BankDetails.BranchCity), new XElement("BranchNumber", host.BankDetails.BranchNumber)));
             HUelement.Add(new XElement("HostingUnitKey", hosting.HostingUnitKey));
-            XElement Owner = ConvertHost(hosting.Owner);
-            HUelement.Add(new XElement("Owner", Owner));
+           // XElement Owner = ConvertHost(hosting.Owner);
+           // HUelement.Add(new XElement("Owner", ConvertHost(hosting.Owner)));
+           HUelement.Add(new XElement()
             HUelement.Add(new XElement("HostingUnitName", hosting.HostingUnitName));
             HUelement.Add(new XElement("area", hosting.area));
             HUelement.Add(new XElement("TypeUnit", hosting.TypeUnit));
@@ -374,33 +376,46 @@ namespace DAL
             return HUelement;
         }
 
-        HostingUnit HUelement(XElement element)
+        HostingUnit ConvertHU(XElement element)
         {
           HostingUnit t = new HostingUnit();
-            /*
+            
             t.HostingUnitKey = int.Parse(element.Element("HostingUnitKey").Value);
-            t.Owner. = element.Element("Owner").Element();
-            t.LastName = element.Element("LastName").Value;
-            t.BirthDate = DateTime.Parse(element.Element("BirthDate").Value);
-            t.Gender = (E_Gender)Enum.Parse(typeof(E_Gender), element.Element("Gender").Value);
-            t.PhoneNumber = element.Element("PhoneNumber").Value;
-            t.Address.City = element.Element("Address").Element("City").Value;
-            t.Address.Street = element.Element("Address").Element("Street").Value;
-            t.Address.HouseNumber = element.Element("Address").Element("HouseNumber").Value;
-            t.VehicleType = (E_VehicleType)Enum.Parse(typeof(E_VehicleType), element.Element("VehicleType").Value);
-            t.ImageSource = @element.Element("ImageSource").Value;
-            t.Email = element.Element("Email").Value;
-            t.YearsOfExperience = int.Parse(element.Element("YearsOfExperience").Value);
-            t.MaxTestsPerWeek = int.Parse(element.Element("MaxTestsPerWeek").Value);
-            t.MaxDistance = int.Parse(element.Element("MaxDistance").Value);
-            var Temp = element.Element("Schedule").Value;
+            t.Owner = ConvertHost(element.Element("Owner"));
+            t.HostingUnitName = element.Element("HostingUnitName").Value;
+            t.area = (Area)Enum.Parse(typeof(Area),element.Element("area").Value);
+            t.TypeUnit = (TypeUnit)Enum.Parse(typeof(TypeUnit), element.Element("TypeUnit").Value);
+            t.pool = bool.Parse(element.Element("pool").Value);
+            t.Jacuzzi = bool.Parse(element.Element("Jacuzzi").Value);
+            t.Garden = bool.Parse(element.Element("Garden").Value);
+            t.ChildrensAttractions = bool.Parse(element.Element("ChildrensAttractions").Value);
+            t.Wifi = bool.Parse(element.Element("Wifi").Value);
+          
+            var Temp = element.Element("Diary").Value;
             int k = 0;
-            for (int i = 0; i < t.Schedule.ScheduleArray.GetLength(0); i++)
-                for (int j = 0; j < t.Schedule.ScheduleArray.GetLength(1); j++)
-                    t.Schedule.ScheduleArray[i, j] = bool.Parse(Temp.Split(' ')[k++]);*/
+            for (int i = 0; i < 12; i++)
+                for (int j = 0; j < 31; j++)
+                    t.Diary[i, j] = bool.Parse(Temp.Split(' ')[k++]);
 
             return t;
 
+        }
+        XElement ConvertHostHU(this XElement HostElement, Host host)
+        {
+           // XElement HostElement = new XElement("Host");
+
+            HostElement.Add(new XElement("ID", host.ID));
+            HostElement.Add(new XElement("FirstName", host.FirstName));
+            HostElement.Add(new XElement("LastName", host.LastName));
+            HostElement.Add(new XElement("PhoneNumber", host.PhoneNumber));
+            HostElement.Add(new XElement("EmailAddress", host.EmailAddress));
+            HostElement.Add(new XElement("BankDetails", new XElement("BankName", host.BankDetails.BankName), new XElement("BankNumber", host.BankDetails.BankNumber), new XElement("BranchAddress", host.BankDetails.BranchAddress), new XElement("BranchCity", host.BankDetails.BranchCity), new XElement("BranchNumber", host.BankDetails.BranchNumber)));
+            // HostElement.Add(new XElement("BankDetails").Element("BankName").Value = host.BankDetails.BankName.ToString());
+            HostElement.Add(new XElement("BankAccountNumber", host.BankAccountNumber));
+            HostElement.Add(new XElement("CollectionClearance", host.CollectionClearance));
+            HostElement.Add(new XElement("commission", host.commission));
+
+            return HostElement;
         }
 
 
@@ -436,7 +451,7 @@ namespace DAL
         {
             Host h = new Host();
             
-            h.ID = element.Element("ID").Value.ToString();
+            h.ID = element.Element("ID").Value;
             h.FirstName = element.Element("FirstName").Value;
             h.LastName = element.Element("LastName").Value;
             h.PhoneNumber = int.Parse(element.Element("PhoneNumber").Value);
@@ -447,39 +462,7 @@ namespace DAL
             return h;
         }
 
-        public static void saveListToXML(List<Host> list, string path)
-        {
-            XmlSerializer x = new XmlSerializer(list.GetType());
-            FileStream fs = new FileStream(path, FileMode.Create);
-            x.Serialize(fs, list);
-        }
-
-        public static List<Host> loadListFromXML(string path)
-        {
-            List<Host> list;
-            XmlSerializer x = new XmlSerializer(typeof(List<Host>));
-            FileStream fs = new FileStream(path, FileMode.Open);
-            list = (List<Host>)x.Deserialize(fs);
-            return list;
-
-        }
-        public static void saveListToXML(List<HostingUnit> list, string path)
-        {
-            XmlSerializer x = new XmlSerializer(list.GetType());
-            FileStream fs = new FileStream(path, FileMode.Create);
-            x.Serialize(fs, list);
-        }
-
-        public static List<HostingUnit> loadListFromXMLHU(string path)
-        {
-            List<HostingUnit> list;
-            XmlSerializer x = new XmlSerializer(typeof(List<HostingUnit>));
-            FileStream fs = new FileStream(path, FileMode.Open);
-            list = (List<HostingUnit>)x.Deserialize(fs);
-            return list;
-
-        }
-
+      
         public static bool[,] ToMatrix(XElement m)
         {
             bool[,] help = new bool[12,31];
@@ -552,24 +535,17 @@ namespace DAL
 
         public void UpdateHost(Host host)
         {
+            LoadDataHost();
             XElement HostElement = (from item in HostRoot.Elements()
                                  let temp = ConvertHost(item)
                                  where temp.ID == host.ID
                                  select item).FirstOrDefault();
             if (HostElement == null)
                 throw new Exception("No Host with this Id found!");
-            HostElement.Add(new XElement("ID", host.ID));
-            HostElement.Add(new XElement("FirstName", host.FirstName));
-            HostElement.Add(new XElement("LastName", host.LastName));
-            HostElement.Add(new XElement("PhoneNumber", host.PhoneNumber));
-            HostElement.Add(new XElement("EmailAddress", host.EmailAddress));
-            HostElement.Add(new XElement("BankDetails", new XElement("BankName", host.BankDetails.BankName), new XElement("BankNumber", host.BankDetails.BankNumber), new XElement("BranchAddress", host.BankDetails.BranchAddress), new XElement("BranchCity", host.BankDetails.BranchCity), new XElement("BranchNumber", host.BankDetails.BranchNumber)));
-            // HostElement.Add(new XElement("BankDetails").Element("BankName").Value = host.BankDetails.BankName.ToString());
-            HostElement.Add(new XElement("BankAccountNumber", host.BankAccountNumber));
-            HostElement.Add(new XElement("CollectionClearance", host.CollectionClearance));
-            HostElement.Add(new XElement("commission", host.commission));
-
+            HostElement.Remove();
+            HostRoot.Add(ConvertHost(host));
             HostRoot.Save(HostRootPath);
+
         }
 
         public void AddHostingUnit(HostingUnit hostingUnit)
@@ -602,31 +578,33 @@ namespace DAL
         public void DelHostingUnit(int key)
         {
             LoadDataHU();
-            XElement removeTraineeElement;
+            XElement removeHUElement;
 
             //find wanted to be deleted
-            removeTraineeElement = (from HUElement in HostingUnitRoot.Elements()
+            removeHUElement = (from HUElement in HostingUnitRoot.Elements()
                                     where int.Parse(HUElement.Element("HostingUnitKey").Value) == key
                                     select HUElement).FirstOrDefault();
 
-            if (removeTraineeElement == null)//cant remove cause didnt find
+            if (removeHUElement == null)//cant remove cause didnt find
                 throw new Exception("No such Hosting Unit in the system");
 
-            removeTraineeElement.Remove();//delete from root
+            removeHUElement.Remove();//delete from root
             HostingUnitRoot.Save(HostingUnitRootPath);//save to file
             
         }
 
         public void UpdateHostUnit(HostingUnit hostingUnit)
         {
-            List<HostingUnit> list = loadListFromXMLHU(HostingUnitRootPath);
-           
-                 int index = list.FindIndex(t => t.HostingUnitKey == hostingUnit.HostingUnitKey);
-            if (index == -1)//meaning id not found
-                throw new KeyNotFoundException("No Hosting Unit was found!");
-            list[index] = hostingUnit.Clone();//update the order
-            saveListToXML(list, HostingUnitRootPath);
-
+            LoadDataHU();
+            XElement HostUElement = (from item in HostingUnitRoot.Elements()
+                                    let temp = ConvertHU(item)
+                                    where temp.HostingUnitKey == hostingUnit.HostingUnitKey
+                                    select item).FirstOrDefault();
+            if (HostUElement == null)
+                throw new Exception("No Host with this Id found!");
+            HostUElement.Remove();
+            HostingUnitRoot.Add(ConvertHU(hostingUnit));
+            HostingUnitRoot.Save(HostingUnitRootPath);
         }
 
         public void AddOrder(Order order)
@@ -656,30 +634,57 @@ namespace DAL
 
         public void UpdateOrder(Order order)
         {
-           /* List<Order> ord = loadListFromXML<Order>(OrderRootPath);
-            int index = ord.FindIndex(t => t.OrderKey == order.OrderKey);
-            if (index == -1)//meaning id not found
-                throw new KeyNotFoundException("No order was found!");
-            ord[index] = order;//update the order
-            saveListToXML(ord, OrderRootPath);*/
+            LoadDataOrder();
+            XElement orderElement = (from item in OrderRoot.Elements()
+                                     let temp = ConvertOrder(item)
+                                     where temp.OrderKey == order.OrderKey
+                                     select item).FirstOrDefault();
+            if (orderElement == null)
+                throw new Exception("Order Not found!");
+            orderElement.Remove();
+            OrderRoot.Add(ConvertOrder(order));
+            OrderRoot.Save(OrderRootPath);
         }
 
         public List<HostingUnit> GetAllHostingUnits()
         {
-            List<HostingUnit> list = loadListFromXMLHU(HostingUnitRootPath);
-            return list;
+            LoadDataHU();
+            List<HostingUnit> hu = new List<HostingUnit>();
+            foreach (XElement o in HostingUnitRoot.Elements())
+            {
+                HostingUnit t = ConvertHU(o);
+
+                hu.Add(t);
+            }
+            return hu;
         }
 
         public List<Guest> GetAllGuests()
         {
-            return(List<Guest>) from item in GuestRoot.Elements()
-                   select ConvertGuest(item);
-        }
+            LoadDataGuests();
+            List<Guest> guest = new List<Guest>();
+            foreach (XElement o in GuestRoot.Elements())
+            {
+                Guest t = ConvertGuest(o);
+
+                guest.Add(t);
+            }
+            return guest;
+        
+    }
 
         public List<Order> GetAllOrders()
         {
-            return (List<Order>)from item in OrderRoot.Elements()
-                                select ConvertOrder(item);
+            
+            LoadDataOrder();
+            List<Order> allorder = new List<Order>();
+            foreach (XElement o in OrderRoot.Elements())
+            {
+                Order t = ConvertOrder(o);
+
+                allorder.Add(t);
+            }
+            return allorder;
         }
 
         public IEnumerable<BankAccount> GetAllBankAccounts()
@@ -700,7 +705,7 @@ namespace DAL
 
         public HostingUnit GetHostingUnit(int key)
         {
-            List<HostingUnit> list = loadListFromXMLHU(HostingUnitRootPath);
+            List<HostingUnit> list = GetAllHostingUnits();
             foreach (HostingUnit unit in list)
                 if (unit.HostingUnitKey == key)
                     return unit;
@@ -710,6 +715,7 @@ namespace DAL
 
         public Order GetOrder(int guestkey, int unitkey)
         {
+            LoadDataOrder();
             XElement order = null;
            
             try
@@ -731,6 +737,7 @@ namespace DAL
 
         public Order GetOrder(int orderkey)
         {
+            LoadDataOrder();
             XElement order = null;
             
             try
@@ -752,16 +759,18 @@ namespace DAL
 
         public HostingUnit GetHostingUnit(string name, string id)
         {
-            List<HostingUnit> list = loadListFromXMLHU(HostingUnitRootPath);
-            foreach (HostingUnit unit in list)
-                if (unit.HostingUnitName == name && unit.Owner.ID == id)
-                    return unit;
+            List<HostingUnit> list = GetAllHostingUnits();
+            foreach(HostingUnit h in list)
+            {
+                if (h.HostingUnitName == name && h.Owner.ID == id)
+                    return h;
+            }
             return null;
         }
 
         public Guest GetGuest(int key)
         {
-
+            LoadDataGuests();
             XElement gu = null;
 
             try

@@ -121,7 +121,7 @@ namespace PLWPF
         {
             try
             {
-                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => MainWindow.ibl.UpdateOrder(ord, t, pic)));
+                //Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => MainWindow.ibl.UpdateOrder(ord, t, pic)));
                 MainWindow.ibl.UpdateOrder(ord, t, pic);
                 Close();
             }
