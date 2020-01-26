@@ -64,19 +64,21 @@ namespace DAL
 
             if (!File.Exists(ConfigRootPath))
             {
-                ConfigRoot = new XElement("config", new XElement("config", "00000000"));
-                ConfigRoot.Save(ConfigRootPath);
+                CreateConfig();
             }
             else ConfigRoot = XElement.Load(ConfigRootPath);
         }
         #region Load&Create
-        private void LoadConfig()
+        private void CreateConfig()
         {
-            /* ConfigRoot = XElement.Load(ConfigRootPath);
-             Configuration.GuestRequestKey = int.Parse((ConfigRoot.Element("config").ConfigRoot.Element("GuestRequestKey").Value));
-             Configuration.OrderKey = int.Parse(ConfigRoot.Element("OrderKey").Value.ToString());
-             Configuration.commission = int.Parse(ConfigRoot.Element("commission").Value.ToString());
-             Configuration.HostingUnitKey = int.Parse(ConfigRoot.Element("HostingUnitKey").Value.ToString());*/
+            XElement HostingUnitKey = new XElement("HostingUnitKey", "10000000");
+            XElement GuestRequestKey = new XElement("GuestRequestKey", "10000000");
+            XElement OrderKey = new XElement("OrderKey", "10000000");
+            XElement commission = new XElement("commission", 10);
+
+            ConfigRoot = new XElement("Configuration", HostingUnitKey, GuestRequestKey, OrderKey, commission);
+            ConfigRoot.Save(ConfigRootPath);
+            
         }
 
         private void LoadDataGuests()//load from file to program (סוג xelement)
@@ -165,138 +167,7 @@ namespace DAL
         }
 
         #endregion
-
-        /*  public Dal_XML_imp()
-          {
-              try
-              {
-                  if (!File.Exists(HostRootPath))
-                  {
-                      HostRoot = new XElement("Hosts");
-                      HostRoot.Save(HostRootPath);
-                  }
-                  else
-                      LoadData(HostRoot, HostRootPath);
-                  if (!File.Exists(HostingUnitRootPath))
-                  {
-                      HostingUnitRoot = new XElement("HostingUnit");
-                      HostingUnitRoot.Save(HostingUnitRootPath);
-                  }
-                  else
-                      LoadData(HostingUnitRoot, HostingUnitRootPath);
-                  if (!File.Exists(GuestRootPath))
-                  {
-                      GuestRoot = new XElement("Guest");
-                      GuestRoot.Save(GuestRootPath);
-                  }
-                  else
-                      LoadData(GuestRoot, GuestRootPath);
-                  if (!File.Exists(OrderRootPath))
-                  {
-                      OrderRoot = new XElement("Orders");
-                      OrderRoot.Save(OrderRootPath);
-                  }
-                  else
-                      LoadData(OrderRoot, OrderRootPath);
-                  if (!File.Exists(ConfigRootPath))
-                  {
-                      CreateConfig();
-
-                  }
-                  else
-                      ConfigRoot = XElement.Load(ConfigRootPath);
-                  /* if (!File.Exists(AtmRootPath))
-                   {
-                       OrderRoot = new XElement("Atm");
-                       OrderRoot.Save(AtmRootPath);
-                   }
-                   else
-                       LoadData(AtmRoot, AtmRootPath);
-
-              }
-              catch
-              {
-                  throw new Exception("Issue with opening XML file");
-              }
-              deleteDup();
-
-          }
-
-          public static volatile bool bankDownloaded = false;//flag if bank was downloaded
-          void DownloadBank()
-          {
-              #region downloadBank
-              const string xmlLocalPath = @"atm.xml";
-              WebClient wc = new WebClient();
-              try
-              {
-                  string xmlServerPath =
-                 @"http://www.boi.org.il/he/BankingSupervision/BanksAndBranchLocations/Lists/BoiBankBranchesDocs/atm.xml";
-                  wc.DownloadFile(xmlServerPath, xmlLocalPath);
-                  bankDownloaded = true;
-              }
-              catch (Exception ex)
-              {
-                  try
-                  {
-                      string xmlServerPath = @"http://www.jct.ac.il/~coshri/atm.xml";
-                      wc.DownloadFile(xmlServerPath, xmlLocalPath);
-                      bankDownloaded = true;
-                  }
-                  catch (Exception exeption)
-                  {
-                      //tries again if the connection didn't allow to download it
-                  }
-              }
-              finally
-              {
-                  wc.Dispose();
-              }
-              #endregion
-
-          }
-
-          private void deleteDup()
-          {
-             /* List<BankAccount> b = loadListFromXML<BankAccount>(AtmRootPath);
-              for(int i=0;i<b.Count;i++)
-              {
-                  for (int j = i + 1; j < b.Count; j++)
-                      if (b[i].BankName == b[j].BankName && b[i].BankNumber == b[j].BankNumber && b[i].BranchAddress == b[j].BranchAddress && b[i].BranchCity == b[j].BranchCity && b[i].BranchNumber == b[j].BranchNumber)
-                          b.Remove(b[j]);
-              }
-              saveListToXML(b, AtmRootPath);
-          }
-          private void LoadConfig()
-          {/*
-              ConfigRoot = XElement.Load(ConfigRootPath);
-              Configuration.GuestRequestKey = int.Parse((ConfigRoot.Element("config").ConfigRoot.Element("GuestRequestKey").Value));
-              Configuration.OrderKey = int.Parse(ConfigRoot.Element("OrderKey").Value.ToString());
-              Configuration.commission = int.Parse(ConfigRoot.Element("commission").Value.ToString());
-              Configuration.HostingUnitKey = int.Parse(ConfigRoot.Element("HostingUnitKey").Value.ToString());
-          }
-
-          private void CreateConfig()
-          {
-              ConfigRoot = new XElement("config", new XElement("GuestRequestKey", "10000000"), new XElement("OrderKey", "10000000"), new XElement("HostingUnitKey", "10000000"), new XElement("commission", "10"));
-
-              ConfigRoot.Save(ConfigRootPath);
-          }
-
-          private void LoadData(XElement x, string s)
-          {
-              try
-              {
-                  x = XElement.Load(s);
-              }
-              catch
-              {
-                  throw new Exception("File upload problem");
-              }
-          }*/
-
-     
-           
+        
       
         #region Convert
         XElement ConvertGuest(Guest guest)
@@ -502,10 +373,11 @@ namespace DAL
                     {
                         try
                         {
-                            LoadConfig();
-                            guest.GuestRequestKey = ++Configuration.GuestRequestKey;
-                            XElement GuestRequestKey = new XElement("GuestRequestKey", Configuration.GuestRequestKey);
-                            GuestRequestKey.Save(ConfigRootPath);
+                            LoadDataConfig();
+                            int num = int.Parse(ConfigRoot.Element("GuestRequestKey").Value) + 1;
+                            guest.GuestRequestKey = num;
+                            ConfigRoot.Element("GuestRequestKey").Value = num.ToString();
+                            ConfigRoot.Save(ConfigRootPath);
 
                         }
                         catch (Exception e)
@@ -580,10 +452,11 @@ namespace DAL
             {
                 try
                 {
-                    LoadConfig();
-                    hostingUnit.HostingUnitKey = ++Configuration.HostingUnitKey;
-                    XElement HostingUnitKey = new XElement("HostingUnitKey", Configuration.HostingUnitKey);
-                    HostingUnitKey.Save(ConfigRootPath);
+                    LoadDataConfig();
+                    int num = int.Parse(ConfigRoot.Element("HostingUnitKey").Value) + 1;
+                    hostingUnit.HostingUnitKey = num;
+                    ConfigRoot.Element("HostingUnitKey").Value = num.ToString();
+                    ConfigRoot.Save(ConfigRootPath);
 
                 }
                 catch (Exception e)
@@ -640,10 +513,11 @@ namespace DAL
             {
                 try
                 {
-                    LoadConfig();
-                    order.OrderKey = ++Configuration.OrderKey;
-                    XElement OrderKey = new XElement("OrderKey", Configuration.OrderKey);
-                    OrderKey.Save(ConfigRootPath);
+                    LoadDataConfig();
+                    int num = int.Parse(ConfigRoot.Element("OrderKey").Value) + 1;
+                    order.OrderKey = num;
+                    ConfigRoot.Element("OrderKey").Value = num.ToString();
+                    ConfigRoot.Save(ConfigRootPath);
 
                 }
                 catch (Exception e)
