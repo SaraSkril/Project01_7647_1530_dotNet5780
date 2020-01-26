@@ -424,27 +424,7 @@ namespace BL
                 throw e;
                 
             }
-            /* MailMessage mail = new MailMessage();
-             mail.To.Add(g.EmailAddress);
-             mail.From = new MailAddress("srskriloff@gmail.com");
-             mail.Subject = "Vakantie vacation offer";
-             mail.Body = text;/* "Hi," + g.FirstName + " " + g.LastName + "!" +"\n" + "Thank you for visiting Vakantie!\n" + "My Hosting Unit - " + hu.HostingUnitName + "  fills your requirements and I'd be more than glad to host you.\n" +
-                 "Please contact me at: " + h.EmailAddress + " to follow up with your order.\n" + "All the best, " + h.FirstName + " " + h.LastName;*/
-            /* mail.AddAttachment(pic);
-             mail.IsBodyHtml = true;
-             SmtpClient smtp = new SmtpClient();
-             smtp.Host = "smtp.gmail.com";
-             smtp.Credentials = new System.Net.NetworkCredential("vakantiebooking@gmail.com","vakantie2020");//open an email account
-             smtp.EnableSsl = true;
-             try
-             {
-                 smtp.Send(mail);
-             }
-             catch (Exception ex)
-             {
-                 throw ex;
-             }*/
-
+            
             try
             {
                 MailMessage mail = new MailMessage();
@@ -469,7 +449,7 @@ namespace BL
             }
             catch(Exception e)
             {
-
+                throw e;
             }
             
         }

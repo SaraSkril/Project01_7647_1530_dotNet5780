@@ -86,14 +86,12 @@
                         <RadioButton x:Name="No" Content="No" />
                     </StackPanel>
                 </Grid>
-                <ToggleButton x:Name="btnFirst" Grid.Column="1" Grid.Row="13"  Height="30" Width="30" Margin="127,12,13,0"  VerticalAlignment="Top" Content="Next"  >
-                    
-                </ToggleButton>
+               
             </Grid>
             <Grid Grid.Row="2" Grid.Column="3" Name="BankGrid">
                 <Grid.Style>
                     <Style TargetType="Grid">
-                        <Setter Property="Visibility" Value="Hidden"/>
+                        <Setter Property="Visibility" Value="Visible"/>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsChecked,ElementName=btnFirst}" Value="True">
                                 <Setter Property="Visibility" Value="Visible"/>
@@ -124,7 +122,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="0.3*"/>
                 </Grid.RowDefinitions>
-                <Label Grid.Column="0" Grid.Row="1" Content="Please Fill In Your Bank Details:" FontFamily="Comic Sans MS"/>
+                <Label Grid.Column="0" Grid.Row="1" Content="Please Fill In Your Bank Details:" FontFamily="Comic Sans MS" Grid.ColumnSpan="2"/>
                 <Label Grid.Column="0" Grid.Row="3" Content="Bank Number:" FontFamily="Comic Sans MS"/>
                 <Label Grid.Column="0" Grid.Row="5" Content="Bank Name:" FontFamily="Comic Sans MS"/>
                 <Label Grid.Column="0" Grid.Row="7" Content="Branch Number:" FontFamily="Comic Sans MS"/>
@@ -133,6 +131,13 @@
                 <Label Grid.Column="0" Grid.Row="13" Content="Account Number:" FontFamily="Comic Sans MS"/>
                 <Button Name="Add_Host" Grid.Column="0" Grid.Row="15" Click="Add_Host_Click" Content="Add" Style="{StaticResource general1}" Height="40" Width="90" Margin="66,7,14,7" FontFamily="Comic Sans MS"/>
                 <Button Name="Cancel" Grid.Column="1" Grid.Row="15" Click="Cancel_Click" Content="Cancel" Style="{StaticResource general1}" Height="40" Width="90" Margin="16,7,113,7" FontFamily="Comic Sans MS"/>
+                <ComboBox Name="Bnumber" Grid.Column="1" Grid.Row="3" FontFamily="Comic Sans MS" IsEditable="True" SelectionChanged="Bnumber_SelectionChanged"/>
+                <Label Name="Bname" Grid.Column="1" Grid.Row="5" FontFamily="Comic Sans MS"  Visibility="Hidden"/>
+                <ComboBox Name="BRnumber" Grid.Column="1" Grid.Row="7" FontFamily="Comic Sans MS" IsEditable="True" Visibility="Hidden"/>
+                <ComboBox Name="BRcity" Grid.Column="1" Grid.Row="9" FontFamily="Comic Sans MS" IsEditable="True" Visibility="Hidden"/>
+                <ComboBox Name="BRadrress" Grid.Column="1" Grid.Row="11" FontFamily="Comic Sans MS" IsEditable="True" Visibility="Hidden"/>
+                <TextBox Name="ActNum" Grid.Column="1" Grid.Row="13" FontFamily="Comic Sans MS" />
+
 
 
             </Grid>

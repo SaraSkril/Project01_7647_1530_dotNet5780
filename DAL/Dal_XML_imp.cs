@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading.Tasks;
+using System.Threading;
 using System.Xml.Linq;
 using BE;
 using System.IO;
@@ -18,18 +20,18 @@ namespace DAL
 {
     class Dal_XML_imp : Idal
     {
-         XElement HostRoot;
+        public static volatile bool bankDownloaded = false;//flag if bank was downloaded
+        BackgroundWorker worker;
+        XElement HostRoot;
          XElement HostingUnitRoot;
          XElement GuestRoot;
         XElement OrderRoot;
          XElement ConfigRoot;
-        //      private XElement AtmRoot;
          string HostRootPath = @"Hosts.xml";
         string HostingUnitRootPath = @"HostingUnits.xml";
         string GuestRootPath = @"Guests.xml";
          string ConfigRootPath = @"Config.xml";
         string OrderRootPath = @"Orders.xml";
-        //      private const string AtmRootPath = @"atm.xml";
 
         #region Singleton
         private static readonly Dal_XML_imp instance = new Dal_XML_imp();
@@ -43,31 +45,103 @@ namespace DAL
 
         public Dal_XML_imp()
         {
-            if (!File.Exists(GuestRootPath))
-                CreatFileGuests();
-            else
-                LoadDataGuests();
-
-            if (!File.Exists(HostingUnitRootPath))
-                CreatFileHU();
-            else
-                LoadDataHU();
-
-            if (!File.Exists(HostRootPath))
-                CreatFileHost();
-            else
-                LoadDataHost();
-            if (!File.Exists(OrderRootPath))
-                CreatFileOrder();
-            else
-                LoadDataOrder();
-
-            if (!File.Exists(ConfigRootPath))
+            try//bank download
             {
-                CreateConfig();
+                worker = new BackgroundWorker();
+                worker.DoWork += Worker_DoWork;
+                worker.RunWorkerAsync();
+
             }
-            else ConfigRoot = XElement.Load(ConfigRootPath);
+            catch
+            {
+                throw new FileLoadException("Could not load Bank Acounts");
+            }
+            try
+            {
+                if (!File.Exists(GuestRootPath))
+                    CreatFileGuests();
+                else
+                    LoadDataGuests();
+
+                if (!File.Exists(HostingUnitRootPath))
+                    CreatFileHU();
+                else
+                    LoadDataHU();
+
+                if (!File.Exists(HostRootPath))
+                    CreatFileHost();
+                else
+                    LoadDataHost();
+                if (!File.Exists(OrderRootPath))
+                    CreatFileOrder();
+                else
+                    LoadDataOrder();
+
+                if (!File.Exists(ConfigRootPath))
+                {
+                    CreateConfig();
+                }
+                else ConfigRoot = XElement.Load(ConfigRootPath);
+            }
+            catch(Exception ex)
+            {
+                throw new FileLoadException("Could not open one of the files"+ ex.Message);
+            }
         }
+        #region Bank
+
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+
+            object ob = e.Argument;
+            while (bankDownloaded == false)//continues until it downloads
+            {
+                try
+                {
+                   DownloadBank();
+                    Thread.Sleep(2000);//sleeps before trying
+                }
+                catch
+                { }
+            }
+
+           getAllBranches();//saves branches to ds
+        }
+
+        void DownloadBank()
+        {
+            
+            string xmlLocalPath = @"atm.xml";
+            WebClient wc = new WebClient();
+            try
+            {
+                string xmlServerPath =
+               @"https://www.boi.org.il/en/BankingSupervision/BanksAndBranchLocations/Lists/BoiBankBranchesDocs/snifim_en.xml";
+                wc.DownloadFile(xmlServerPath, xmlLocalPath);
+                bankDownloaded = true;
+            }
+            catch
+            {
+
+                string xmlServerPath = @"http://www.jct.ac.il/~coshri/atm.xml";
+                wc.DownloadFile(xmlServerPath, xmlLocalPath);
+                bankDownloaded = true;
+
+            }
+            finally
+            {
+                wc.Dispose();
+            }
+
+        }
+
+        List<BankAccount> getAllBranches()
+        {
+
+        }
+
+        #endregion
+
         #region Load&Create
         private void CreateConfig()
         {
@@ -592,6 +666,7 @@ namespace DAL
 
         public IEnumerable<BankAccount> GetAllBankAccounts()
         {
+            return null;
             throw new NotImplementedException();
 
         }

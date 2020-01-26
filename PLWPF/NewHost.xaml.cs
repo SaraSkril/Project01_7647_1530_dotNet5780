@@ -19,10 +19,28 @@ namespace PLWPF
     /// </summary>
     public partial class NewHost : Window
     {
+        IEnumerable<BankAccount> BA;
+        List<int> bankNumber;
         public NewHost()
         {
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
+            BA = MainWindow.ibl.GetAllBankAccounts();
+            bankNumber = new List<int>();
+            bankNumber.Add(4);
+            bankNumber.Add(10);
+            bankNumber.Add(11);
+            bankNumber.Add(12);
+            bankNumber.Add(13);
+            bankNumber.Add(14);
+            bankNumber.Add(17);
+            bankNumber.Add(20);
+            bankNumber.Add(26);
+            bankNumber.Add(31);
+            bankNumber.Add(46);
+            bankNumber.Add(52);
+            bankNumber.Add(54);
+            Bnumber.ItemsSource = bankNumber;
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -150,14 +168,14 @@ namespace PLWPF
                 h.CollectionClearance = CollectionClearance.No;
             h.EmailAddress = Email.Text;
             {
-                h.BankAccountNumber = 11111;
+               /* h.BankAccountNumber = 11111;
                 BankAccount b = new BankAccount();
                 b.BankName = "bbb";
                 b.BankNumber = 12;
                 b.BranchAddress = "bbb";
                 b.BranchCity = "bbb";
                 b.BranchNumber = 2;
-                h.BankDetails = b;
+                h.BankDetails = b;*/
             }
 
             //bank
@@ -179,6 +197,59 @@ namespace PLWPF
             No.IsChecked = false;
             number.Text = "";
             Close();
+        }
+
+        private void Bnumber_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Bname.Visibility = Visibility.Visible;
+            BRnumber.Visibility = Visibility.Visible;
+            //when the number changes everything changes 
+            int BankNumber = int.Parse(Bnumber.SelectedItem.ToString());
+           switch(BankNumber)
+            {
+                case 4:
+                    Bname.Content = "בנק יהב לעובדי המדינה ";
+                    break;
+                case 10:
+                    Bname.Content = "בנק לאומי";
+                    break;
+                case 11:
+                    Bname.Content = "בנק דיסקונט";
+                    break;
+                case 12:
+                    Bname.Content = "בנק הפועלים";
+                    break;
+                case 13:
+                    break;
+                case 14:
+                    Bname.Content = "בנק אוצר החייל";
+                    break;
+                case 17:
+                    break;
+                case 20:
+                    Bname.Content = "בנק מזרחי טפחות";
+                    break;
+                case 26:
+                    break;
+                case 31:
+                    Bname.Content = "הבנק הבינלאומי הראשון";
+                    break;
+                case 46:
+                    break;
+                case 52:
+                    break;
+                case 54:
+                    break;
+
+
+
+
+
+
+
+
+            }
+            
         }
     }
 }
