@@ -20,6 +20,10 @@ namespace PLWPF
     public partial class UpdateHost : Window
     {
         Host h = new Host();
+        List<int> bankNumberList;
+        IEnumerable<IGrouping<int, BankAccount>> ba;
+        IEnumerable<IGrouping<int, BankAccount>> branches;
+        IEnumerable<BankAccount> br;
         public UpdateHost()
         {
             InitializeComponent();
@@ -29,6 +33,13 @@ namespace PLWPF
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
             h = MainWindow.ibl.FindHost(id);
+            bankNumberList = new List<int>();
+            ba = MainWindow.ibl.GetBanksbyBankNumbers();
+            foreach (var b in ba)
+            {
+                bankNumberList.Add(b.Key);
+            }
+            Bnumber.ItemsSource = bankNumberList;
             SetAll();
             
 
@@ -84,7 +95,12 @@ namespace PLWPF
             else
                 No.IsChecked = true;
             {
-                //bankdetails
+                Bnumber.Text = h.BankDetails.BankNumber.ToString();
+                Bname.Content = h.BankDetails.BankName.ToString();
+                BRadrress.Content = h.BankDetails.BranchAddress.ToString();
+                BRcity.Content = h.BankDetails.BranchCity.ToString();
+                ActNum.Text = h.BankAccountNumber.ToString();
+                BRnumber.Text = h.BankDetails.BranchNumber.ToString();
             }
 
         }
@@ -133,17 +149,19 @@ namespace PLWPF
                 h.CollectionClearance = CollectionClearance.Yes;
             else
                 h.CollectionClearance = CollectionClearance.No;
+
             h.EmailAddress = Email.Text;
             {
-                h.BankAccountNumber = 11111;
-                BankAccount b = new BankAccount();
-                b.BankName = "bbb";
-                b.BankNumber = 12;
-                b.BranchAddress = "bbb";
-                b.BranchCity = "bbb";
-                b.BranchNumber = 2;
-                h.BankDetails = b;
+                if (Bnumber.SelectedItem == null || BRnumber.SelectedItem == null || ActNum.Text == "" || int.TryParse(ActNum.Text, out number1) == false)
+                    return;
             }
+            h.BankAccountNumber = int.Parse(ActNum.Text);
+            h.BankDetails.BankName = Bname.Content.ToString();
+            h.BankDetails.BankNumber = System.Convert.ToInt32(Bnumber.SelectedItem.ToString());
+            h.BankDetails.BranchAddress =BRadrress.Content.ToString();
+            h.BankDetails.BranchCity =BRcity.Content.ToString();
+            h.BankDetails.BranchNumber =int.Parse(BRnumber.SelectedItem.ToString());
+            
 
             //bank
             try
@@ -170,6 +188,59 @@ namespace PLWPF
             {
                 // Do not close the window  
             }
+        }
+
+        private void BRnumber_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            BRcity.Visibility = Visibility.Visible;
+            BRadrress.Visibility = Visibility.Visible;
+            if (BRnumber.SelectedItem == null)
+                return;
+            int BankNumber = int.Parse(BRnumber.SelectedItem.ToString());//gets bank number that was chosen
+            h.BankDetails.BranchNumber = BankNumber;
+            foreach (var temp in branches)
+            {
+                if (temp.Key == BankNumber)
+                {
+                    BRcity.Content = temp.First().BranchCity;
+                    BRadrress.Content = temp.First().BranchAddress;
+                    h.BankDetails.BranchCity= temp.First().BranchCity;
+                    h.BankDetails.BranchAddress= temp.First().BranchAddress;
+                    break;
+                }
+            }
+        }
+
+        private void Bnumber_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Bname.Visibility = Visibility.Visible;
+            BRnumber.Visibility = Visibility.Visible;
+            int BankNumber = int.Parse(Bnumber.SelectedItem.ToString());//gets bank number that was chosen
+
+            br = null;
+            foreach (var b in ba)//goes over banks
+            {
+                if (b.Key == BankNumber)
+                {
+                    br = b;//gets the bank accounts that belong to the bank number that was chosen
+                    break;
+                }
+
+            }
+            Bname.Content = br.First().BankName;//displays bank name according to chosen
+            BRnumber.Text = "";
+           
+            branches = MainWindow.ibl.GetBanksbyBranchesNumbers(br);//groups accounts by branches of chosen bank
+            List<int> branchnumer = new List<int>();
+            #region getsBranch
+            foreach (var branch in branches)
+            {
+                branchnumer.Add(branch.Key);
+            }
+            #endregion
+            BRnumber.ItemsSource = branchnumer;
+            BRcity.Content = "";
+            BRadrress.Content = "";
         }
     }
 }

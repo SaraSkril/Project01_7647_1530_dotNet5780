@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using System.Threading;
 using System.ComponentModel;
 
 using BE;
@@ -409,7 +410,7 @@ namespace BL
             hostingUnit.Owner.CollectionClearance = CollectionClearance.No;//change collection clearence
             return true;
         }
-        public void SendMail(Order order,string text, string pic)//when status of order is changed to "sent mail", this function will send the mail
+        public void SendMail(Order order, string text, string pic)//when status of order is changed to "sent mail", this function will send the mail
         {
             Guest g = dal.GetGuest(order.GuestRequestKey);
             HostingUnit hu = dal.GetHostingUnit(order.HostingUnitKey);
@@ -419,39 +420,42 @@ namespace BL
                 checkEmail(g.EmailAddress);
                 checkEmail(h.EmailAddress);
             }
-            catch(InvalidOperationException e)
+            catch (InvalidOperationException e)
             {
                 throw e;
-                
-            }
-            
-            try
-            {
-                MailMessage mail = new MailMessage();
-                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
-                mail.From = new MailAddress("vakantiebooking@gmail.com");
-                mail.To.Add(g.EmailAddress);
-                mail.Subject = "Vakantie vacation offer";
-                mail.Body = text;
 
-                if (pic != "")
+            }
+
+            new Thread(() =>
+            {
+                try
                 {
-                    System.Net.Mail.Attachment attachment;
-                    attachment = new System.Net.Mail.Attachment(pic);
-                    mail.Attachments.Add(attachment);
+                    MailMessage mail = new MailMessage();
+                    SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+                    mail.From = new MailAddress("vakantiebooking@gmail.com");
+                    mail.To.Add(g.EmailAddress);
+                    mail.Subject = "Vakantie vacation offer";
+                    mail.Body = text;
+
+                    if (pic != "")
+                    {
+                        System.Net.Mail.Attachment attachment;
+                        attachment = new System.Net.Mail.Attachment(pic);
+                        mail.Attachments.Add(attachment);
+                    }
+
+                    SmtpServer.Port = 587;
+                    SmtpServer.Credentials = new System.Net.NetworkCredential("vakantiebooking@gmail.com", "vakantie2020");
+                    SmtpServer.EnableSsl = true;
+
+                    SmtpServer.Send(mail);
+                }
+                catch (Exception e)
+                {
+                    throw e;
                 }
 
-                SmtpServer.Port = 587;
-                SmtpServer.Credentials = new System.Net.NetworkCredential("vakantiebooking@gmail.com", "vakantie2020");
-                SmtpServer.EnableSsl = true;
-
-                SmtpServer.Send(mail);
-            }
-            catch(Exception e)
-            {
-                throw e;
-            }
-            
+            }).Start();
         }
         public List<HostingUnit> AllDays(DateTime date, int duration)//returns all hosting units with avilble date
         {
@@ -569,6 +573,7 @@ namespace BL
             return from item in ba
                    group item by item.BranchNumber
                         into g
+                        orderby g.Key
                    select g;
         }
         public IEnumerable<IGrouping<int, BankAccount>> GetBanksbyBankNumbers()//groups bank accounts according to bank numbers
@@ -576,6 +581,7 @@ namespace BL
             return from item in dal.GetAllBankAccounts()
                    group item by item.BankNumber
                          into g
+                         orderby g.Key
                    select g;
         }
 

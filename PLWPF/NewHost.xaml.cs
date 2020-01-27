@@ -150,6 +150,8 @@ namespace PLWPF
                 MessageBox.Show("Please select Automatic billing");
                 return;
             }
+            if (Bnumber.SelectedItem == null || BRnumber.SelectedItem == null || ActNum.Text == "" || int.TryParse(ActNum.Text, out number1) == false)
+                flag = false;
             if (!flag)
                 return;
             h.ID = ID.Text;
@@ -162,14 +164,14 @@ namespace PLWPF
                 h.CollectionClearance = CollectionClearance.No;
             h.EmailAddress = Email.Text;
             {
-               /* h.BankAccountNumber = 11111;
+                h.BankAccountNumber = int.Parse(ActNum.Text);
                 BankAccount b = new BankAccount();
-                b.BankName = "bbb";
-                b.BankNumber = 12;
-                b.BranchAddress = "bbb";
-                b.BranchCity = "bbb";
-                b.BranchNumber = 2;
-                h.BankDetails = b;*/
+                b.BankName = Bname.Content.ToString();
+                b.BankNumber = int.Parse(Bnumber.SelectedItem.ToString());
+                b.BranchAddress = BRadrress.Content.ToString();
+                b.BranchCity = BRcity.Content.ToString();
+                b.BranchNumber = int.Parse(BRnumber.Text);
+                h.BankDetails = b;
             }
 
             //bank
@@ -212,10 +214,12 @@ namespace PLWPF
             Bname.Content = br.First().BankName;//displays bank name according to chosen
             branches = MainWindow.ibl.GetBanksbyBranchesNumbers(br);//groups accounts by branches of chosen bank
             List<int> branchnumer = new List<int>();
-            foreach(var branch in branches)
+            #region getsBranch
+            foreach (var branch in branches)
             {
                 branchnumer.Add(branch.Key);
             }
+            #endregion
             BRnumber.ItemsSource = branchnumer;
             BRcity.Content = "";
             BRadrress.Content = "";
@@ -230,6 +234,8 @@ namespace PLWPF
         {
             BRcity.Visibility = Visibility.Visible;
             BRadrress.Visibility = Visibility.Visible;
+            if (BRnumber.SelectedItem == null)
+                return;
             int BankNumber = int.Parse(BRnumber.SelectedItem.ToString());//gets bank number that was chosen
             foreach (var temp in branches)
             {
