@@ -26,16 +26,11 @@ namespace PLWPF
         {
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
-            //App.numOfActivatedMainWindow++;
             this.FlowDirection = FlowDirection.RightToLeft;
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
             Style = (Style)FindResource(typeof(Window));
             SystemCommands.MaximizeWindow(this);
-           // loadSystemWorker.DoWork += LoadSystem_DoWork;
-            //loadSystemWorker.RunWorkerCompleted += LoadSystemWorker_RunWorkerCompleted;
-            //updateAddresses.DoWork += UpdateAddresses_DoWork;
-           // updateAddresses.RunWorkerCompleted += UpdateAddresses_RunWorkerCompleted;
         }
        
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)

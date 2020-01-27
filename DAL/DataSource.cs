@@ -171,17 +171,17 @@ namespace DAL
             hostingUnit3.TypeUnit = TypeUnit.Hotel;
             hostingUnits.Add(hostingUnit3);
 
-            BankAccount b1 = new BankAccount(); b1.BankName = "Pag"; b1.BankNumber = 14; b1.BranchAddress = "Tzealim 4"; b1.BranchCity = "Beit Shemesh"; b1.BranchNumber = 122;
+           /* BankAccount b1 = new BankAccount(); b1.BankName = "Pag"; b1.BankNumber = 14; b1.BranchAddress = "Tzealim 4"; b1.BranchCity = "Beit Shemesh"; b1.BranchNumber = 122;
             BankAccount b2 = new BankAccount(); b2.BankName = "Poalim"; b2.BankNumber = 12; b2.BranchAddress = "Kanfei Nesharim 55"; b2.BranchCity = "Jerusalem"; b2.BranchNumber = 446;
             BankAccount b3 = new BankAccount(); b3.BankName = "Yahav"; b3.BankNumber = 11; b3.BranchAddress = "Dolev 24"; b3.BranchCity = "Tel Aviv"; b3.BranchNumber = 789;
             BankAccount b4 = new BankAccount(); b4.BankName = "Mizrachi Tfachot"; b4.BankNumber = 17; b4.BranchAddress = "Tkoa"; b4.BranchCity = "Tkoa Citi"; b4.BranchNumber = 20;
-            BankAccount b5 = new BankAccount(); b5.BankName = "Bank Israel"; b5.BankNumber = 89; b5.BranchAddress = "King David "; b5.BranchCity = "Jerusalem"; b5.BranchNumber = 63;
-
+            BankAccount b5 = new BankAccount(); b5.BankName = "Bank Israel"; b5.BankNumber = 89; b5.BranchAddress = "King David "; b5.BranchCity = "Jerusalem"; b5.BranchNumber = 63;*/
+            /*
             bankAccounts.Add(b1);
             bankAccounts.Add(b2);
             bankAccounts.Add(b3);
             bankAccounts.Add(b4);
-            bankAccounts.Add(b5);
+            bankAccounts.Add(b5);*/
 
             Order order = new Order();
             order.OrderKey = ++(Configuration.OrderKey);

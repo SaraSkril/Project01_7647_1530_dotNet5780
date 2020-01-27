@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using BE;
+using BE; 
 namespace PLWPF
 {
     /// <summary>
@@ -19,28 +19,22 @@ namespace PLWPF
     /// </summary>
     public partial class NewHost : Window
     {
-        IEnumerable<BankAccount> BA;
-        List<int> bankNumber;
+        
+        List<int> bankNumberList;
+        IEnumerable<IGrouping<int, BankAccount>> ba;
+        IEnumerable<IGrouping<int, BankAccount>> branches;
+        IEnumerable<BankAccount> br;
         public NewHost()
         {
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
-            BA = MainWindow.ibl.GetAllBankAccounts();
-            bankNumber = new List<int>();
-            bankNumber.Add(4);
-            bankNumber.Add(10);
-            bankNumber.Add(11);
-            bankNumber.Add(12);
-            bankNumber.Add(13);
-            bankNumber.Add(14);
-            bankNumber.Add(17);
-            bankNumber.Add(20);
-            bankNumber.Add(26);
-            bankNumber.Add(31);
-            bankNumber.Add(46);
-            bankNumber.Add(52);
-            bankNumber.Add(54);
-            Bnumber.ItemsSource = bankNumber;
+            bankNumberList = new List<int>();
+            ba = MainWindow.ibl.GetBanksbyBankNumbers();
+            foreach(var b in ba)
+            {
+                bankNumberList.Add(b.Key);
+            }
+            Bnumber.ItemsSource = bankNumberList;
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -203,53 +197,49 @@ namespace PLWPF
         {
             Bname.Visibility = Visibility.Visible;
             BRnumber.Visibility = Visibility.Visible;
-            //when the number changes everything changes 
-            int BankNumber = int.Parse(Bnumber.SelectedItem.ToString());
-           switch(BankNumber)
+            int BankNumber = int.Parse(Bnumber.SelectedItem.ToString());//gets bank number that was chosen
+
+            br = null;
+            foreach(var b in ba)//goes over banks
             {
-                case 4:
-                    Bname.Content = "בנק יהב לעובדי המדינה ";
+                if (b.Key == BankNumber)
+                {
+                    br = b;//gets the bank accounts that belong to the bank number that was chosen
                     break;
-                case 10:
-                    Bname.Content = "בנק לאומי";
-                    break;
-                case 11:
-                    Bname.Content = "בנק דיסקונט";
-                    break;
-                case 12:
-                    Bname.Content = "בנק הפועלים";
-                    break;
-                case 13:
-                    break;
-                case 14:
-                    Bname.Content = "בנק אוצר החייל";
-                    break;
-                case 17:
-                    break;
-                case 20:
-                    Bname.Content = "בנק מזרחי טפחות";
-                    break;
-                case 26:
-                    break;
-                case 31:
-                    Bname.Content = "הבנק הבינלאומי הראשון";
-                    break;
-                case 46:
-                    break;
-                case 52:
-                    break;
-                case 54:
-                    break;
-
-
-
+                }
+                    
+            }
+            Bname.Content = br.First().BankName;//displays bank name according to chosen
+            branches = MainWindow.ibl.GetBanksbyBranchesNumbers(br);//groups accounts by branches of chosen bank
+            List<int> branchnumer = new List<int>();
+            foreach(var branch in branches)
+            {
+                branchnumer.Add(branch.Key);
+            }
+            BRnumber.ItemsSource = branchnumer;
+            BRcity.Content = "";
+            BRadrress.Content = "";
 
 
 
 
 
             }
-            
+
+        private void BRnumber_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            BRcity.Visibility = Visibility.Visible;
+            BRadrress.Visibility = Visibility.Visible;
+            int BankNumber = int.Parse(BRnumber.SelectedItem.ToString());//gets bank number that was chosen
+            foreach (var temp in branches)
+            {
+                if(temp.Key==BankNumber)
+                {
+                    BRcity.Content = temp.First().BranchCity;
+                    BRadrress.Content = temp.First().BranchAddress;
+                    break;
+                }
+            }
         }
     }
-}
+    }

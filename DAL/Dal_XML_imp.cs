@@ -12,6 +12,7 @@ using System.Reflection;
 using System.ComponentModel;
 using System.Xml.Serialization;
 using BE;
+using System.Xml;
 using System.Net;
 
 
@@ -23,14 +24,16 @@ namespace DAL
         public static volatile bool bankDownloaded = false;//flag if bank was downloaded
         BackgroundWorker worker;
         XElement HostRoot;
-         XElement HostingUnitRoot;
-         XElement GuestRoot;
+        XElement HostingUnitRoot;
+        XElement GuestRoot;
         XElement OrderRoot;
-         XElement ConfigRoot;
-         string HostRootPath = @"Hosts.xml";
+        XElement ConfigRoot;
+        XElement ATMRoot;
+        string xmlLocalPath = @"atm.xml";
+        string HostRootPath = @"Hosts.xml";
         string HostingUnitRootPath = @"HostingUnits.xml";
         string GuestRootPath = @"Guests.xml";
-         string ConfigRootPath = @"Config.xml";
+        string ConfigRootPath = @"Config.xml";
         string OrderRootPath = @"Orders.xml";
 
         #region Singleton
@@ -40,22 +43,12 @@ namespace DAL
             get { return instance; }
         }
 
-       
+
         static Dal_XML_imp() { }
 
         public Dal_XML_imp()
         {
-            try//bank download
-            {
-                worker = new BackgroundWorker();
-                worker.DoWork += Worker_DoWork;
-                worker.RunWorkerAsync();
 
-            }
-            catch
-            {
-                throw new FileLoadException("Could not load Bank Acounts");
-            }
             try
             {
                 if (!File.Exists(GuestRootPath))
@@ -82,15 +75,18 @@ namespace DAL
                     CreateConfig();
                 }
                 else ConfigRoot = XElement.Load(ConfigRootPath);
+                if (!File.Exists(xmlLocalPath))
+                    createATM();
+                ATMRoot = XElement.Load(xmlLocalPath);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw new FileLoadException("Could not open one of the files"+ ex.Message);
+                throw new FileLoadException("Could not open one of the files" + ex.Message);
             }
         }
         #region Bank
 
-        private void Worker_DoWork(object sender, DoWorkEventArgs e)
+        /*private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
 
             object ob = e.Argument;
@@ -105,13 +101,28 @@ namespace DAL
                 { }
             }
 
-           getAllBranches();//saves branches to ds
-        }
+            GetAllBankAccounts();//saves branches to ds
+        }*/
 
-        void DownloadBank()
+        /*void DownloadBank()
         {
+           
+           if (File.Exists(xmlLocalPath))
+            {
+                try
+                {
+                    ATMRoot = XElement.Load(xmlLocalPath);
+                    bankDownloaded = true;
+                    return;
+                }
+                catch
+                {
+                    throw new FileLoadException("Could not Load file!");
+                }
+                
+            }
             
-            string xmlLocalPath = @"atm.xml";
+           
             WebClient wc = new WebClient();
             try
             {
@@ -135,14 +146,153 @@ namespace DAL
 
         }
 
-        List<BankAccount> getAllBranches()
+        public IEnumerable<BankAccount> GetAllBankAccounts()
         {
 
-        }
 
+           List<BankAccount> banks = new List<BankAccount>();
+            XmlDocument doc = new XmlDocument();
+            doc.Load(@"atm.xml");
+            XmlNode rootNode = doc.DocumentElement;
+            
+
+            XmlNodeList children = rootNode.ChildNodes;
+            foreach (XmlNode child in children)
+            {
+                BankAccount b = GetBranchByXmlNode(child);
+                if (b != null)
+                {
+                    //DataSource.GetBankAccounts().Add(b);
+                    banks.Add(b);
+                }
+            }
+
+            
+             return (IEnumerable<BankAccount>)banks;
+        }
+       /* public IEnumerable<BankAccount> GetAllBankAccounts()
+        {
+            return (IEnumerable<BankAccount>)DataSource.GetBankAccounts();
+        }*/
+
+        /*  private static BankAccount GetBranchByXmlNode(XmlNode node)
+          {
+              if (node.Name != "BRANCH") return null;
+              BankAccount b = new BankAccount();
+
+              XmlNodeList children = node.ChildNodes;
+
+              foreach (XmlNode child in children)
+              {
+                  switch (child.Name)
+                  {
+                      case "Bank_Code":
+                          b.BankNumber = int.Parse(child.InnerText);
+                          break;
+                      case "Bank_Name":
+                          b.BankName = child.InnerText;
+                          break;
+                      case "Branch_Code":
+                          b.BranchNumber = int.Parse(child.InnerText);
+                          break;
+                      case "Branch_Address":
+                          b.BranchAddress = child.InnerText;
+                          break;
+                      case "City":
+                          b.BranchCity = child.InnerText;
+                          break;
+
+                  }
+
+              }
+
+              if (b.BranchNumber > 0)
+                  return b;
+
+              return null;
+
+          }
+          */
         #endregion
 
         #region Load&Create
+        private void createATM()
+        {
+            /*  try//bank download
+              {
+                  worker = new BackgroundWorker();
+                  worker.DoWork += Worker_DoWork;
+                  worker.RunWorkerAsync();
+
+              }
+              catch
+              {
+                  throw new FileLoadException("Could not load Bank Acounts");
+              }*/
+            ATMRoot = new XElement("BRANCHES");
+            ATMRoot.Save(xmlLocalPath);//add new main element
+        }
+
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+
+            object ob = e.Argument;
+            while (bankDownloaded == false)//continues until it downloads
+            {
+                try
+                {
+                    DownloadBank();
+                    Thread.Sleep(2000);//sleeps before trying
+                }
+                catch
+                { }
+            }
+
+            // GetAllBankAccounts();//saves branches to ds
+        }
+
+        void DownloadBank()
+        {
+
+           /* if (File.Exists(xmlLocalPath))
+            {
+                try
+                {
+                    ATMRoot = XElement.Load(xmlLocalPath);
+                    bankDownloaded = true;
+                    return;
+                }
+                catch
+                {
+                    throw new FileLoadException("Could not Load file!");
+                }
+
+            }
+            */
+
+            WebClient wc = new WebClient();
+            try
+            {
+                string xmlServerPath =
+               @"https://www.boi.org.il/en/BankingSupervision/BanksAndBranchLocations/Lists/BoiBankBranchesDocs/snifim_en.xml";
+                wc.DownloadFile(xmlServerPath, xmlLocalPath);
+                bankDownloaded = true;
+            }
+            catch
+            {
+
+                string xmlServerPath = @"http://www.jct.ac.il/~coshri/atm.xml";
+                wc.DownloadFile(xmlServerPath, xmlLocalPath);
+                bankDownloaded = true;
+
+            }
+            finally
+            {
+                wc.Dispose();
+            }
+
+        }
+    
         private void CreateConfig()
         {
             XElement HostingUnitKey = new XElement("HostingUnitKey", "10000000");
@@ -408,6 +558,17 @@ namespace DAL
             help.BranchNumber = Int32.Parse(a.Element("BranchNumber").Value);
             return help;
         }
+
+        public static BankAccount converBank(XElement a)
+        {
+            BankAccount help = new BankAccount();
+            help.BankName = a.Element("Bank_Name").Value;
+            help.BankNumber = Int32.Parse(a.Element("Bank_Code").Value);
+            help.BranchAddress = a.Element("Address").Value;
+            help.BranchCity = a.Element("City").Value;
+            help.BranchNumber = Int32.Parse(a.Element("Branch_Code").Value);
+            return help;
+        }
         Host ConvertHost(XElement element)
         {
             Host h = new Host();
@@ -622,6 +783,17 @@ namespace DAL
         #endregion
 
         #region Gets
+        public IEnumerable<BankAccount> GetAllBankAccounts()
+        {
+            ATMRoot = XElement.Load(xmlLocalPath);
+            List<BankAccount> b = new List<BankAccount>();
+            foreach(XElement element in ATMRoot.Elements())
+            {
+                BankAccount ba = converBank(element);
+                b.Add(ba);
+            }
+            return b;
+        }
 
         public List<HostingUnit> GetAllHostingUnits()
         {
@@ -664,12 +836,7 @@ namespace DAL
             return allorder;
         }
 
-        public IEnumerable<BankAccount> GetAllBankAccounts()
-        {
-            return null;
-            throw new NotImplementedException();
-
-        }
+      
 
         public Host GetHost(string id)
         {
@@ -792,3 +959,4 @@ namespace DAL
     }
 }
 #endregion
+          

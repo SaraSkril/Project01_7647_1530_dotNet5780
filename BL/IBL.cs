@@ -70,6 +70,8 @@ namespace BL
         #endregion
         #region Group
         List<string> GetHubyHost(string id);
+        IEnumerable<IGrouping<int, BankAccount>> GetBanksbyBranchesNumbers(IEnumerable<BankAccount> ba);//groups bank accounts according to branch numbers
+        IEnumerable<IGrouping<int, BankAccount>> GetBanksbyBankNumbers();//groups bank accounts according to bank numbers
         IEnumerable<IGrouping<Area, Guest>> GetGuestsGroupsByArea();//groups geusts according to area
         IEnumerable<IGrouping<int, Guest>> GetGuestsGroupsByVacationers();//groups guests according to num vacationers
         IEnumerable<IGrouping<int, Host>> GetHostsGroupsByHostingUnits();//groups hosts according to num of hosting units

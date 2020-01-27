@@ -553,18 +553,33 @@ namespace BL
             }
             return count;
         }
-     
 
-       /* public int GetHUkeyBuName(string name)
-            {
-             HostingUnit h=dal.GetHostingUnit(name);
-            return h.HostingUnitKey;
-          
-           }*/
+
+        /* public int GetHUkeyBuName(string name)
+             {
+              HostingUnit h=dal.GetHostingUnit(name);
+             return h.HostingUnitKey;
+
+            }*/
         #endregion
         #region Group
-        
-            public IEnumerable<IGrouping<Area, Guest>> GetGuestsGroupsByArea()//groups geusts according to area
+
+        public IEnumerable<IGrouping<int, BankAccount>> GetBanksbyBranchesNumbers(IEnumerable<BankAccount> ba)//groups bank accounts according to branch numbers
+        {
+            return from item in ba
+                   group item by item.BranchNumber
+                        into g
+                   select g;
+        }
+        public IEnumerable<IGrouping<int, BankAccount>> GetBanksbyBankNumbers()//groups bank accounts according to bank numbers
+        {
+            return from item in dal.GetAllBankAccounts()
+                   group item by item.BankNumber
+                         into g
+                   select g;
+        }
+
+        public IEnumerable<IGrouping<Area, Guest>> GetGuestsGroupsByArea()//groups geusts according to area
         {
             return from item in dal.GetAllGuests()
                    group item by item.Area
