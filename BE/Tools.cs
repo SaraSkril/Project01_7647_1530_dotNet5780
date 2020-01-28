@@ -16,5 +16,5 @@ namespace BE
                 str += "\n" + item.Name + ": " + item.GetValue(t, null);
             return str;
         }
-       
+    }
 }

@@ -8,7 +8,7 @@ using BE;
 namespace DAL
 {
     class Dal_imp : Idal
-    {
+    {//singleton-alows us to create the instance of dal only once
         #region Singleton
         private static readonly Dal_imp instance = new Dal_imp();
         public static Dal_imp Instance
@@ -16,7 +16,7 @@ namespace DAL
             get { return instance; }
         }
 
-        public Dal_imp() { }
+        public Dal_imp() { }//constructors
         static Dal_imp() { }
 
         #endregion
@@ -205,6 +205,14 @@ namespace DAL
         public List<Host> GetHosts()
         {
             return DataSource.getHosts();
+        }
+       public DateTime GetLastUpdated()//returns the date that the orders were last updated 
+        {
+            return DateTime.Now;
+        }
+        public void UpdateLastUpdated()//updates
+        {
+
         }
 
     }

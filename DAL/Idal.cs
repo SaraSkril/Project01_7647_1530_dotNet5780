@@ -39,6 +39,8 @@ namespace DAL
         IEnumerable<BankAccount> GetAllBankAccounts();//returns a list with all Bank Accounts 
 
         #region finds element
+        DateTime GetLastUpdated();//returns the date that the orders were last updated 
+        void UpdateLastUpdated();//updates
         Host GetHost(string id);
         HostingUnit GetHostingUnit(int key);
      

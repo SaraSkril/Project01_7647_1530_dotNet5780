@@ -28,9 +28,6 @@ namespace DAL
         XElement GuestRoot;
         XElement OrderRoot;
         XElement ConfigRoot;
-        //XElement ATMRoot;
-        //string xmlLocalPath = @"atm.xml";
-
         string HostRootPath = @"Hosts.xml";
         string HostingUnitRootPath = @"HostingUnits.xml";
         string GuestRootPath = @"Guests.xml";
@@ -38,6 +35,7 @@ namespace DAL
         string OrderRootPath = @"Orders.xml";
 
         #region Singleton
+        //singleton-alows us to create the instance of dal only once
         private static readonly Dal_XML_imp instance = new Dal_XML_imp();
         public static Dal_XML_imp Instance
         {
@@ -49,6 +47,25 @@ namespace DAL
 
         public Dal_XML_imp()
         {
+            /*new Thread(() =>
+            {
+                if (GetLastUpdated() < DateTime.Today)//only updates them if it didn't update today already
+                {
+
+                    foreach (Order order in GetAllOrders())
+                    {
+                       // if (order.OrderDate != default(DateTime) && DaysBetween(order.OrderDate) > 31 && order.Status == Status.Mail_Sent)
+                        {
+                            order.Status = Status.Closed_NoReply;
+                           UpdateOrder(order);
+
+                        }
+
+                    }
+                   UpdateLastUpdated();//updates the date 
+                }
+                Thread.Sleep(86400000);//sleeps for 24 hours
+            }).Start();//starts i*/
 
             try
             {
@@ -395,8 +412,11 @@ namespace DAL
             XElement GuestRequestKey = new XElement("GuestRequestKey", "10000000");
             XElement OrderKey = new XElement("OrderKey", "10000000");
             XElement commission = new XElement("commission", 10);
+            XElement year = new XElement("year", DateTime.Now.Year);
+            XElement month = new XElement("month", DateTime.Now.Month);
+            XElement day = new XElement("day", DateTime.Now.Day);
 
-            ConfigRoot = new XElement("Configuration", HostingUnitKey, GuestRequestKey, OrderKey, commission);
+            ConfigRoot = new XElement("Configuration", HostingUnitKey, GuestRequestKey, OrderKey, commission,year,month,day);
             ConfigRoot.Save(ConfigRootPath);
             
         }
@@ -1042,7 +1062,30 @@ namespace DAL
 
         }
         #endregion
+        #region UpdateDate
+       public DateTime GetLastUpdated()//returns the date that the orders were last updated 
+        {
+            LoadDataConfig();
+            int yr = int.Parse(ConfigRoot.Element("year").Value);
+            int mnth = int.Parse(ConfigRoot.Element("month").Value);
+            int day = int.Parse(ConfigRoot.Element("day").Value);
 
+            DateTime d = new DateTime(yr, mnth, day);
+            return d;
+
+        }
+       public void UpdateLastUpdated()//updates
+        {
+            LoadDataConfig();
+            ConfigRoot.Element("year").Value = DateTime.Now.Year.ToString();
+            ConfigRoot.Element("month").Value = DateTime.Now.Month.ToString();
+            ConfigRoot.Element("day").Value = DateTime.Now.Day.ToString();
+            ConfigRoot.Save(ConfigRootPath);
+
+
+
+        }
+        #endregion
 
 
 

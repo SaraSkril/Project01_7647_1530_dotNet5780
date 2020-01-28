@@ -21,6 +21,24 @@ namespace BL
         public IBL_Imp()//ctor
         {
             dal = DAL.FactoryDal.GetDal();
+           new Thread(() =>
+            {
+                if (dal.GetLastUpdated() < DateTime.Today)//only updates them if it didn't update today already
+                {
+                   
+                    foreach(Order order in dal.GetAllOrders())
+                    {
+                        if (order.OrderDate != default(DateTime) && DaysBetween(order.OrderDate) > 31 && order.Status == Status.Mail_Sent)
+                        { order.Status = Status.Closed_NoReply;
+                            dal.UpdateOrder(order);
+              
+                         }
+
+                    }
+                    dal.UpdateLastUpdated();//updates the date 
+                }
+                Thread.Sleep(86400000);//sleeps for 24 hours
+            }).Start();//starts i
         }
         #region Add
         public void AddGuestReq(Guest guest)//Adds a new Guest Request
@@ -557,14 +575,7 @@ namespace BL
             }
             return count;
         }
-
-
-        /* public int GetHUkeyBuName(string name)
-             {
-              HostingUnit h=dal.GetHostingUnit(name);
-             return h.HostingUnitKey;
-
-            }*/
+        
         #endregion
         #region Group
 

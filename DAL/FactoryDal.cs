@@ -8,11 +8,13 @@ namespace DAL
 {
     public class FactoryDal
     {
+        //static Idal dal = null;
         public static Idal GetDal()
         {
-            //return new Dal_imp();
+            // if (dal == null)//we only want one object of dal(of the functions)=singelton
+            //     dal= new Dal_XML_imp();//creates an instance 
+            //return dal;//that exists
             return new Dal_XML_imp();
         }
-
     }
 }
