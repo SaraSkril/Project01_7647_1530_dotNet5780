@@ -670,5 +670,17 @@ namespace BL
         }
         #endregion
 
+      
+           /* new Thread(() =>
+            {
+            if (myDAL.getLastUpdatedStatus() < DateTime.Today)//only updates them if it didn't update today already
+            {
+                List<Order> orders = myDAL.getAllOrders();//all orders
+                myDAL.changeOrderStatus(ord => ord.Status == Enums.OrderStatus.Mailed && ord.OrderDate < DateTime.Today.AddDays(30), Enums.OrderStatus.Expired);
+                //changes status of orders more than 30 days old
+                myDAL.setLastUpdatedStatus();//updates date to datetime.today
+            }
+            Thread.Sleep(86400000);//sleeps for 24 hours
+        }).Start();//starts it*/
     }
 }
