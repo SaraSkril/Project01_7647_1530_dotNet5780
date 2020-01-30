@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Threading;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -37,6 +38,7 @@ namespace PLWPF
             s+= "Number of Guests: " + g.Count + "\n";
             s += "Number of Hosting Units: " + hu.Count + "\n";
             Info.Content = s;
+            
         }
 
         private void Hosts_Click(object sender, RoutedEventArgs e)

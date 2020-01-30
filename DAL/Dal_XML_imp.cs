@@ -47,34 +47,15 @@ namespace DAL
 
         public Dal_XML_imp()
         {
-            /*new Thread(() =>
-            {
-                if (GetLastUpdated() < DateTime.Today)//only updates them if it didn't update today already
-                {
-
-                    foreach (Order order in GetAllOrders())
-                    {
-                       // if (order.OrderDate != default(DateTime) && DaysBetween(order.OrderDate) > 31 && order.Status == Status.Mail_Sent)
-                        {
-                            order.Status = Status.Closed_NoReply;
-                           UpdateOrder(order);
-
-                        }
-
-                    }
-                   UpdateLastUpdated();//updates the date 
-                }
-                Thread.Sleep(86400000);//sleeps for 24 hours
-            }).Start();//starts i*/
-
+           
             try
             {
-               
 
-                //bank download
-             /*   worker = new BackgroundWorker();
-                worker.DoWork += Worker_DoWork;
-                worker.RunWorkerAsync();*/
+                //הערה: הורדנו את הקובץ של הבנקים פעם אחת , במקרה שישתנה בנק נשנה ידנית
+                //bank download   
+                /*   worker = new BackgroundWorker();
+                   worker.DoWork += Worker_DoWork;
+                   worker.RunWorkerAsync();*/
                 if (!File.Exists(GuestRootPath))
                     CreatFileGuests();
                 else
@@ -237,22 +218,7 @@ namespace DAL
         #endregion
 
         #region Load&Create
-        private void createATM()
-        {
-            /*  try//bank download
-              {
-                  worker = new BackgroundWorker();
-                  worker.DoWork += Worker_DoWork;
-                  worker.RunWorkerAsync();
-
-              }
-              catch
-              {
-                  throw new FileLoadException("Could not load Bank Acounts");
-              }*/
-           // ATMRoot = new XElement("BRANCHES");
-          //  ATMRoot.Save(xmlLocalPath);//add new main element
-        }
+    
 
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -269,8 +235,6 @@ namespace DAL
 
                 }
             }
-
-            //ListOfBanks();//saves branches to ds
         }
 
         void DownloadBank()
@@ -364,47 +328,7 @@ namespace DAL
             return null;
 
         }
-        //void DownloadBank()
-        // {
-
-        /* if (File.Exists(xmlLocalPath))
-         {
-             try
-             {
-                 ATMRoot = XElement.Load(xmlLocalPath);
-                 bankDownloaded = true;
-                 return;
-             }
-             catch
-             {
-                 throw new FileLoadException("Could not Load file!");
-             }
-
-         }
-
-
-         WebClient wc = new WebClient();
-         try
-         {
-             string xmlServerPath =
-            @"https://www.boi.org.il/en/BankingSupervision/BanksAndBranchLocations/Lists/BoiBankBranchesDocs/snifim_en.xml";
-             wc.DownloadFile(xmlServerPath, xmlLocalPath);
-             bankDownloaded = true;
-         }
-         catch
-         {
-
-             string xmlServerPath = @"http://www.jct.ac.il/~coshri/atm.xml";
-             wc.DownloadFile(xmlServerPath, xmlLocalPath);
-             bankDownloaded = true;
-
-         }
-         finally
-         {
-             wc.Dispose();
-         }
-         */
-        //   }
+       
 
         private void CreateConfig()
         {

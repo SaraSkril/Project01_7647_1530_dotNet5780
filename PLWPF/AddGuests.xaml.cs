@@ -133,7 +133,7 @@ namespace PLWPF
             }
             if (!flag)
                 MessageBox.Show("Please fill all");
-            if (Area.SelectedItem != null && Resort.SelectedItem != null && Adult.Text != "" && Pool.SelectedItem != null
+            if (Area.SelectedItem != null && Resort.SelectedItem != null && Adult.Text != ""&&Adult.Text!="0" && Pool.SelectedItem != null
                 && Jaccuzi.SelectedItem != null && Garden.SelectedItem != null && Children_att.SelectedItem != null && Wifi.SelectedItem != null)
             {
                 guest.FirstName = First_Name.Text;
@@ -208,8 +208,10 @@ namespace PLWPF
         {
             adultTB.Text = (Convert.ToInt32(adultTB.Text) - 1).ToString();
             Adult.Text = adultTB.Text;
-            if (adultTB.Text == "0")
+            if (adultTB.Text == "1")
                 minus.IsEnabled = false;
+            else
+            minus.IsEnabled = true;
         }
 
         private void addadult_Click(object sender, RoutedEventArgs e)//for subtracting number of adults

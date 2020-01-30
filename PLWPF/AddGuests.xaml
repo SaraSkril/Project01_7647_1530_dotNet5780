@@ -92,7 +92,7 @@
                                 <ColumnDefinition Width="50*"/>
                             </Grid.ColumnDefinitions>
                             <Button x:Name="plus" Content="+" Grid.Column="0" HorizontalAlignment="Right" Width="20" Height="20" Click="addadult_Click" BorderBrush="White" Background="White" Margin="0,0,0,3.333"/>
-                            <Button x:Name="minus" Content="-" Grid.Column="2" HorizontalAlignment="Left" Margin="48,0,-38.667,3.333" Width="20" Height="20" Click="lessadult_Click" BorderBrush="White" Background="White"/>
+                            <Button x:Name="minus" Content="-" Grid.Column="2" HorizontalAlignment="Left" Margin="48,0,-38.667,3.333" Width="20" Height="20" Click="lessadult_Click" BorderBrush="White" Background="White" IsEnabled="False"/>
                             <TextBox x:Name="adultTB" Text="1" TextAlignment="Center" IsReadOnly="True" Grid.Column="1" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="11,0,-15,0" Width="28" BorderBrush="White" />
                         </Grid>
                     </ComboBoxItem>

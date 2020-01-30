@@ -79,7 +79,11 @@ namespace BL
         IEnumerable<IGrouping<Area, HostingUnit>> GetHUGroupsByArea();//groups hosting units according to area
         IEnumerable<IGrouping<TypeUnit, HostingUnit>> GetHUGroupsByType();//groups hosting units according to area
         IEnumerable<IGrouping<Status, Order>> GetOrderByStatus();//groups orders according to status
-      
+
+        #endregion
+        #region Config
+        DateTime GetLastUpdated();//returns the date that the orders were last updated 
+        void UpdateLastUpdated();//updates
         #endregion
     }
 }

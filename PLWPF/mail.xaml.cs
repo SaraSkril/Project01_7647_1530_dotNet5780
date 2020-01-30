@@ -50,9 +50,6 @@ namespace PLWPF
                 }
             }
             starttextbox();
-            //worker.DoWork += AddChosenTestThreadFunc;
-            //worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
-           // worker.WorkerSupportsCancellation = true;
         }
 
 
